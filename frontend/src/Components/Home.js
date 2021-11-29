@@ -1,5 +1,6 @@
 import React from 'react'
 import NavBar from './NavBar'
+import RandomProducts from './RandomProducts'
 import RegLog from './RegLog'
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
         <div>
             <RegLog />
             <NavBar />
+            <RandomProducts />
         </div>
     )
 }
