@@ -71,6 +71,46 @@ class Api {
 		let data = this.delete(`/products/${id}/`);
 		return data;
 	}
+
+	getCustomer = (id) => {
+		let data = this.get(`/customers/${id}/`);
+		return data;
+	}
+
+	createCustomer = (username, password, phoneNumber, address) => {
+		let data = this.post(`/customers/create/`,{username, password, phoneNumber, address});
+		return data;
+	}
+
+	updateCustomer = (id,username, password, phoneNumber, address) => {
+		let data = this.put(`/customers/${id}/`,{username, password, phoneNumber, address});
+		return data;
+	}
+
+	deleteCustomer = (id) => {
+		let data = this.delete(`/customers/${id}/`);
+		return data;
+	}
+
+	getSeller = (id) => {
+		let data = this.get(`/sellers/${id}/`);
+		return data;
+	}
+
+	createSeller = (username, password, phoneNumber, address) => {
+		let data = this.post(`/sellers/create/`,{username, password, phoneNumber, address});
+		return data;
+	}
+
+	updateSeller = (id,username, password, phoneNumber, address) => {
+		let data = this.put(`/sellers/${id}/`,{username, password, phoneNumber, address});
+		return data;
+	}
+
+	deleteSeller = (id) => {
+		let data = this.delete(`/sellers/${id}/`);
+		return data;
+	}
 }
 
 const api = new Api()
