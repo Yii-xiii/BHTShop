@@ -1,6 +1,7 @@
 import React from 'react'
 import NavBar from './NavBar'
-import RandomProducts from './RandomProducts'
+import RankedProducts from './RankedProducts'
+import RandomProducts from './RandomProducts.js'
 import RegLog from './RegLog'
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
         <div>
             <RegLog />
             <NavBar />
+            <RankedProducts />
             <RandomProducts />
         </div>
     )

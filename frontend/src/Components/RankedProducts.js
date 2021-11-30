@@ -1,16 +1,15 @@
 import {useState, useEffect} from 'react'
-import './RandomProducts.css'
+import './RankedProducts.css'
 import api from './Api'
 import Products from './Products'
 
-const RandomProducts = () => {
+const RankedProducts = () => {
     // Initializing
     const [products, setProducts] = useState([])
 
     // Fetch data from database
     const fetchProducts = async() => {
         const data = await api.getProductList()
-        // const data = await response.json()
 
         return data.data
     }
@@ -24,13 +23,13 @@ const RandomProducts = () => {
 
         getProducts()
     }, [])
-    
+
     // Output
     return (
-        <div className='random-box'>
-            <h1>商品库</h1>
+        <div className='ranked-box'>
+            <h1>销量排名</h1>
             
-            <div className='random-show-box'>
+            <div className='ranked-show-box'>
                 {products.length > 0 ? <Products products={ products }/>
                 : console.log('No product founds.')}
             </div>
@@ -38,4 +37,4 @@ const RandomProducts = () => {
     )
 }
 
-export default RandomProducts
+export default RankedProducts
