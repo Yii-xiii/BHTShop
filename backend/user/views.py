@@ -1,14 +1,21 @@
 from django.shortcuts import render
 from .models import Customer, Seller
 from django.http import JsonResponse
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 import json
 
+
 # Create your views here.
+def returnJson(data=[], errorCode=0, cookie=''):
+	return JsonResponse({'errorCode': errorCode, 'data': data, 'cookie': cookie})
+
 
 def customerList(request):
 	if request.method == 'GET':
 		customers = Customer.objects.all()
-		return JsonResponse([dict(customer.body()) for customer in customers], safe = False)
+		return returnJson([dict(customer.body()) for customer in customers])
+
 
 def createCustomer(request):
 	if request.method == 'POST':
@@ -21,35 +28,49 @@ def createCustomer(request):
 		customer.phoneNumber = data["phoneNumber"]
 
 		customer.save()
-		return JsonResponse([dict(customer.body())], safe = False)
+		return returnJson([dict(customer.body())])
 
-def customer(request,pk):
+
+def customer(request, pk):
+	try:
+		customer = Customer.objects.get(id=pk)
+	except Customer.DoesNotExist:
+		return returnJson([], 404)
+	return returnJson([dict(customer.body())])
+
+
+@login_required
+def edit_customer(request, pk):
+	try:
+		customer = Customer.objects.get(id=pk)
+	except Customer.DoesNotExist:
+		return returnJson([], 404)
+
+	if request.user != customer:
+		return returnJson([], 403)
+
 	if request.method == 'PUT':
 		data = json.loads(request.body)
 
-		customer = Customer.objects.get(id = pk)
 		customer.username = data["username"]
 		customer.set_password(data["password"])
 		customer.address = data["address"]
 		customer.phoneNumber = data["phoneNumber"]
 
 		customer.save()
-		return JsonResponse([dict(customer.body())], safe = False)
+		return returnJson([dict(customer.body())])
 
 	elif request.method == 'DELETE':
-		customer = Customer.objects.get(id = pk)
 		customer.delete()
 		customers = Customer.objects.all()
-		return JsonResponse([dict(customer.body()) for customer in customers], safe = False)
+		return returnJson([dict(customer.body()) for customer in customers])
 
-	elif request.method == 'GET':
-		customer = Customer.objects.get(id = pk)
-		return JsonResponse([dict(customer.body())], safe = False)
 
 def sellerList(request):
 	if request.method == 'GET':
 		sellers = Seller.objects.all()
-		return JsonResponse([dict(seller.body()) for seller in sellers], safe = False)
+		return returnJson([dict(seller.body()) for seller in sellers])
+
 
 def createSeller(request):
 	if request.method == 'POST':
@@ -62,27 +83,87 @@ def createSeller(request):
 		seller.phoneNumber = data["phoneNumber"]
 
 		seller.save()
-		return JsonResponse([dict(seller.body())], safe = False)
+		return returnJson([dict(seller.body())])
 
-def seller(request,pk):
+
+def seller(request, pk):
+	try:
+		seller = Seller.objects.get(id=pk)
+	except Seller.DoesNotExist:
+		return returnJson([], 404)
+	return returnJson([dict(seller.body())])
+
+
+@login_required
+def editSeller(request, pk):
+	try:
+		seller = Seller.objects.get(id=pk)
+	except Seller.DoesNotExist:
+		return returnJson([], 404)
+	
+	if request.user != seller:
+		return returnJson([], 403)
+
 	if request.method == 'PUT':
 		data = json.loads(request.body)
 
-		seller = Seller.objects.get(id = pk)
 		seller.username = data["username"]
 		seller.set_password(data["password"])
 		seller.address = data["address"]
 		seller.phoneNumber = data["phoneNumber"]
 
 		seller.save()
-		return JsonResponse([dict(seller.body())], safe = False)
+		return returnJson([dict(seller.body())])
 
 	elif request.method == 'DELETE':
-		seller = Seller.objects.get(id = pk)
 		seller.delete()
 		sellers = Seller.objects.all()
-		return JsonResponse([dict(seller.body()) for seller in sellers], safe = False)
+		return returnJson([dict(seller.body()) for seller in sellers])
 
-	elif request.method == 'GET':
-		seller = Seller.objects.get(id = pk)
-		return JsonResponse([dict(seller.body())], safe = False)
+
+
+def userLogin(request):
+	data = json.loads(request.body)
+
+	username = data["username"]
+	password = data["password"]
+	user = authenticate(request, username, password)
+
+	if user is not None:
+		login(request, user)
+		try:
+			seller = Seller.objects.get(username = username)
+			return returnJson([dict(seller.body)], 0, {'user' : 'Seller', 'Username' : username})
+		except Seller.DoesNotExist:
+			try : 
+				customer = Customer.objects.get(username = username)
+				return returnJson([dict(customer.body)], 0, {'user' : 'Customer', 'Username' : username})
+			except Customer.DoesNotExist:
+				return returnJson([],403)
+	else:
+		return returnJson([], 403)
+
+
+def userLogout(request):
+	if request.user.is_authenticated:
+		logout(request)
+		return returnJson([])
+	else:
+		return returnJson([],403)
+
+
+@login_required
+def currentUser(request):
+	username = request.user.username
+
+	try:
+		seller = Seller.objects.get(username = username)
+		return returnJson([dict(seller.body)])
+	except Seller.DoesNotExist:
+		try : 
+			customer = Customer.objects.get(username = username)
+			return returnJson([dict(customer.body)])
+		except Customer.DoesNotExist:
+			return returnJson([{'username' : username}]) #TODO admin
+
+
