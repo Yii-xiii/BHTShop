@@ -10,6 +10,17 @@ def product_list(request):
     products = Product.objects.all()
     return JsonResponse([dict(product.body()) for product in products], safe = False)
 
+def product_list_by_page(request,pageNum):
+    products = Product.objects.all()[((pageNum-1)*10):(pageNum*10)]
+    return JsonResponse([dict(product.body()) for product in products], safe = False)
+
+def latest_product_list(request):
+    products = Product.objects.all().order_by('-id')
+    return JsonResponse([dict(product.body()) for product in products], safe = False)
+
+def latest_product_list_by_page(request,pageNum):
+    products = Product.objects.all().order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+    return JsonResponse([dict(product.body()) for product in products], safe = False)
 
 def create_product(request):
     if request.method == 'POST':
@@ -20,7 +31,6 @@ def create_product(request):
         product.save()
         products = Product.objects.all()
         return JsonResponse([dict(product.body()) for product in products], safe=False)
-
 
 def product(request, pk):
     if request.method == 'DELETE':
@@ -41,6 +51,18 @@ def product(request, pk):
 
 def product_spec_list(request, pk):
     productSpecs = ProductSpec.objects.filter(product = pk)
+    return JsonResponse([dict(spec.body()) for spec in productSpecs], safe = False)
+
+def product_spec_list_by_page(request, pk, pageNum):
+    productSpecs = ProductSpec.objects.filter(product = pk)[((pageNum-1)*10):(pageNum*10)]
+    return JsonResponse([dict(spec.body()) for spec in productSpecs], safe = False)
+
+def latest_product_spec_list(request, pk):
+    productSpecs = ProductSpec.objects.filter(product = pk).order_by('-id')
+    return JsonResponse([dict(spec.body()) for spec in productSpecs], safe = False)
+
+def latest_product_spec_list_by_page(request, pk, pageNum):
+    productSpecs = ProductSpec.objects.filter(product = pk).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
     return JsonResponse([dict(spec.body()) for spec in productSpecs], safe = False)
 
 def create_product_spec(request,pk):
