@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
-import Api from './Api'
 import './RandomProducts.css'
+import api from './Api'
 import Products from './Products'
 
 const RandomProducts = () => {
@@ -9,10 +9,10 @@ const RandomProducts = () => {
 
     // Fetch data from database
     const fetchProducts = async() => {
-        const response = await fetch('http://localhost:8000/products')
-        const data = await response.json()
+        const data = await api.getProductList()
+        // const data = await response.json()
 
-        console.log(data)
+        console.log('data: ' + data)
         return data
     }
 
@@ -28,9 +28,11 @@ const RandomProducts = () => {
     return (
         <div className='random-box'>
             <h1>随机商品</h1>
-
-            {products.length > 0 ? <Products products={products}/>
-            : console.log('no tasks.')}
+            
+            <div className='random-show-box'>
+                {/*products.size > 0 ? <Products products={ products }/>
+                : console.log('no product.')*/}
+            </div>
         </div>
     )
 }

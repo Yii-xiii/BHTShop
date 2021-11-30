@@ -1,0 +1,26 @@
+.product-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 50px;
+    width: 150px;
+    height: 200px;
+    background: linear-gradient(lightblue, transparent);
+    background-color: #5ba4cf;
+    display: inline-block;
+    border-radius: 20px;
+    position: relative;
+}
+
+.title-text {
+    color: white;
+    position: absolute;
+    bottom: 50px;
+    left: 20px;
+}
+
+.desc-text {
+    color: white;
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+}

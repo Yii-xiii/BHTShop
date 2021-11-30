@@ -237,7 +237,7 @@ class Api {
 	login = (username, password) => {
 		//403 : wrong username or password
 		let data = this.post(`users/login`, {username, password});
-		if (data["errorCode"] != 403) {
+		if (data["errorCode"] !== 403) {
 			const cookies = data["cookies"]
 			Cookies.set("user",cookies["user"])
 			Cookies.set("username",cookies["username"])
@@ -248,7 +248,7 @@ class Api {
 	logout = () => {
 		//403 : user is not logged in
 		let data = this.post(`users/logout`);
-		if (data["errorCode"] != 403) {
+		if (data["errorCode"] !== 403) {
 			Cookies.remove("user")
 			Cookies.remove("username")
 		}
