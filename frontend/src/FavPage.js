@@ -2,7 +2,7 @@ import React from 'react'
 import NavBar from './Components/NavBar.js'
 import RegLog from './Components/RegLog.js'
 
-const Fav = () => {
+const FavPage = () => {
     return (
         <div>
             <RegLog />
@@ -12,4 +12,4 @@ const Fav = () => {
     )
 }
 
-export default Fav
+export default FavPage
