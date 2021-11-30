@@ -2,18 +2,18 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-	path('current_user/', views.currentUser),
+	path('current_user/', views.current_user),
 
-	path('customers/',views.customerList),
-	path('customers/create/',views.createCustomer),
+	path('customers/',views.customer_list),
+	path('customers/create/',views.create_customer),
 	path('customers/<int:pk>/',views.customer),
-	path('customers/<int:pk>/edit',views.editCustomer),
+	path('customers/<int:pk>/edit',views.edit_customer),
 
-	path('sellers/',views.sellerList),
-	path('sellers/create/',views.createSeller),
+	path('sellers/',views.seller_list),
+	path('sellers/create/',views.create_seller),
 	path('sellers/<int:pk>/',views.seller),
-	path('sellers/<int:pk>/edit', views.editSeller),
+	path('sellers/<int:pk>/edit', views.edit_seller),
 
-	path('login/',views.userLogin),
-	path('logout/',views.userLogout),
+	path('login/',views.user_login),
+	path('logout/',views.user_logout),
 ]

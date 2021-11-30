@@ -13,13 +13,13 @@ def returnJson(data=None, errorCode=0, cookie=''):
 	return JsonResponse({'errorCode': errorCode, 'data': data, 'cookie': cookie})
 
 
-def customerList(request):
+def customer_list(request):
 	if request.method == 'GET':
 		customers = Customer.objects.all()
 		return returnJson([dict(customer.body()) for customer in customers])
 
 
-def createCustomer(request):
+def create_customer(request):
 	if request.method == 'POST':
 		data = json.loads(request.body)
 
@@ -42,7 +42,7 @@ def customer(request, pk):
 
 
 @login_required
-def editCustomer(request, pk):
+def edit_customer(request, pk):
 	try:
 		customer = Customer.objects.get(id=pk)
 	except Customer.DoesNotExist:
@@ -68,13 +68,13 @@ def editCustomer(request, pk):
 		return returnJson([dict(customer.body()) for customer in customers])
 
 
-def sellerList(request):
+def seller_list(request):
 	if request.method == 'GET':
 		sellers = Seller.objects.all()
 		return returnJson([dict(seller.body()) for seller in sellers])
 
 
-def createSeller(request):
+def create_seller(request):
 	if request.method == 'POST':
 		data = json.loads(request.body)
 
@@ -97,7 +97,7 @@ def seller(request, pk):
 
 
 @login_required
-def editSeller(request, pk):
+def edit_seller(request, pk):
 	try:
 		seller = Seller.objects.get(id=pk)
 	except Seller.DoesNotExist:
@@ -124,7 +124,7 @@ def editSeller(request, pk):
 
 
 
-def userLogin(request):
+def user_login(request):
 	data = json.loads(request.body)
 
 	username = data["username"]
@@ -146,7 +146,7 @@ def userLogin(request):
 		return returnJson([], 403)
 
 
-def userLogout(request):
+def user_logout(request):
 	if request.user.is_authenticated:
 		logout(request)
 		return returnJson([])
@@ -155,7 +155,7 @@ def userLogout(request):
 
 
 @login_required
-def currentUser(request):
+def current_user(request):
 	username = request.user.username
 
 	try:
