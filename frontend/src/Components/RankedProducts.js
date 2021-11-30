@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import './RankedProducts.css'
 import api from './Api'
 import Products from './Products'
+import HorizontalScroll from 'react-scroll-horizontal'
 
 const RankedProducts = () => {
     // Initializing
@@ -29,10 +30,16 @@ const RankedProducts = () => {
         <div className='ranked-box'>
             <h1>销量排名</h1>
             
-            <div className='ranked-show-box'>
-                {products.length > 0 ? <Products products={ products }/>
-                : console.log('No product founds.')}
-            </div>
+            <HorizontalScroll 
+                pageLock={true} 
+                reverseScroll={false}
+                style={{width: `100%`, height: `300px`}}>
+
+                <div className='ranked-show-box'>
+                    {products.length > 0 ? <Products products={ products }/>
+                    : console.log('No product founds.')}
+                </div>
+            </HorizontalScroll>
         </div>
     )
 }
