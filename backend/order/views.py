@@ -49,17 +49,15 @@ def createOrder(request):
 	if request.COOKIES["user"] != "Customer":
 		return returnJson([],403)
 
-	try:
-		customer = Customer.objects.get(username=request.COOKIES["username"])
-	except Customer.DoesNotExist:
-		return returnJson([],404)
+	customer = Customer.objects.get(username=request.COOKIES["username"])
+
+	data = json.loads(request.body)
 
 	try:
-		product = Product.objects.get(id=productId)
+		product = Product.objects.get(id=data["productId"])
 	except Product.DoesNotExist:
 		return returnJson([],404)
 
-	data = json.loads(request.body)
 	order = Order.objects.create()
 	order.quantity = data["quantity"]
 	order.totalPrice = data["totalPrice"]
