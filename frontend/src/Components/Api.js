@@ -48,238 +48,238 @@ class Api {
 	}	
 
 	//Product CRUD
-	getProductList = () => {
-		let data = this.get(`/products/`);
-		return data["data"];
+	getProductList = async () => {
+		let data = await this.get(`/products/`);
+		return data;
 	}
 
-	getProductListByPage = (pageNum) => { 
+	getProductListByPage = async (pageNum) => { 
 		//10 per page
-		let data = this.get(`/products/pages/${pageNum}`);
+		let data = await this.get(`/products/pages/${pageNum}`);
 		return data;
 	}
 
-	getLastestProductListByPageNum = (pageNum) => { 
+	getLastestProductListByPageNum = async (pageNum) => { 
 		//10 per page
-		let data = this.get(`/products/latest/pages/${pageNum}`);
+		let data = await this.get(`/products/latest/pages/${pageNum}`);
 		return data;
 	}
 
-	getProduct = (id) => {
+	getProduct = async (id) => {
 		//404 : product not found
-		let data = this.get(`/products/${id}/`);
+		let data = await this.get(`/products/${id}/`);
 		return data;
 	}
 
-	createProduct = (title, description) => {
+	createProduct = async (title, description) => {
 		//login required
 		//403 : user is not a seller
-		let data = this.post(`/products/create/`,{title, description});
+		let data = await this.post(`/products/create/`,{title, description});
 		return data;
 	}
 
-	updateProduct = (id,title, description) => {
-		//login required
-		//404 : product not found
-		//403 : user is not a seller
-		let data = this.put(`/products/${id}/edit/`,{title, description});
-		return data;
-	}
-
-	deleteProduct = (id) => {
+	updateProduct = async (id,title, description) => {
 		//login required
 		//404 : product not found
 		//403 : user is not a seller
-		let data = this.delete(`/products/${id}/edit/`);
+		let data = await this.put(`/products/${id}/edit/`,{title, description});
+		return data;
+	}
+
+	deleteProduct = async (id) => {
+		//login required
+		//404 : product not found
+		//403 : user is not a seller
+		let data = await this.delete(`/products/${id}/edit/`);
 		return data;
 	}
 
 	//ProductSpec CRUD
-	getProductSpecList = (productId) => {
-		let data = this.get(`/products/${productId}/specs`);
+	getProductSpecList = async (productId) => {
+		let data = await this.get(`/products/${productId}/specs`);
 		return data;
 	}
 
-	getProductSpecListByPageNum = (productId,pageNum) => { //10 per page
-		let data = this.get(`/products/${productId}/specs/pages/${pageNum}`);
+	getProductSpecListByPageNum = async (productId,pageNum) => { //10 per page
+		let data = await this.get(`/products/${productId}/specs/pages/${pageNum}`);
 		return data;
 	}
 
-	getLastestProductSpecListByPageNum = (productId,pageNum) => { //10 per page
-		let data = this.get(`/products/${productId}/specs/latest/pages/${pageNum}`);
+	getLastestProductSpecListByPageNum = async (productId,pageNum) => { //10 per page
+		let data = await this.get(`/products/${productId}/specs/latest/pages/${pageNum}`);
 		return data;
 	}
 
-	getProductSpec = (productId,specId) => {
+	getProductSpec = async (productId,specId) => {
 		//404 : product spec not found
-		let data = this.get(`/products/${productId}/specs/${specId}/`);
+		let data = await this.get(`/products/${productId}/specs/${specId}/`);
 		return data;
 	}
 
-	createProductSpec = (productId, description, price, stock) => {
+	createProductSpec = async (productId, description, price, stock) => {
 		//login required
 		//404 : product not found
 		//403 : user is not a seller
-		let data = this.post(`/products/${productId}/specs/create/`,{description, price, stock});
+		let data = await this.post(`/products/${productId}/specs/create/`,{description, price, stock});
 		return data;
 	}
 
-	updateProductSpec = (productId, specId, description, price, stock) => {
+	updateProductSpec = async (productId, specId, description, price, stock) => {
 		//login required
 		//404 : product spec not found
 		//403 : user is not a seller
-		let data = this.put(`/products/${productId}/specs/${specId}/edit/`,{description, price, stock});
+		let data = await this.put(`/products/${productId}/specs/${specId}/edit/`,{description, price, stock});
 		return data;
 	}
 
-	deleteProductSpec = (productId, specId) => {
+	deleteProductSpec = async (productId, specId) => {
 		//login required
 		//404 : product spec not found
 		//403 : user is not a seller
-		let data = this.delete(`/products/${productId}/specs/${specId}/edit/`);
+		let data = await this.delete(`/products/${productId}/specs/${specId}/edit/`);
 		return data;
 	}
 
 
 	//ProductImage CRUD
-	getProductImageList = (productId) => {
-		let data = this.get(`/products/${productId}/images`);
+	getProductImageList = async (productId) => {
+		let data = await this.get(`/products/${productId}/images`);
 		return data;
 	}
 
-	getProductImage = (productId,imageId) => {
+	getProductImage = async (productId,imageId) => {
 		//404 : product image not found
-		let data = this.get(`/products/${productId}/images/${imageId}/`);
+		let data = await this.get(`/products/${productId}/images/${imageId}/`);
 		return data;
 	}
 
-	createProductImage = (productId, form) => {
+	createProductImage = async (productId, form) => {
 		//login required
 		//404 : product not found
 		//403 : user is not a seller
-		let data = this.post(`/products/${productId}/images/create/`,{form});
+		let data = await this.post(`/products/${productId}/images/create/`,{form});
 		return data;
 	}
 
-	updateProductImage = (productId, imageId, form) => {
+	updateProductImage = async (productId, imageId, form) => {
 		//login required
 		//404 : product image not found
 		//403 : user is not a seller
-		let data = this.put(`/products/${productId}/images/${imageId}/edit/`,{form});
+		let data = await this.put(`/products/${productId}/images/${imageId}/edit/`,{form});
 		return data;
 	}
 
-	deleteProductImage = (productId, imageId) => {
+	deleteProductImage = async (productId, imageId) => {
 		//login required
 		//404 : product image not found
 		//403 : user is not a seller
-		let data = this.delete(`/products/${productId}/images/${imageId}/edit/`);
+		let data = await this.delete(`/products/${productId}/images/${imageId}/edit/`);
 		return data;
 	}
 
 	//Order CRUD
-	getProductOrderListByPage = (productId,pageNum) => {
-		let data = this.get(`/orders/products/${productId}/pages/${pageNum}`);
+	getProductOrderListByPage = async (productId,pageNum) => {
+		let data = await this.get(`/orders/products/${productId}/pages/${pageNum}`);
 		return data;
 	}
 
-	getCustomerOrderListByPage = (customerId,pageNum) => {
-		let data = this.get(`/orders/customers/${customerId}/pages/${pageNum}`);
+	getCustomerOrderListByPage = async (customerId,pageNum) => {
+		let data = await this.get(`/orders/customers/${customerId}/pages/${pageNum}`);
 		return data;
 	}
 
-	getOrder = (orderId) => {
+	getOrder = async (orderId) => {
 		//login required
 		//404 : order not found
 		//403 : user is neither order.customer nor order.seller
-		let data = this.get(`/orders/${orderId}/`);
+		let data = await this.get(`/orders/${orderId}/`);
 		return data;
 	}
 
-	createOrder = (productId, quantity, totalPrice, address, phoneNumber) => {
+	createOrder = async (productId, quantity, totalPrice, address, phoneNumber) => {
 		//login required
 		//404 : product not found
 		//403 : user is not a customer
-		let data = this.post(`/orders/create/`,{productId, quantity, totalPrice, address, phoneNumber});
+		let data = await this.post(`/orders/create/`,{productId, quantity, totalPrice, address, phoneNumber});
 		return data;
 	}
 
-	updateOrder = (orderId, quantity, totalPrice, address, phoneNumber) => {
+	updateOrder = async (orderId, quantity, totalPrice, address, phoneNumber) => {
 		//login required
 		//404 : order not found
 		//403 : user is not order.customer
-		let data = this.put(`/orders/${orderId}/edit/`,{quantity, totalPrice, address, phoneNumber});
+		let data = await this.put(`/orders/${orderId}/edit/`,{quantity, totalPrice, address, phoneNumber});
 		return data;
 	}
 
-	deleteOrder = (orderId) => {
+	deleteOrder = async (orderId) => {
 		//login required
 		//404 : order not found
 		//403 : user is not order.customer
-		let data = this.delete(`/orders/${orderId}/edit/`);
+		let data = await this.delete(`/orders/${orderId}/edit/`);
 		return data;
 	}
 
 	//Customer CRUD
-	getCustomer = (id) => {
+	getCustomer = async (id) => {
 		//404 : customer not found
-		let data = this.get(`/users/customers/${id}/`);
+		let data = await this.get(`/users/customers/${id}/`);
 		return data;
 	}
 
-	createCustomer = (username, password, phoneNumber, address) => {
-		let data = this.post(`/users/customers/create/`,{username, password, phoneNumber, address});
+	createCustomer = async (username, password, phoneNumber, address) => {
+		let data = await this.post(`/users/customers/create/`,{username, password, phoneNumber, address});
 		return data;
 	}
 
-	updateCustomer = (id,username, password, phoneNumber, address) => {
+	updateCustomer = async (id,username, password, phoneNumber, address) => {
 		//login required
 		//404 : customer not found
 		//403 : editing other customer info
-		let data = this.put(`/users/customers/${id}/edit`,{username, password, phoneNumber, address});
+		let data = await this.put(`/users/customers/${id}/edit`,{username, password, phoneNumber, address});
 		return data;
 	}
 
-	deleteCustomer = (id) => {
+	deleteCustomer = async (id) => {
 		//login required
 		//404 : customer not found
 		//403 : editing other customer info
-		let data = this.delete(`/users/customers/${id}/edit`);
+		let data = await this.delete(`/users/customers/${id}/edit`);
 		return data;
 	}
 
 	//Seller CRUD
-	getSeller = (id) => {
+	getSeller = async (id) => {
 		//404 : seller not found
-		let data = this.get(`/users/sellers/${id}/`);
+		let data = await this.get(`/users/sellers/${id}/`);
 		return data;
 	}
 
-	createSeller = (username, password, phoneNumber, address) => {
-		let data = this.post(`/users/sellers/create/`,{username, password, phoneNumber, address});
+	createSeller = async (username, password, phoneNumber, address) => {
+		let data = await this.post(`/users/sellers/create/`,{username, password, phoneNumber, address});
 		return data;
 	}
 
-	updateSeller = (id,username, password, phoneNumber, address) => {
+	updateSeller = async (id,username, password, phoneNumber, address) => {
 		//login required
 		//404 : seller not found
 		//403 : editing other seller info
-		let data = this.put(`/users/sellers/${id}/edit/`,{username, password, phoneNumber, address});
+		let data = await this.put(`/users/sellers/${id}/edit/`,{username, password, phoneNumber, address});
 		return data;
 	}
 
-	deleteSeller = (id) => {
+	deleteSeller = async (id) => {
 		//login required
 		//404 : seller not found
 		//403 : editing other seller info
-		let data = this.delete(`/users/sellers/${id}/edit/`);
+		let data = await this.delete(`/users/sellers/${id}/edit/`);
 		return data;
 	}
 
 	//login logout
-	login = (username, password) => {
+	login = async (username, password) => {
 		//403 : wrong username or password
-		let data = this.post(`users/login`, {username, password});
+		let data = await this.post(`users/login`, {username, password});
 		if (data["errorCode"] !== 403) {
 			const cookies = data["cookies"]
 			Cookies.set("user",cookies["user"])
@@ -288,9 +288,9 @@ class Api {
 		return data;
 	}
 
-	logout = () => {
+	logout = async () => {
 		//403 : user is not logged in
-		let data = this.post(`users/logout`);
+		let data = await this.post(`users/logout`);
 		if (data["errorCode"] !== 403) {
 			Cookies.remove("user")
 			Cookies.remove("username")
