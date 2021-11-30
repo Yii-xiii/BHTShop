@@ -40,7 +40,7 @@ def customer(request, pk):
 
 
 @login_required
-def edit_customer(request, pk):
+def editCustomer(request, pk):
 	try:
 		customer = Customer.objects.get(id=pk)
 	except Customer.DoesNotExist:
@@ -133,11 +133,11 @@ def userLogin(request):
 		login(request, user)
 		try:
 			seller = Seller.objects.get(username = username)
-			return returnJson([dict(seller.body)], 0, {'user' : 'Seller', 'Username' : username})
+			return returnJson([dict(seller.body)], 0, {'user' : 'Seller', 'username' : username})
 		except Seller.DoesNotExist:
 			try : 
 				customer = Customer.objects.get(username = username)
-				return returnJson([dict(customer.body)], 0, {'user' : 'Customer', 'Username' : username})
+				return returnJson([dict(customer.body)], 0, {'user' : 'Customer', 'username' : username})
 			except Customer.DoesNotExist:
 				return returnJson([],403)
 	else:

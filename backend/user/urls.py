@@ -7,6 +7,7 @@ urlpatterns = [
 	path('customers/',views.customerList),
 	path('customers/create/',views.createCustomer),
 	path('customers/<int:pk>/',views.customer),
+	path('customers/<int:pk>/edit',views.editCustomer),
 
 	path('sellers/',views.sellerList),
 	path('sellers/create/',views.createSeller),
