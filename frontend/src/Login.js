@@ -1,14 +1,9 @@
 import React from 'react'
-import NavBar from './NavBar'
-import RegLog from './RegLog'
 import './Login.css'
 
 const Login = () => {
     return (
         <div className='login'>
-            <RegLog />
-            <NavBar />
-
             <div className='login-whole-box'>
                 <form className='login-box'>
                     <h1 className='form-head'>注册 / 登录</h1>
