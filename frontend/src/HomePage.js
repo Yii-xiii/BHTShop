@@ -2,7 +2,7 @@ import React from 'react'
 import RankedProducts from './Components/RankedProducts.js'
 import RandomProducts from './Components/RandomProducts.js'
 
-const Home = () => {
+const HomePage = () => {
     return (
         <div>
             <RankedProducts />
@@ -11,4 +11,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default HomePage

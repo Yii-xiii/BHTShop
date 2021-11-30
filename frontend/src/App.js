@@ -1,8 +1,8 @@
 import './App.css';
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Login from './Login'
-import Home from './Home'
+import LoginPage from './LoginPage'
+import HomePage from './HomePage'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
 import FavPage from './FavPage'
@@ -15,8 +15,8 @@ function App() {
         <Header />
 
         <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/login' element={<Login />}/>
+          <Route path='/' element={<HomePage/>}/>
+          <Route path='/login' element={<LoginPage />}/>
           <Route path='/fav' element={<FavPage />}/>
           <Route path='/cart' element={<CartPage />}/>
         </Routes>
