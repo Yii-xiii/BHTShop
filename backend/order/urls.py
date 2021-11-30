@@ -2,12 +2,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-	path('',views.getOrderList),
-	path('pages/<int:pageNum>',views.getLatestOrderListByPage),
-	path('customers/<int:customerId>/pages/<int:pageNum>',views.getLatestCustomerOrderListByPage),
-	path('products/<int:productId>/pages/<int:pageNum>',views.getLatestProductOrderListByPage),
+	path('',views.get_order_list),
+	path('pages/<int:pageNum>',views.get_latest_order_list_by_page),
+	path('customers/<int:customerId>/pages/<int:pageNum>',views.get_latest_customer_order_list_by_page),
+	path('products/<int:productId>/pages/<int:pageNum>',views.get_latest_product_order_list_by_page),
 	
-	path('create',views.createOrder),
-	path('<int:orderId>',views.getOrder),
-	path('<int:orderId>/edit',views.editOrder),
+	path('create',views.create_order),
+	path('<int:orderId>',views.get_order),
+	path('<int:orderId>/edit',views.edit_order),
 ]

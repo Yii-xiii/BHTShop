@@ -29,6 +29,10 @@ def latest_product_list(request):
 	products = Product.objects.all().order_by('-id')
 	return returnJson([dict(product.body()) for product in products])
 
+def best_selling_product_list(request):
+	products = Product.objects.all().order_by('-soldAmount')[:10]
+	return returnJson([dict(product.body()) for product in products])
+
 
 def latest_product_list_by_page(request, pageNum):
 	products = Product.objects.all().order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]

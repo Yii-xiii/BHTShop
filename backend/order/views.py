@@ -14,17 +14,17 @@ def returnJson(data=None, errorCode=0):
 	return JsonResponse({'errorCode': errorCode, 'data': data})
 
 
-def getOrderList(request):
+def get_order_list(request):
 	orders = Order.objects.all()
 	return returnJson([dict(order.body()) for order in orders])
 
 
-def getLatestOrderListByPage(request, pageNum):
+def get_latest_order_list_by_page(request, pageNum):
 	orders = Order.objects.all().order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(order.body()) for order in orders])
 
 
-def getLatestCustomerOrderListByPage(request, customerId, pageNum):
+def get_latest_customer_order_list_by_page(request, customerId, pageNum):
 	try:
 		customer = Customer.objects.get(id=customerId)
 	except Customer.DoesNotExist:
@@ -34,7 +34,7 @@ def getLatestCustomerOrderListByPage(request, customerId, pageNum):
 	return returnJson([dict(order.body()) for order in orders])
 
 
-def getLatestProductOrderListByPage(request, productId, pageNum):
+def get_latest_product_order_list_by_page(request, productId, pageNum):
 	try:
 		product = Product.objects.get(id=productId)
 	except Product.DoesNotExist:
@@ -45,7 +45,7 @@ def getLatestProductOrderListByPage(request, productId, pageNum):
 
 
 @login_required
-def createOrder(request):
+def create_order(request):
 	if request.COOKIES["user"] != "Customer":
 		return returnJson([],403)
 
@@ -73,7 +73,7 @@ def createOrder(request):
 	return returnJson([dict(order.body())])
 
 @login_required
-def getOrder(request,orderId):
+def get_order(request,orderId):
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
@@ -85,7 +85,7 @@ def getOrder(request,orderId):
 	return returnJson([dict(order.body())])
 
 @login_required
-def editOrder(request,orderId):
+def edit_order(request,orderId):
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:

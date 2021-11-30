@@ -18,6 +18,7 @@ class Product(models.Model):
                 'seller' : self.seller.body(),
                 'title': self.title,
                 'description': self.description,
+                'soldAmount': self.soldAmount,
                 }
 
 
