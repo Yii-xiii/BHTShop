@@ -1,8 +1,8 @@
 import React from 'react'
-import NavBar from './NavBar'
-import RankedProducts from './RankedProducts'
-import RandomProducts from './RandomProducts.js'
-import RegLog from './RegLog'
+import NavBar from './Components/NavBar.js'
+import RegLog from './Components/RegLog.js'
+import RankedProducts from './Components/RankedProducts.js'
+import RandomProducts from './Components/RandomProducts.js'
 
 const Home = () => {
     return (
