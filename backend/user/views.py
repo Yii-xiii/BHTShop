@@ -7,7 +7,9 @@ import json
 
 
 # Create your views here.
-def returnJson(data=[], errorCode=0, cookie=''):
+def returnJson(data=None, errorCode=0, cookie=''):
+	if data is None:
+		data = []
 	return JsonResponse({'errorCode': errorCode, 'data': data, 'cookie': cookie})
 
 

@@ -177,6 +177,49 @@ class Api {
 		return data;
 	}
 
+	//Order CRUD
+	getProductOrderListByPage = (productId,pageNum) => {
+		let data = this.get(`/orders/products/${productId}/pages/${pageNum}`);
+		return data;
+	}
+
+	getCustomerOrderListByPage = (customerId,pageNum) => {
+		let data = this.get(`/orders/customers/${customerId}/pages/${pageNum}`);
+		return data;
+	}
+
+	getOrder = (orderId) => {
+		//login required
+		//404 : order not found
+		//403 : user is neither order.customer nor order.seller
+		let data = this.get(`/orders/${orderId}/`);
+		return data;
+	}
+
+	createOrder = (productId, quantity, totalPrice, address, phoneNumber) => {
+		//login required
+		//404 : product not found
+		//403 : user is not a customer
+		let data = this.post(`/orders/create/`,{productId, quantity, totalPrice, address, phoneNumber});
+		return data;
+	}
+
+	updateOrder = (orderId, quantity, totalPrice, address, phoneNumber) => {
+		//login required
+		//404 : order not found
+		//403 : user is not order.customer
+		let data = this.put(`/orders/${orderId}/edit/`,{quantity, totalPrice, address, phoneNumber});
+		return data;
+	}
+
+	deleteOrder = (orderId) => {
+		//login required
+		//404 : order not found
+		//403 : user is not order.customer
+		let data = this.delete(`/orders/${orderId}/edit/`);
+		return data;
+	}
+
 	//Customer CRUD
 	getCustomer = (id) => {
 		//404 : customer not found
