@@ -19,4 +19,12 @@ urlpatterns = [
     path('<int:pk>/specs/<int:pk_spec>', views.product_spec),
     path('<int:pk>/specs/<int:pk_spec>/edit', views.edit_product_spec),
     path('<int:pk>/specs/create/', views.create_product_spec),
+
+    path('<int:pk>/images/', views.product_image_list),
+
+    path('<int:pk>/images/<int:pk_image>', views.product_image),
+    path('<int:pk>/images/<int:pk_image>/edit', views.edit_product_image),
+    path('<int:pk>/images/create/', views.create_product_image),
+
+    # path('<int:pk>/images/<int:pk_image>/delete/', views.delete_image),
 ]

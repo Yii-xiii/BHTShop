@@ -36,3 +36,17 @@ class ProductSpec(models.Model):
                 'description': self.description,
                 'price': self.price,
                 'stock': self.stock}
+
+
+class ProductImage(models.Model):
+    image = models.ImageField(upload_to="product_images",null = False, blank = False)
+    product = models.ForeignKey(Product, on_delete = models.CASCADE, null = False)
+
+    def __str__(self):
+        return self.product.title + " image"
+
+    def body(self):
+        return {'id': self.id,
+                'product': self.product.body(),
+                'image_relative_path': self.image.name,
+                'image_absolute_path': self.image.path}
