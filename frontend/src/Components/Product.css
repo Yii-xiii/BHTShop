@@ -24,8 +24,12 @@
 }
 
 .desc-text {
+    max-width: 80%;
+    display: inline-block;
     color: white;
     position: absolute;
+    overflow: hidden;
     bottom: 25px;
     left: 20px;
+    text-overflow: ellipsis;
 }
