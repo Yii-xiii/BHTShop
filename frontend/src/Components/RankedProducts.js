@@ -32,7 +32,7 @@ const RankedProducts = () => {
             
             <HorizontalScroll 
                 pageLock={true} 
-                reverseScroll={false}
+                reverseScroll={true}
                 style={{width: `100%`, height: `300px`}}>
 
                 <div className='ranked-show-box'>
