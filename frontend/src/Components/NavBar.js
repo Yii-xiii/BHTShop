@@ -1,11 +1,14 @@
 import React from 'react'
-import SearchIcon from '@material-ui/icons/Search'
 import './NavBar.css'
 import Logo from './Logo.png'
 import Operate from './Operate'
 import {Link} from 'react-router-dom'
+import Search from './Search'
 
 const NavBar = () => {
+    // const { search } = window.location
+    // const query = new URLSearchParams(search).get('s')
+
     return (
         <header>
             <nav className='navbar'>
@@ -13,12 +16,7 @@ const NavBar = () => {
                     <img className='navbar-logo' src={Logo} alt='logo'/>
                 </Link>
 
-                <div className='navbar-search'>
-                    <form className='navbar-search'>
-                        <input type='text' className='navbar-search-input' placeholder='搜索'/>
-                        <button type='submit' className='navbar-search-button'><SearchIcon className='navbar-search-icon' /></button>
-                    </form>
-                </div>
+                <Search />
 
                 <div>
                     <Operate className='operate-box'/>
