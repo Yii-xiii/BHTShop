@@ -1,6 +1,7 @@
 .div-reglog {
     overflow: auto;
     margin-right: 10px;
+    min-width: 840px;
 }
 
 .btn {

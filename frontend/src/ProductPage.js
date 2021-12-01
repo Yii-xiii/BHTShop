@@ -1,12 +1,16 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
+import ProductMainInfo from './Components/ProductMainInfo'
+import './ProductPage.css'
 
 const ProductPage = () => {
-    const { id } = useParams()
+    const { productId } = useParams()
 
     return (
-        <div>
-            <h1>TODO Item:{id} Page</h1>
+        <div className='product-page-box'>
+            <ProductMainInfo productId={ productId }/>
+
+            <h1>TODO Item:{ productId } Descriptions</h1>
         </div>
     )
 }

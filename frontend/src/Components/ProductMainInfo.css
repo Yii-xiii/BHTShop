@@ -1,0 +1,28 @@
+.main-info-box {
+    background-color: #fff;
+    border-radius: 30px;
+    overflow-y: auto;
+    margin: 50px;
+    max-height: 500px;
+    min-width: 300px;
+}
+
+.main-info-show-box {
+    width: 100%;
+    height: 250px;
+    display: inline-flex;
+}
+
+.main-info-name-box {
+    
+}
+
+.main-info-photo-box {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(lightgrey, transparent);
+    background-color: grey;
+    display: inline-block;
+    border-radius: 20px;
+    position: relative;
+}
