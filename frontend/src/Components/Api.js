@@ -60,13 +60,13 @@ class Api {
 
 	getProductListByPage = async (pageNum) => { 
 		//10 per page
-		let data = await this.get(`/products/pages/${pageNum}`);
+		let data = await this.get(`/products/pages/${pageNum}/`);
 		return data;
 	}
 
 	getLastestProductListByPageNum = async (pageNum) => { 
 		//10 per page
-		let data = await this.get(`/products/latest/pages/${pageNum}`);
+		let data = await this.get(`/products/latest/pages/${pageNum}/`);
 		return data;
 	}
 
@@ -101,17 +101,17 @@ class Api {
 
 	//ProductSpec CRUD
 	getProductSpecList = async (productId) => {
-		let data = await this.get(`/products/${productId}/specs`);
+		let data = await this.get(`/products/${productId}/specs/`);
 		return data;
 	}
 
 	getProductSpecListByPageNum = async (productId,pageNum) => { //10 per page
-		let data = await this.get(`/products/${productId}/specs/pages/${pageNum}`);
+		let data = await this.get(`/products/${productId}/specs/pages/${pageNum}/`);
 		return data;
 	}
 
 	getLastestProductSpecListByPageNum = async (productId,pageNum) => { //10 per page
-		let data = await this.get(`/products/${productId}/specs/latest/pages/${pageNum}`);
+		let data = await this.get(`/products/${productId}/specs/latest/pages/${pageNum}/`);
 		return data;
 	}
 
@@ -148,7 +148,7 @@ class Api {
 
 	//ProductImage CRUD
 	getProductImageList = async (productId) => {
-		let data = await this.get(`/products/${productId}/images`);
+		let data = await this.get(`/products/${productId}/images/`);
 		return data;
 	}
 
@@ -191,37 +191,37 @@ class Api {
 	//Product Comment CRUD
 	getProductCommentList = async (productId) => {
 		//404 : product not found
-		let data = await this.get(`comments/products/${productId}`);
+		let data = await this.get(`comments/products/${productId}/`);
 		return data;
 	}
 
 	getProductCommentListByPage = async (productId,pageNum) => {
 		//404 : product not found
-		let data = await this.get(`comments/products/${productId}/pages/${pageNum}`);
+		let data = await this.get(`comments/products/${productId}/pages/${pageNum}/`);
 		return data;
 	}
 
 	getLatestProductCommentList = async (productId) => {
 		//404 : product not found
-		let data = await this.get(`comments/products/${productId}/latest`);
+		let data = await this.get(`comments/products/${productId}/latest/`);
 		return data;
 	}
 
 	getLatestProductCommentListByPage = async (productId,pageNum) => {
 		//404 : product not found
-		let data = await this.get(`comments/products/${productId}/latest/pages/${pageNum}`);
+		let data = await this.get(`comments/products/${productId}/latest/pages/${pageNum}/`);
 		return data;
 	}
 
 	getOrderComment = async (orderId) => {
 		//404 : order not found
-		let data = await this.get(`comments/orders/${orderId}`);
+		let data = await this.get(`comments/orders/${orderId}/`);
 		return data;
 	}
 
 	getProductComment = async (commentId) => {
 		//404 : comment not found
-		let data = await this.get(`comments/${commentId}`);
+		let data = await this.get(`comments/${commentId}/`);
 		return data;
 	}
 
@@ -252,12 +252,12 @@ class Api {
 
 	//Order CRUD
 	getProductOrderListByPage = async (productId,pageNum) => {
-		let data = await this.get(`/orders/products/${productId}/pages/${pageNum}`);
+		let data = await this.get(`/orders/products/${productId}/pages/${pageNum}/`);
 		return data;
 	}
 
 	getCustomerOrderListByPage = async (customerId,pageNum) => {
-		let data = await this.get(`/orders/customers/${customerId}/pages/${pageNum}`);
+		let data = await this.get(`/orders/customers/${customerId}/pages/${pageNum}/`);
 		return data;
 	}
 
@@ -296,20 +296,20 @@ class Api {
 	//OrderStatus CRUD
 	getLatestOrderStatusList = async (orderId) => {
 		//404 : order not found
-		let data = await this.get(`/orders/${orderId}/statuses/latest_list`);
+		let data = await this.get(`/orders/${orderId}/statuses/latest_list/`);
 		return data;
 	}
 
 	getLatestOrderStatus = async (orderId) => {
 		//404 : order not found
-		let data = await this.get(`/orders/${orderId}/statuses/latest`);
+		let data = await this.get(`/orders/${orderId}/statuses/latest/`);
 		return data;
 	}
 
 	getOrderStatus = async (orderId,statusId) => {
 		//login required
 		//404 : status not found
-		let data = await this.get(`/orders/${orderId}/statuses/${statusId}`);
+		let data = await this.get(`/orders/${orderId}/statuses/${statusId}/`);
 		return data;
 	}
 
@@ -353,7 +353,7 @@ class Api {
 		//login required
 		//404 : customer not found
 		//403 : editing other customer info
-		let data = await this.put(`/users/customers/${id}/edit`,{username, password, phoneNumber, address});
+		let data = await this.put(`/users/customers/${id}/edit/`,{username, password, phoneNumber, address});
 		return data;
 	}
 
@@ -361,7 +361,7 @@ class Api {
 		//login required
 		//404 : customer not found
 		//403 : editing other customer info
-		let data = await this.delete(`/users/customers/${id}/edit`);
+		let data = await this.delete(`/users/customers/${id}/edit/`);
 		return data;
 	}
 
@@ -396,7 +396,7 @@ class Api {
 	//login logout
 	login = async (username, password) => {
 		//403 : wrong username or password
-		let data = await this.post(`users/login`, {username, password});
+		let data = await this.post(`users/login/`, {username, password});
 		if (data["errorCode"] !== 403) {
 			const cookies = data["cookies"]
 			Cookies.set("user",cookies["user"])
@@ -408,7 +408,7 @@ class Api {
 
 	logout = async () => {
 		//403 : user is not logged in
-		let data = await this.post(`users/logout`);
+		let data = await this.post(`users/logout/`);
 		if (data["errorCode"] !== 403) {
 			Cookies.remove("user")
 			Cookies.remove("username")
