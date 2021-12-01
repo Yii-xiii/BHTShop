@@ -10,8 +10,8 @@ const Product = ({ product }) => {
     // Fetch data from database
     const fetchImages = async() => {
         const data = await api.getFirstProductImage(product.id)
-        
-        return data
+
+        return data.errorCode === '404' ? (console.log('image not found')) : data.data[0]
     }
 
     // Importing data
@@ -29,7 +29,7 @@ const Product = ({ product }) => {
             {product.title.length > 0 ? (
                 <Link to='/'>
                     <div className='product-box'>
-                        
+                        <img src={ image? image.image_absolute_path : ''}/>
                         <h3 className='title-text'>{product.title}</h3>
                         <h5 className='desc-text'>{product.description}</h5>
                     </div>
