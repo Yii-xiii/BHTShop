@@ -1,4 +1,4 @@
-import {useState, useEffect, useParams} from 'react'
+import {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import './Product.css'
 import api from './Api'
