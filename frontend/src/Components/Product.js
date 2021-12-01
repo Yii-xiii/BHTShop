@@ -27,11 +27,14 @@ const Product = ({ product }) => {
     const path = `/product/${product.id}`
 
     return (
-        <div>
+        <div className='product-out-box'>
             {product.title.length > 0 ? (
                 <Link to={path}>
                     <div className='product-box'>
-                        <img src={ image? image.image_url : ''} alt='img'/>
+                        <div className='image-box'>
+                            <img src={ image? image.image_url : '0'} alt='img'/>
+                        </div>
+
                         <h3 className='title-text'>{product.title}</h3>
                         <h5 className='desc-text'>{product.description}</h5>
                     </div>

@@ -1,35 +1,53 @@
+.product-out-box {
+    height: 330px;
+}
+
 .product-box {
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     margin-right: 50px;
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 230px;
     background: linear-gradient(lightblue, transparent);
     background-color: #5ba4cf;
     display: inline-block;
     border-radius: 20px;
     position: relative;
+    box-shadow: 2px 2px grey;
+}
+
+.image-box {
+    position: relative;
+    width: 200px;
+    height: 230px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.image-box img {
+    position: absolute;
+    min-width: 100%;
 }
 
 .title-text {
     max-width: 80%;
     display: inline-block;
-    color: white;
+    color: black;
     font-size: 18px;
     position: absolute;
     overflow: hidden;
-    bottom: 50px;
-    left: 20px;
+    bottom: -40px;
+    left: 15px;
     text-overflow: ellipsis;
 }
 
 .desc-text {
     max-width: 80%;
     display: inline-block;
-    color: white;
+    color: black;
     position: absolute;
     overflow: hidden;
-    bottom: 25px;
-    left: 20px;
+    bottom: -65px;
+    left: 15px;
     text-overflow: ellipsis;
 }
