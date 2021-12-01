@@ -396,7 +396,7 @@ class Api {
 	//login logout
 	login = async (username, password) => {
 		//403 : wrong username or password
-		let data = await this.post(`users/login/`, {username, password});
+		let data = await this.post(`/users/login/`, {username, password});
 
 		if (data["errorCode"] !== 403) {
 			const cookies = data["cookies"]
@@ -409,7 +409,7 @@ class Api {
 
 	logout = async () => {
 		//403 : user is not logged in
-		let data = await this.post(`users/logout/`);
+		let data = await this.post(`/users/logout/`);
 		if (data["errorCode"] !== 403) {
 			Cookies.remove("user")
 			Cookies.remove("username")
