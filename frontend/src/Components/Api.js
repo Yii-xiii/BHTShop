@@ -158,6 +158,12 @@ class Api {
 		return data;
 	}
 
+	getFirstProductImage = async (productId) => {
+		//404 : product not found
+		let data = await this.get(`/products/${productId}/images/first/`);
+		return data;
+	}
+
 	createProductImage = async (productId, form) => {
 		//login required
 		//404 : product not found
