@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useParams} from 'react'
 import {Link} from 'react-router-dom'
 import './Product.css'
 import api from './Api'
@@ -27,7 +27,7 @@ const Product = ({ product }) => {
     return (
         <div>
             {product.title.length > 0 ? (
-                <Link to='/'>
+                <Link to='/product/:id'>
                     <div className='product-box'>
                         <img src={ image? image.image_absolute_path : ''} alt='img'/>
                         <h3 className='title-text'>{product.title}</h3>
