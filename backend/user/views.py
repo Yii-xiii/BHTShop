@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Customer, Seller
 from django.http import JsonResponse
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 import json
 
