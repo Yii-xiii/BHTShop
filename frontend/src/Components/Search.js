@@ -10,7 +10,8 @@ const Search = () => {
                     type='text' 
                     className='navbar-search-input' 
                     placeholder='搜索'
-                    id='search-val'/>
+                    id='header-search'
+                    name='s'/>
                 <button type='submit' className='navbar-search-button'><SearchIcon className='navbar-search-icon' /></button>
             </form>
         </div>
