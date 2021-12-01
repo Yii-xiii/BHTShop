@@ -58,7 +58,7 @@ def create_order(request):
 	except Product.DoesNotExist:
 		return returnJson([],404)
 
-	order = Order.objects.create()
+	order = Order.objects.create(customer=customer, product=product)
 	order.quantity = data["quantity"]
 	order.totalPrice = data["totalPrice"]
 	order.address = data["address"]

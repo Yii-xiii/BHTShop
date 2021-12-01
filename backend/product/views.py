@@ -42,12 +42,12 @@ def latest_product_list_by_page(request, pageNum):
 def create_product(request):
 	if request.method == 'POST':
 		if request.COOKIES["user"] == "Seller":
-			product = Product.objects.create()
+			seller = Seller.objects.get(username=request.user.username)
+			product = Product.objects.create(seller=seller)
 			data = json.loads(request.body)
 
 			product.title = data["title"]
 			product.description = data["description"]
-			product.seller = request.user
 			# product.soldAmount = 0
 
 			product.save()
@@ -120,8 +120,7 @@ def create_product_spec(request, pk):
 	except Product.DoesNotExist:
 		return JsonResponse([], 404)
 
-	spec = ProductSpec.objects.create()
-	spec.product = product
+	spec = ProductSpec.objects.create(product=product)
 
 	data = json.loads(request.body)
 	spec.description = data["description"]
