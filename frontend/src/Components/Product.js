@@ -5,21 +5,20 @@ import api from './Api'
 
 const Product = ({ product }) => {
     // Initializing
-    const [images, setImages] = useState([])
+    const [image, setImages] = useState([])
 
     // Fetch data from database
     const fetchImages = async() => {
-        const data = await api.getProductImageList(product.id)
-
-        console.log('images: ' + data)
-        return data.data
+        const data = await api.getFirstProductImage(product.id)
+        
+        return data
     }
 
     // Importing data
     useEffect(() => {
         const getImages = async() => {
-            const productsFromServer = await fetchImages()
-            setImages(productsFromServer)
+            const imageFromServer = await fetchImages()
+            setImages(imageFromServer)
         }
 
         getImages()
@@ -30,8 +29,7 @@ const Product = ({ product }) => {
             {product.title.length > 0 ? (
                 <Link to='/'>
                     <div className='product-box'>
-                        {/* getting first image and output it here*/}
-                        {/* <img src={images[Object.keys(images)[0]]}/> */}
+                        
                         <h3 className='title-text'>{product.title}</h3>
                         <h5 className='desc-text'>{product.description}</h5>
                     </div>
