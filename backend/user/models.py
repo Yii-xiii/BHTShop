@@ -7,8 +7,8 @@ from django.utils import timezone
 # Create your models here.
 
 class Customer(User):
-    address = models.TextField()
-    phoneNumber = models.TextField()
+    address = models.TextField(null=False)
+    phoneNumber = models.TextField(null=False)
 
     def __str__(self):
         return self.username
@@ -22,8 +22,8 @@ class Customer(User):
 
 
 class Seller(User):
-    address = models.TextField()
-    phoneNumber = models.TextField()
+    address = models.TextField(null=False)
+    phoneNumber = models.TextField(null=False)
     joinDate = models.DateField(default=timezone.now)
 
     def __str__(self):

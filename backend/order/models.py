@@ -7,10 +7,10 @@ from django.utils import timezone
 class Order(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
 	customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
-	quantity = models.IntegerField(null=False, blank=False)
-	totalPrice = models.DecimalField(decimal_places=2, max_digits=10)
-	address = models.TextField(blank=True)
-	phoneNumber = models.TextField(blank=True)
+	quantity = models.IntegerField(null=False)
+	totalPrice = models.DecimalField(decimal_places=2, max_digits=10,null=False)
+	address = models.TextField(null=False)
+	phoneNumber = models.TextField(null=False)
 	time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
@@ -40,7 +40,7 @@ class OrderStatus(models.Model):
 
 	order = models.ForeignKey(Order, on_delete=models.CASCADE, null=False)
 	status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=PAID)
-	description = models.TextField()
+	description = models.TextField(null=True)
 	time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):

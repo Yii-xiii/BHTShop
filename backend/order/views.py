@@ -58,15 +58,16 @@ def create_order(request):
 	except Product.DoesNotExist:
 		return returnJson([],404)
 
-	order = Order.objects.create(customer=customer, product=product)
-	order.quantity = data["quantity"]
-	order.totalPrice = data["totalPrice"]
-	order.address = data["address"]
-	if order.address == '':
-		order.address = customer.address
-	order.phoneNumber = data["phoneNumber"]
-	if order.phoneNumber == '':
-		order.phoneNumber = customer.phoneNumber
+	quantity = data["quantity"]
+	totalPrice = data["totalPrice"]
+	address = data["address"]
+	phoneNumber = data["phoneNumber"]
+	if address == '':
+		address = customer.address
+	if phoneNumber == '':
+		phoneNumber = customer.phoneNumber
+
+	order = Order.objects.create(customer=customer, product=product,quantity=quantity,totalPrice=totalPrice,address=address,phoneNumber=phoneNumber)
 	order.save()
 	product.soldAmount += 1
 	status = OrderStatus.objects.create(order=order)
