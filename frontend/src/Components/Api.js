@@ -225,6 +225,50 @@ class Api {
 		return data;
 	}
 
+	//OrderStatus CRUD
+	getLatestOrderStatusList = async (orderId) => {
+		//404 : order not found
+		let data = await this.get(`/orders/${orderId}/statuses/latest_list`);
+		return data;
+	}
+
+	getLatestOrderStatus = async (orderId) => {
+		//404 : order not found
+		let data = await this.get(`/orders/${orderId}/statuses/latest`);
+		return data;
+	}
+
+	getOrderStatus = async (orderId,statusId) => {
+		//login required
+		//404 : status not found
+		let data = await this.get(`/orders/${orderId}/statuses/${statusId}`);
+		return data;
+	}
+
+	createOrderStatus = async (orderId,status, description) => {
+		//login required
+		//404 : order not found
+		//403 : user is not a seller
+		let data = await this.post(`/orders/${orderId}/statuses/create/`,{status, description});
+		return data;
+	}
+
+	updateOrderStatus = async (orderId, statusId, status, description) => {
+		//login required
+		//404 : status not found
+		//403 : user is not order.product.seller
+		let data = await this.put(`/orders/${orderId}/statuses/${statusId}/edit/`,{status, description});
+		return data;
+	}
+
+	deleteOrderStatus = async (orderId, statusId) => {
+		//login required
+		//404 : status not found
+		//403 : user is not order.product.seller
+		let data = await this.delete(`/orders/${orderId}/statuses/${statusId}/edit/`);
+		return data;
+	}
+
 	//Customer CRUD
 	getCustomer = async (id) => {
 		//404 : customer not found

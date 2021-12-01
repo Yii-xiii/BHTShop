@@ -15,7 +15,7 @@ urlpatterns = [
 	path('<int:orderId>/statuses/latest',views.get_latest_order_status),
 	path('<int:orderId>/statuses/latest_list',views.get_latest_order_status_list),
 
-	path('<int:orderId>/create',views.create_order_status),
+	path('<int:orderId>/statuses/create',views.create_order_status),
 	path('<int:orderId>/statuses/<int:statusId>',views.get_order_status),
 	path('<int:orderId>/statuses/<int:statusId>/edit',views.edit_order_status),
 ]
