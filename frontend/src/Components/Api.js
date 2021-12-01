@@ -250,6 +250,121 @@ class Api {
 		return data;
 	}
 
+
+	//Customer Collection CRUD
+	getCustomerCollectionList = async () => {
+		//login required
+		//403 : user is not customer
+		let data = await this.get(`collections/`);
+		return data;
+	}
+
+	getLatestCustomerCollectionList = async () => {
+		//login required
+		//403 : user is not customer
+		let data = await this.get(`collections/latest/`);
+		return data;
+	}
+
+	getLatestCustomerCollectionListByPage = async () => {
+		//login required
+		//403 : user is not customer
+		let data = await this.get(`collections/latest/pages/${pageNum}/`);
+		return data;
+	}
+
+	createCustomerCollection = async (productId) => {
+		//login required
+		//403 : user is not customer
+		//404 : product not found
+		let data = await this.post(`collections/create/`,{productId});
+		return data;
+	}
+
+	deleteCustomerCollection = async (productId) => {
+		//login required
+		//403 : user is not collection.customer
+		//404 : collection not found
+		let data = await this.delete(`collections/products/${productId}/edit/`);
+		return data;
+	}
+
+	//Customer Followship CRUD
+	getCustomerFollowshipList = async () => {
+		//login required
+		//403 : user is not customer
+		let data = await this.get(`followships/`);
+		return data;
+	}
+
+	getLatestCustomerFollowshipList = async () => {
+		//login required
+		//403 : user is not customer
+		let data = await this.get(`followships/latest/`);
+		return data;
+	}
+
+	getLatestCustomerFollowshipListByPage = async () => {
+		//login required
+		//403 : user is not customer
+		let data = await this.get(`followships/latest/pages/${pageNum}/`);
+		return data;
+	}
+
+	createCustomerFollowship = async (sellerId) => {
+		//login required
+		//403 : user is not customer
+		//404 : seller not found
+		let data = await this.post(`followships/create/`,{sellerId});
+		return data;
+	}
+
+	deleteCustomerFollowship = async (sellerId) => {
+		//login required
+		//403 : user is not followship.customer
+		//404 : followship not found
+		let data = await this.delete(`followships/sellers/${sellerId}/edit/`);
+		return data;
+	}
+
+	//Customer Cart CRUD
+	getCustomerCartList = async () => {
+		//login required
+		//403 : user is not customer
+		let data = await this.get(`carts/`);
+		return data;
+	}
+
+	getLatestCustomerCartList = async () => {
+		//login required
+		//403 : user is not customer
+		let data = await this.get(`carts/latest/`);
+		return data;
+	}
+
+	getLatestCustomerCartListByPage = async () => {
+		//login required
+		//403 : user is not customer
+		let data = await this.get(`carts/latest/pages/${pageNum}/`);
+		return data;
+	}
+
+	createCustomerCart = async (specId) => {
+		//login required
+		//403 : user is not customer
+		//404 : spec not found
+		let data = await this.post(`carts/create/`,{specId});
+		return data;
+	}
+
+	deleteCustomerCart = async (specId) => {
+		//login required
+		//403 : user is not cart.customer
+		//404 : cart not found
+		let data = await this.delete(`carts/productSpecs/${specId}/edit/`);
+		return data;
+	}
+
 	//Order CRUD
 	getProductOrderListByPage = async (productId,pageNum) => {
 		let data = await this.get(`/orders/products/${productId}/pages/${pageNum}/`);
