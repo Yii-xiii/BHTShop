@@ -50,4 +50,4 @@ class ProductImage(models.Model):
         return {'id': self.id,
                 'product': self.product.body(),
                 'image_relative_path': self.image.name,
-                'image_absolute_path': self.image.path}
+                'image_absolute_path': '"' + self.image.path + '"'}
