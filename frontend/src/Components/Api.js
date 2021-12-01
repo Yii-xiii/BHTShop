@@ -402,6 +402,7 @@ class Api {
 			Cookies.set("user",cookies["user"])
 			Cookies.set("username",cookies["username"])
 		}
+
 		return data;
 	}
 

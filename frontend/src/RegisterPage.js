@@ -12,10 +12,10 @@ const RegisterPage = () => {
                     <h1 className='form-head'>注册</h1>
                     
                     <div className='form'>
-                        <label>邮箱</label>
+                        <label>用户名</label>
                         <input 
-                            type='email' 
-                            placeholder='输入邮箱'/>
+                            type='username' 
+                            placeholder='输入用户名'/>
                     </div>
 
                     <div className='form'>
