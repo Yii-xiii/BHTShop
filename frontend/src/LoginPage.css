@@ -22,6 +22,7 @@
 
 .form {
     margin-top: 20px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,7 +31,8 @@
 .form label {
     margin-top: 7px;
     text-align: center;
-    margin-right: 30px;
+    width: 60px;
+    margin-right: 10px;
     display: block;
 }
   
