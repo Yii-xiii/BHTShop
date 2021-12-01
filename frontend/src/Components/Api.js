@@ -397,6 +397,7 @@ class Api {
 	login = async (username, password) => {
 		//403 : wrong username or password
 		let data = await this.post(`users/login/`, {username, password});
+
 		if (data["errorCode"] !== 403) {
 			const cookies = data["cookies"]
 			Cookies.set("user",cookies["user"])

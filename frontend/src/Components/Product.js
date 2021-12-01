@@ -22,14 +22,14 @@ const Product = ({ product }) => {
         }
 
         getImages()
-    }, [])
+    })
 
     return (
         <div>
             {product.title.length > 0 ? (
                 <Link to='/'>
                     <div className='product-box'>
-                        <img src={ image? image.image_absolute_path : ''}/>
+                        <img src={ image? image.image_absolute_path : ''} alt='img'/>
                         <h3 className='title-text'>{product.title}</h3>
                         <h5 className='desc-text'>{product.description}</h5>
                     </div>

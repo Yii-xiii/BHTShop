@@ -1,9 +1,8 @@
 import React from 'react'
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import './LoginPage.css'
 import {Link} from 'react-router-dom'
 import api from './Components/Api'
-import Cookies from "js-cookie"
 
 const LoginPage = () => {
     const [username, setUsername] = useState([])
