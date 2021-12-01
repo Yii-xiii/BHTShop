@@ -2,6 +2,8 @@ import React from 'react'
 import './ProductMainInfo.css'
 
 const ProductMainInfo = ({ productId }) => {
+    
+
     return (
         <div className='main-info-box'>
             <div className='main-info-show-box'>
