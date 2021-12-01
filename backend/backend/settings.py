@@ -130,5 +130,5 @@ CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
 
-MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'

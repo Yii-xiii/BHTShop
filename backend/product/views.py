@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Product, ProductSpec, ProductImage
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .serializers import ProductImageSerializer
 import json
@@ -229,9 +229,9 @@ def first_product_image(request, pk):
 	except Product.DoesNotExist:
 		return JsonResponse([], 404)
 
-	images = ProductImage.objects.filter(product=product)[:1]
+	image = ProductImage.objects.filter(product=product).first()
 
-	return returnJson([dict(image.body()) for image in images])
+	return returnJson([dict(image.body())])
 
 
 @login_required
