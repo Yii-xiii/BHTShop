@@ -11,7 +11,7 @@ const Product = ({ product }) => {
     const fetchImages = async() => {
         const data = await api.getFirstProductImage(product.id)
 
-        return data.errorCode === '404' ? (console.log('image not found')) : data.data[0]
+        if (data !== undefined) return data.errorCode === '404' ? (console.log('image not found')) : data.data[0]
     }
 
     // Importing data
@@ -22,7 +22,7 @@ const Product = ({ product }) => {
         }
 
         getImages()
-    })
+    }, [])
 
     const path = `/product/${product.id}`
 
@@ -31,7 +31,7 @@ const Product = ({ product }) => {
             {product.title.length > 0 ? (
                 <Link to={path}>
                     <div className='product-box'>
-                        <img src={ image? image.image_absolute_path : ''} alt='img'/>
+                        <img src={ image? image.image_url : ''} alt='img'/>
                         <h3 className='title-text'>{product.title}</h3>
                         <h5 className='desc-text'>{product.description}</h5>
                     </div>
