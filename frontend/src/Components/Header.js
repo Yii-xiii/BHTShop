@@ -1,16 +1,14 @@
 import React from 'react'
-import NavBar from './NavBar'
-import RandomProducts from './RandomProducts'
 import RegLog from './RegLog'
+import NavBar from './NavBar'
 
-const Home = () => {
+const Header = () => {
     return (
         <div>
             <RegLog />
             <NavBar />
-            <RandomProducts />
         </div>
     )
 }
 
-export default Home
+export default Header

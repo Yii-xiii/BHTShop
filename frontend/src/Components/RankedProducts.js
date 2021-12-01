@@ -1,16 +1,16 @@
 import {useState, useEffect} from 'react'
-import './RandomProducts.css'
+import './RankedProducts.css'
 import api from './Api'
 import Products from './Products'
+import HorizontalScroll from 'react-scroll-horizontal'
 
-const RandomProducts = () => {
+const RankedProducts = () => {
     // Initializing
     const [products, setProducts] = useState([])
 
     // Fetch data from database
     const fetchProducts = async() => {
         const data = await api.getProductList()
-        // const data = await response.json()
 
         return data.data
     }
@@ -24,18 +24,24 @@ const RandomProducts = () => {
 
         getProducts()
     }, [])
-    
+
     // Output
     return (
-        <div className='random-box'>
-            <h1>商品库</h1>
+        <div className='ranked-box'>
+            <h1>销量排名</h1>
             
-            <div className='random-show-box'>
-                {products.length > 0 ? <Products products={ products }/>
-                : console.log('No product founds.')}
-            </div>
+            <HorizontalScroll 
+                pageLock={true} 
+                reverseScroll={true}
+                style={{width: `100%`, height: `300px`}}>
+
+                <div className='ranked-show-box'>
+                    {products.length > 0 ? <Products products={ products }/>
+                    : console.log('No product founds.')}
+                </div>
+            </HorizontalScroll>
         </div>
     )
 }
 
-export default RandomProducts
+export default RankedProducts
