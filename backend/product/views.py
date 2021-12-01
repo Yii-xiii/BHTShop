@@ -196,6 +196,16 @@ def product_image(request, pk, pk_image):
 
 	return returnJson([dict(image.body())])
 
+def first_product_image(request, pk):
+	try:
+		product = Product.objects.get(id = pk)
+	except Product.DoesNotExist:
+		return JsonResponse([], 404)
+
+	images = ProductImage.objects.filter(product=product)[:1]
+
+	return returnJson([dict(image.body()) for image in images])
+
 
 @login_required
 def edit_product_image(request, pk, pk_image):

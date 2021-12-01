@@ -24,6 +24,7 @@ urlpatterns = [
     path('<int:pk>/images/', views.product_image_list),
 
     path('<int:pk>/images/<int:pk_image>', views.product_image),
+    path('<int:pk>/images/first', views.first_product_image),
     path('<int:pk>/images/<int:pk_image>/edit', views.edit_product_image),
     path('<int:pk>/images/create/', views.create_product_image),
 
