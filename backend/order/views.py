@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Order
+from .models import Order, OrderStatus
 from product.models import Product
 from user.models import Customer
 from django.contrib.auth.decorators import login_required
@@ -69,6 +69,7 @@ def create_order(request):
 		order.phoneNumber = customer.phoneNumber
 	order.save()
 	product.soldAmount += 1
+	status = OrderStatus.objects.create(order=order)
 
 	return returnJson([dict(order.body())])
 
@@ -103,8 +104,93 @@ def edit_order(request,orderId):
 		order.save()
 
 		return returnJson([dict(order.body())])
-	elif request.method == 'PUT':
+	elif request.method == 'DELETE':
 		order.delete()
+		return returnJson()
+
+
+def get_order_status_list(request, orderId):
+	try:
+		order = Order.objects.get(id=orderId)
+	except Order.DoesNotExist:
+		return returnJson([],404)
+
+	statuses = OrderStatus.objects.filter(order=order)
+	return returnJson([dict(status.body()) for status in statuses])
+
+
+def get_latest_order_status_list(request, orderId):
+	try:
+		order = Order.objects.get(id=orderId)
+	except Order.DoesNotExist:
+		return returnJson([],404)
+
+	statuses = OrderStatus.objects.filter(order=order).order_by('-id')
+	return returnJson([dict(status.body()) for status in statuses])
+
+
+def get_latest_order_status(request, orderId):
+	try:
+		order = Order.objects.get(id=orderId)
+	except Order.DoesNotExist:
+		return returnJson([],404)
+
+	statuses = OrderStatus.objects.filter(order=order).order_by('-id')[:1]
+	return returnJson([dict(status.body()) for status in statuses])
+
+
+@login_required
+def create_order_status(request,orderId):
+	if request.COOKIES["user"] != "Seller":
+		return returnJson([],403)
+
+	seller = Seller.objects.get(username=request.COOKIES["username"])
+
+	try:
+		order = Order.objects.get(id=orderId)
+	except Order.DoesNotExist:
+		return returnJson([],404)
+
+	data = json.loads(request.body)
+
+	status = OrderStatus.objects.create(order=order)
+	status.status = data["status"]
+	status.description = data["description"]
+	status.save()
+
+	return returnJson([dict(status.body())])
+
+@login_required
+def get_order_status(request,orderId,statusId):
+	try:
+		status = OrderStatus.objects.get(id=statusId)
+	except OrderStatus.DoesNotExist:
+		return returnJson([],404)
+
+	# if request.user is not status.order.customer and request.user is not status.order.product.seller:
+	# 	return returnJson([],403)
+
+	return returnJson([dict(status.body())])
+
+@login_required
+def edit_order_status(request,orderId,statusId):
+	try:
+		status = OrderStatus.objects.get(id=statusId)
+	except OrderStatus.DoesNotExist:
+		return returnJson([],404)
+
+	if request.user is not status.order.product.seller:
+		return returnJson([],403)
+	
+	if request.method == 'PUT':
+		data = json.loads(request.body)
+		status.status = data["status"]
+		status.description = data["description"]
+		status.save()
+
+		return returnJson([dict(order.body())])
+	elif request.method == 'DELETE':
+		status.delete()
 		return returnJson()
 
 
