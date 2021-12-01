@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'user',
     'order',
     'comment',
+    'collection',
 ]
 
 MIDDLEWARE = [
