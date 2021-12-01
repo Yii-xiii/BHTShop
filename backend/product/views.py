@@ -90,23 +90,44 @@ def edit_product(request, pk):
 		return returnJson([dict(product.body())])
 
 
+# product spec
 def product_spec_list(request, pk):
-	productSpecs = ProductSpec.objects.filter(product=pk)
+	try:
+		product = Product.objects.get(id=pk)
+	except Product.DoesNotExist:
+		return returnJson([], 404)
+
+	productSpecs = ProductSpec.objects.filter(product=product)
 	return returnJson([dict(spec.body()) for spec in productSpecs])
 
 
 def product_spec_list_by_page(request, pk, pageNum):
-	productSpecs = ProductSpec.objects.filter(product=pk)[((pageNum - 1) * 10):(pageNum * 10)]
+	try:
+		product = Product.objects.get(id=pk)
+	except Product.DoesNotExist:
+		return returnJson([], 404)
+
+	productSpecs = ProductSpec.objects.filter(product=product)[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(spec.body()) for spec in productSpecs])
 
 
 def latest_product_spec_list(request, pk):
-	productSpecs = ProductSpec.objects.filter(product=pk).order_by('-id')
+	try:
+		product = Product.objects.get(id=pk)
+	except Product.DoesNotExist:
+		return returnJson([], 404)
+
+	productSpecs = ProductSpec.objects.filter(product=product).order_by('-id')
 	return returnJson([dict(spec.body()) for spec in productSpecs])
 
 
 def latest_product_spec_list_by_page(request, pk, pageNum):
-	productSpecs = ProductSpec.objects.filter(product=pk).order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
+	try:
+		product = Product.objects.get(id=pk)
+	except Product.DoesNotExist:
+		return returnJson([], 404)
+
+	productSpecs = ProductSpec.objects.filter(product=product).order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(spec.body()) for spec in productSpecs])
 
 
@@ -166,8 +187,14 @@ def edit_product_spec(request, pk, pk_spec):
 		return returnJson([dict(spec.body()) for spec in productSpecs])
 
 
+# product image
 def product_image_list(request, pk):
-	productImages = ProductImage.objects.filter(product=pk)
+	try:
+		product = Product.objects.get(id=pk)
+	except Product.DoesNotExist:
+		return returnJson([], 404)
+
+	productImages = ProductImage.objects.filter(product=product)
 	return returnJson([dict(image.body()) for image in productImages])
 
 
@@ -184,7 +211,7 @@ def create_product_image(request, pk):
 	serializer = ProductImageSerializer(data=request.data, context={'request':request})
 	serializer.save()
 
-	productImages = ProductImage.objects.filter(product=pk)
+	productImages = ProductImage.objects.filter(product=product)
 	return returnJson([dict(image.body()) for image in productImages])
 
 
@@ -226,7 +253,13 @@ def edit_product_image(request, pk, pk_image):
 	elif request.method == 'DELETE':
 		os.system("rm %s" % image.image.path)
 		image.delete()
-		productImages = ProductImage.objects.filter(product=pk)
+		
+		try:
+			product = Product.objects.get(id=pk)
+		except Product.DoesNotExist:
+			return returnJson([])
+
+		productImages = ProductImage.objects.filter(product=product)
 		return returnJson([dict(image.body()) for image in productImages])
 
 # def delete_image(request,pk,pk_image):

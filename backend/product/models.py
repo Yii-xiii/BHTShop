@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import Seller
-
+from django.utils import timezone
 
 # Create your models here.
 

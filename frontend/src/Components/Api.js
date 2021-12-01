@@ -188,6 +188,68 @@ class Api {
 		return data;
 	}
 
+	//Product Comment CRUD
+	getProductCommentList = async (productId) => {
+		//404 : product not found
+		let data = await this.get(`comments/products/${productId}`);
+		return data;
+	}
+
+	getProductCommentListByPage = async (productId,pageNum) => {
+		//404 : product not found
+		let data = await this.get(`comments/products/${productId}/pages/${pageNum}`);
+		return data;
+	}
+
+	getLatestProductCommentList = async (productId) => {
+		//404 : product not found
+		let data = await this.get(`comments/products/${productId}/latest`);
+		return data;
+	}
+
+	getLatestProductCommentListByPage = async (productId,pageNum) => {
+		//404 : product not found
+		let data = await this.get(`comments/products/${productId}/latest/pages/${pageNum}`);
+		return data;
+	}
+
+	getOrderComment = async (orderId) => {
+		//404 : order not found
+		let data = await this.get(`comments/orders/${orderId}`);
+		return data;
+	}
+
+	getProductComment = async (commentId) => {
+		//404 : comment not found
+		let data = await this.get(`comments/${commentId}`);
+		return data;
+	}
+
+	createProductComment = async (orderId, description, rating) => {
+		//login required
+		//404 : order not found
+		//403 : user is not a customer or not order.customer
+		//400 : customer had alrdy left a comment for this order
+		let data = await this.post(`comments/orders/${orderId}/create/`,{description, rating});
+		return data;
+	}
+
+	updateProductComment = async (commentId, description, rating) => {
+		//login required
+		//404 : comment not found
+		//403 : user is not a comment.order.customer
+		let data = await this.put(`comments/${commentId}/edit/`,{description, rating});
+		return data;
+	}
+
+	deleteProductComment = async (commentId) => {
+		//login required
+		//404 : comment not found
+		//403 : user is not a comment.order.customer
+		let data = await this.delete(`comments/${commentId}/edit/`);
+		return data;
+	}
+
 	//Order CRUD
 	getProductOrderListByPage = async (productId,pageNum) => {
 		let data = await this.get(`/orders/products/${productId}/pages/${pageNum}`);
