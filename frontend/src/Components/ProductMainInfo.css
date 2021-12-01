@@ -3,23 +3,32 @@
     border-radius: 30px;
     overflow-y: auto;
     margin: 50px;
-    max-height: 500px;
+    max-height: 600px;
     min-width: 300px;
 }
 
 .main-info-show-box {
     width: 100%;
-    height: 250px;
+    height: auto;
     display: inline-flex;
 }
 
 .main-info-name-box {
-    
+    display: flex;
+    margin-top: 30px;
+    margin-left: 10px;
+    width: 50%;
+    height: 100px;
+}
+
+.main-info-name-box h2 {
+    font-size: 30px;
 }
 
 .main-info-photo-box {
     width: 300px;
     height: 300px;
+    margin: 30px;
     background: linear-gradient(lightgrey, transparent);
     background-color: grey;
     display: inline-block;
