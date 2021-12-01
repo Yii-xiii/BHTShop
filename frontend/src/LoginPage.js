@@ -3,14 +3,16 @@ import {useState, useEffect} from 'react'
 import './LoginPage.css'
 import {Link} from 'react-router-dom'
 import api from './Components/Api'
+import Cookies from "js-cookie"
 
 const LoginPage = () => {
     const [username, setUsername] = useState([])
     const [password, setPassword] = useState([])
 
     const loginAction = async() => {
-        const data = api.login(username, password)
+        const data = await api.login(username, password)
 
+        // console.log('login: ' + data.cookies.user)
         return data.data
     }
 
@@ -39,7 +41,7 @@ const LoginPage = () => {
                     </div>
 
                     <div className='button-submit-box'>
-                        <button onClick={console.log('trying login')} type='submit' className='button-submit'>提交</button>
+                        <button onClick={loginAction} type='submit' className='button-submit'>提交</button>
                     </div>
 
                     <div className='reg-link-box'>
