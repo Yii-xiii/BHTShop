@@ -6,19 +6,12 @@ import api from './Api'
 const Product = ({ product }) => {
     // Initializing
     const [image, setImages] = useState([])
-    let imgPath
 
     // Fetch data from database
     const fetchImages = async() => {
         const data = await api.getFirstProductImage(product.id)
-        
-        let returnData = ''
 
-        {data.errorCode === '404' ? (console.log('image not found')) : (returnData = data.data[0])}
-        
-        console.log(product.title + ' ' + returnData)
-
-        return returnData
+        return data.errorCode === '404' ? (console.log('image not found')) : data.data[0]
     }
 
     // Importing data
@@ -36,9 +29,7 @@ const Product = ({ product }) => {
             {product.title.length > 0 ? (
                 <Link to='/'>
                     <div className='product-box'>
-                        {image ? imgPath='"' + image.image_absolute_path + '"' : ''}
-                        
-                        <img src={imgPath}/>
+                        <img src={ image? image.image_absolute_path : ''}/>
                         <h3 className='title-text'>{product.title}</h3>
                         <h5 className='desc-text'>{product.description}</h5>
                     </div>

@@ -10,7 +10,7 @@ const RankedProducts = () => {
 
     // Fetch data from database
     const fetchProducts = async() => {
-        const data = await api.getProductList()
+        const data = await api.getBestSellingProductList()
 
         return data.data
     }
