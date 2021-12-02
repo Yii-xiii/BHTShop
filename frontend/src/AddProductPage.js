@@ -66,7 +66,7 @@ const AddProductPage = () => {
                     <div>
                         <label>图片</label>
                         <input 
-                            name={images.url}
+                            name={images}
                             onChange={event => setImages(event.target.files[0])}
                             type="file" 
                             multiple required/>
