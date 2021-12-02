@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 import api from './Components/Api'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
+import Cookies from 'js-cookie'
+import HomePage from './HomePage'
 
 const RegisterPage = () => {
 
@@ -68,6 +70,14 @@ const RegisterPage = () => {
 
     const isSeller = (e) => {
         setSeller(true)
+    }
+
+    const loggedInType = Cookies.get('user')
+
+    if (loggedInType === 'Customer') {
+        return (
+            <HomePage />
+        )
     }
 
     return (

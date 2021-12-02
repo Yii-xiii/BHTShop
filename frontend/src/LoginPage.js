@@ -6,6 +6,7 @@ import api from './Components/Api'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
 import Cookies from 'js-cookie'
+import HomePage from './HomePage'
 
 const LoginPage = () => {
     const [username, setUsername] = useState([])
@@ -43,6 +44,14 @@ const LoginPage = () => {
         }
     }
 
+    const loggedInType = Cookies.get('user')
+
+    if (loggedInType === 'Customer') {
+        return (
+            <HomePage />
+        )
+    }
+    
     return (
         <div className='login'>
             <Header />
