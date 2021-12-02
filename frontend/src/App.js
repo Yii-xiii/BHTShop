@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import LoginPage from './LoginPage'
 import HomePage from './HomePage'
 import Header from './Components/Header'
@@ -15,8 +15,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
-
         <Routes>
           <Route path='/' element={<HomePage />}/>
           <Route path='/register' element={<RegisterPage />}/>
@@ -27,8 +25,6 @@ function App() {
           <Route path='/user/:userId' element={<PersonalInfoPage />}/>
           <Route path='/orderList/:userId' element={<OrderListPage />}/>
         </Routes>
-
-        <Footer />
       </div>
     </Router>
   );

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './RegisterPage.css'
 import {Link} from 'react-router-dom'
 import api from './Components/Api'
+import Header from './Components/Header'
+import Footer from './Components/Footer'
 
 const RegisterPage = () => {
 
@@ -70,41 +72,43 @@ const RegisterPage = () => {
 
     return (
         <div className='register'>
+            <Header />
+
             <div className='register-whole-box'>
                 <form className='register-box' onSubmit={createUser}>
                     <h1 className='form-head'>注册</h1>
 
                     <Error />
-                    
+
                     <div className='form'>
                         <label className='form-label' >用户名</label>
-                        <input 
+                        <input
                             onChange={event => setUsername(event.target.value)}
-                            type='username' 
+                            type='username'
                             placeholder='输入用户名'/>
                     </div>
 
                     <div className='form'>
                         <label className='form-label'>密码</label>
-                        <input 
+                        <input
                             onChange={event => setPassword(event.target.value)}
-                            type='password' 
+                            type='password'
                             placeholder='输入密码'/>
                     </div>
 
                     <div className='form'>
                         <label className='form-label'>电话号码</label>
-                        <input 
+                        <input
                             onChange={event => setPhoneNumber(event.target.value)}
-                            type='phoneNumber' 
+                            type='phoneNumber'
                             placeholder='输入电话号码'/>
                     </div>
 
                     <div className='form'>
                         <label className='form-label'>地址</label>
-                        <input 
+                        <input
                             onChange={event => setAddress(event.target.value)}
-                            type='address' 
+                            type='address'
                             placeholder='输入地址'/>
                     </div>
 
@@ -123,10 +127,12 @@ const RegisterPage = () => {
                     <div className='reg-link-box'>
                         <Link to='/login' className='reg-link'>
                             <h5>已有账户？点此登录</h5>
-                        </Link> 
+                        </Link>
                     </div>
                 </form>
             </div>
+
+            <Footer />
         </div>
     )
 }

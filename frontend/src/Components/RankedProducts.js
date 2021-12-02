@@ -36,7 +36,7 @@ const RankedProducts = () => {
                 style={{width: `100%`, height: `400px`}}>
 
                 <div className='ranked-show-box'>
-                    {products.length > 0 ? <Products products={ products }/>
+                    {products.length > 0 ? <Products products={ products } type='ranked'/>
                     : console.log('No product founds.')}
                 </div>
             </HorizontalScroll>

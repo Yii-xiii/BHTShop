@@ -14,6 +14,4 @@ const Cart = ({count}) => {
     )
 }
 
-
-
 export default Cart
