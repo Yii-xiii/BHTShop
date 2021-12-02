@@ -3,6 +3,7 @@
     border-radius: 30px;
     overflow-y: auto;
     margin: 50px;
+    margin-bottom: 40px;
     max-height: 600px;
     min-width: 300px;
 }

@@ -1,0 +1,22 @@
+.product-review-outer-box {
+    min-height: 200px;
+    max-height: 500px;
+    margin-bottom: 50px;
+    height: auto;
+    border-radius: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+    background-color: #fff;
+}
+
+.review-title {
+    display: inline-flex;
+    height: 100px;
+    margin: 30px;
+    margin-left: 40px;
+    width: 100%;
+}
+
+.review-title h5 {
+    font-size: 20px;
+}

@@ -1,6 +1,8 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
 import ProductMainInfo from './Components/ProductMainInfo'
+import ProductDescription from './Components/ProductDescription'
+import ProductReviews from './Components/ProductReviews'
 import './ProductPage.css'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
@@ -14,8 +16,8 @@ const ProductPage = () => {
 
             <div className='product-page-box'>
                 <ProductMainInfo productId={ productId }/>
-
-                <h1>TODO Item:{ productId } Descriptions</h1>
+                <ProductDescription productId={ productId }/>
+                <ProductReviews productId={ productId }/>
             </div>
 
             <Footer />
