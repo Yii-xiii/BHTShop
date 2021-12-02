@@ -1,12 +1,14 @@
 import React from 'react'
 import './RegisterPage.css'
 import {Link} from 'react-router-dom'
+import Header from './Components/Header'
+import Footer from './Components/Footer'
 
 const RegisterPage = () => {
-
-
     return (
         <div className='register'>
+            <Header />
+
             <div className='register-whole-box'>
                 <form className='register-box'>
                     <h1 className='form-head'>注册</h1>
@@ -44,6 +46,8 @@ const RegisterPage = () => {
                     </div>
                 </form>
             </div>
+
+            <Footer />
         </div>
     )
 }

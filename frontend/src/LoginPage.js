@@ -1,26 +1,32 @@
 import React from 'react'
 import {useState} from 'react'
 import './LoginPage.css'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import api from './Components/Api'
+import Header from './Components/Header'
+import Footer from './Components/Footer'
+import Cookies from 'js-cookie'
 
 const LoginPage = () => {
     const [username, setUsername] = useState([])
     const [password, setPassword] = useState([])
     const [errorMessage,setErrorMessage] = useState("")
+    const navigate = useNavigate()
 
     const loginAction = async(e) => {
         e.preventDefault()
-        //console.log(username + " " + password)
         const data = await api.login(username, password)
 
-        //console.log(data)
         if (data.errorCode === 403) {
             console.log(data)
             setPassword('')
             setErrorMessage("Invalid username or password.")
         } else {
-            
+            if (Cookies.get('user') === 'Customer') {
+                navigate('/')
+            } else if (Cookies.get('user') === 'Seller') {
+                navigate('/')
+            }
         }
     }
 
@@ -38,6 +44,8 @@ const LoginPage = () => {
 
     return (
         <div className='login'>
+            <Header />
+
             <div className='login-whole-box'>
                 <form className='login-box' onSubmit={loginAction}>
                     <h1 className='form-head'>登录</h1>
@@ -73,6 +81,8 @@ const LoginPage = () => {
                     </div>
                 </form>
             </div>
+
+            <Footer />
         </div>
     )
 }
