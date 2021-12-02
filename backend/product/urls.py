@@ -8,6 +8,9 @@ urlpatterns = [
     path('latest/', views.latest_product_list),
     path('latest/pages/<int:pageNum>/', views.latest_product_list_by_page),
 
+    path('sellers/latest/', views.seller_latest_product_list),
+    path('sellers/best_selling/', views.seller_best_selling_product_list),
+
     path('<int:pk>/', views.product),
     path('<int:pk>/edit/', views.edit_product),
     path('create/', views.create_product),
