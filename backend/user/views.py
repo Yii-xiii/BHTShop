@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Customer, Seller
+from .models import Customer, Seller, User
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -23,14 +23,19 @@ def create_customer(request):
 	if request.method == 'POST':
 		data = json.loads(request.body)
 
-		customer = Customer.objects.create()
-		customer.username = data["username"]
-		customer.set_password(data["password"])
-		customer.address = data["address"]
-		customer.phoneNumber = data["phoneNumber"]
+		try:
+			user = User.objects.get(username=data["username"])
+		except User.DoesNotExist:
+			customer = Customer.objects.create()
+			customer.username = data["username"]
+			customer.set_password(data["password"])
+			customer.address = data["address"]
+			customer.phoneNumber = data["phoneNumber"]
 
-		customer.save()
-		return returnJson([dict(customer.body())])
+			customer.save()
+			return returnJson([dict(customer.body())])
+
+		return returnJson([],400)
 
 
 def customer(request, pk):
@@ -78,14 +83,19 @@ def create_seller(request):
 	if request.method == 'POST':
 		data = json.loads(request.body)
 
-		seller = Seller.objects.create()
-		seller.username = data["username"]
-		seller.set_password(data["password"])
-		seller.address = data["address"]
-		seller.phoneNumber = data["phoneNumber"]
+		try:
+			user = User.objects.get(username=data["username"])
+		except User.DoesNotExist:
+			seller = Seller.objects.create()
+			seller.username = data["username"]
+			seller.set_password(data["password"])
+			seller.address = data["address"]
+			seller.phoneNumber = data["phoneNumber"]
 
-		seller.save()
-		return returnJson([dict(seller.body())])
+			seller.save()
+			return returnJson([dict(seller.body())])
+
+		return returnJson([],400)
 
 
 def seller(request, pk):
