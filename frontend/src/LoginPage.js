@@ -19,8 +19,9 @@ const LoginPage = () => {
             console.log(data)
             setPassword('')
             setErrorMessage("Invalid username or password.")
+        } else {
+            
         }
-        
     }
 
     function Error() {
@@ -42,7 +43,6 @@ const LoginPage = () => {
                     <h1 className='form-head'>登录</h1>
 
                     <Error />
-                    
                     
                     <div className='form'>
                         <label>用户名</label>
