@@ -1,5 +1,5 @@
 .product-out-box {
-    height: 330px;
+    height: 310px;
 }
 
 .product-box {
@@ -7,7 +7,7 @@
     margin-bottom: 20px;
     margin-right: 50px;
     width: 200px;
-    height: 230px;
+    height: 200px;
     background: linear-gradient(lightblue, transparent);
     background-color: #5ba4cf;
     display: inline-block;
@@ -19,7 +19,7 @@
 .image-box {
     position: relative;
     width: 200px;
-    height: 230px;
+    height: 200px;
     border-radius: 20px;
     overflow: hidden;
 }
