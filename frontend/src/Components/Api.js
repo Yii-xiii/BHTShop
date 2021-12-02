@@ -55,6 +55,7 @@ class Api {
 
 	getBestSellingProductList = async () => {
 		let data = await this.get(`/products/best_selling/`);
+		console.log(data)
 		return data;
 	}
 
