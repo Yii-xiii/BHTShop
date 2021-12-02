@@ -38,6 +38,8 @@ const RegLog = () => {
             </div>
         )
     } else if (loggedInType === 'Seller') {
+        const path = `/seller/${userId}`
+
         return (
             <div className='div-reglog'>
                 <Link className='reglog-link' to='/'>
@@ -46,7 +48,7 @@ const RegLog = () => {
                     </button>
                 </Link>
 
-                <Link className='reglog-link' to=''>
+                <Link className='reglog-link' to={path}>
                     <h5 className='login-status'>{username}，已登录。</h5>
                 </Link>
             </div>
