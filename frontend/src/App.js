@@ -8,6 +8,8 @@ import FavPage from './FavPage'
 import CartPage from './CartPage'
 import RegisterPage from './RegisterPage'
 import ProductPage from './ProductPage'
+import PersonalInfoPage from './PersonalInfoPage'
+import OrderListPage from './OrderListPage'
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path='/fav' element={<FavPage />}/>
           <Route path='/cart' element={<CartPage />}/>
           <Route path='/product/:productId' element={<ProductPage />}/>
+          <Route path='/user/:userId' element={<PersonalInfoPage />}/>
+          <Route path='/orderList/:userId' element={<OrderListPage />}/>
         </Routes>
 
         <Footer />
