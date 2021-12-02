@@ -1,11 +1,11 @@
 from django.db import models
-from product.models import Product
+from product.models import ProductSpec
 from user.models import Customer
 from django.utils import timezone
 # Create your models here.
 
 class Order(models.Model):
-	product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
+	productSpec = models.ForeignKey(ProductSpec, on_delete=models.CASCADE, null=False)
 	customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
 	quantity = models.IntegerField(null=False)
 	totalPrice = models.DecimalField(decimal_places=2, max_digits=10,null=False)
@@ -14,11 +14,11 @@ class Order(models.Model):
 	time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.customer.username + " bought " + self.product.title
+		return self.customer.username + " bought " + self.productSpec.title
 
 	def body(self):
 		return {'id': self.id,
-				'product' : self.product.body(),
+				'productSpec' : self.productSpec.body(),
 				'customer': self.customer.body(),
 				'quantity': self.quantity,
 				'totalPrice': self.totalPrice,
@@ -44,7 +44,7 @@ class OrderStatus(models.Model):
 	time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.order.customer.username + " bought " + self.order.product.title + " status " + self.status
+		return self.order.customer.username + " bought " + self.order.productSpec.title + " status " + self.status
 
 	def body(self):
 		return {'id': self.id,

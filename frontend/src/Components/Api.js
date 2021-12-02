@@ -410,12 +410,17 @@ class Api {
 	}
 
 	//Order CRUD
-	getProductOrderListByPage = async (productId,pageNum) => {
+	getLatestProductOrderListByPage = async (productId,pageNum) => {
 		let data = await this.get(`/orders/products/${productId}/pages/${pageNum}/`);
 		return data;
 	}
 
-	getCustomerOrderListByPage = async (customerId,pageNum) => {
+	getLatestProductSpecOrderListByPage = async (specId,pageNum) => {
+		let data = await this.get(`/orders/products/specs/${specId}/pages/${pageNum}/`);
+		return data;
+	}
+
+	getLatestCustomerOrderListByPage = async (customerId,pageNum) => {
 		let data = await this.get(`/orders/customers/${customerId}/pages/${pageNum}/`);
 		return data;
 	}
@@ -428,11 +433,11 @@ class Api {
 		return data;
 	}
 
-	createOrder = async (productId, quantity, totalPrice, address, phoneNumber) => {
+	createOrder = async (specId, quantity, totalPrice, address, phoneNumber) => {
 		//login required
-		//404 : product not found
+		//404 : spec not found
 		//403 : user is not a customer
-		let data = await this.post(`/orders/create/`,{productId, quantity, totalPrice, address, phoneNumber});
+		let data = await this.post(`/orders/create/`,{specId, quantity, totalPrice, address, phoneNumber});
 		return data;
 	}
 
