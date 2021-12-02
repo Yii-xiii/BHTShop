@@ -9,12 +9,12 @@ class Order(models.Model):
 	customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
 	quantity = models.IntegerField(null=False)
 	totalPrice = models.DecimalField(decimal_places=2, max_digits=10,null=False)
-	address = models.TextField(null=False)
-	phoneNumber = models.TextField(null=False)
+	address = models.TextField(null=False,blank=True)
+	phoneNumber = models.TextField(null=False,blank=True)
 	time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.customer.username + " bought " + self.productSpec.title
+		return self.customer.username + " bought " + self.productSpec.product.title
 
 	def body(self):
 		return {'id': self.id,
@@ -44,7 +44,7 @@ class OrderStatus(models.Model):
 	time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.order.customer.username + " bought " + self.order.productSpec.title + " status " + self.status
+		return self.order.customer.username + " bought " + self.order.productSpec.product.title + " status " + self.status
 
 	def body(self):
 		return {'id': self.id,
