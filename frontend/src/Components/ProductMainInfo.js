@@ -41,7 +41,7 @@ const ProductMainInfo = ({ productId }) => {
         <div className='main-info-box'>
             <div className='main-info-show-box'>
                 <div className='main-info-photo-box'>
-                    <img src={ image? image.image_url : '0'} alt='img'/>
+                    <img className='main-image' src={ image? image.image_url : '0'} alt='img'/>
                 </div>
                 
                 <div className='main-info-name-box'>
