@@ -58,6 +58,24 @@ def create_customer_followship(request, pk_seller):
 
 
 @login_required
+def get_customer_followship(request, pk_seller):
+	try:
+		seller = Seller.objects.get(id = pk_seller)
+	except Seller.DoesNotExist:
+		return returnJson([], 404)
+
+	try:
+		followship = Followship.objects.filter(customer=request.user).get(seller=seller)
+	except Followship.DoesNotExist:
+		return returnJson([], 404)
+
+	if followship.customer != request.user:
+		return returnJson([],403)
+
+	return returnJson([dict(followship.body())])
+
+
+@login_required
 def edit_customer_followship(request, pk_seller):
 	try:
 		seller = Seller.objects.get(id = pk_seller)

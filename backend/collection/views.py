@@ -59,6 +59,25 @@ def create_customer_collection(request, pk_product):
 
 
 @login_required
+def get_customer_collection(request, pk_product):
+	try:
+		product = Product.objects.get(id = pk_product)
+	except Product.DoesNotExist:
+		return returnJson([], 404)
+
+	try:
+		collection = Collection.objects.filter(customer=request.user).get(product=product)
+	except Collection.DoesNotExist:
+		return returnJson([], 404)
+
+	if collection.customer != request.user:
+		return returnJson([],403)
+
+	
+	return returnJson([dict(collection.body())])
+
+
+@login_required
 def edit_customer_collection(request, pk_product):
 	try:
 		product = Product.objects.get(id = pk_product)
@@ -74,5 +93,5 @@ def edit_customer_collection(request, pk_product):
 		return returnJson([],403)
 
 	if request.method == 'DELETE':
-		comment.delete()
+		collection.delete()
 		return returnJson()

@@ -59,6 +59,25 @@ def create_customer_cart(request, pk_spec):
 
 
 @login_required
+def get_customer_cart(request, pk_spec):
+	try:
+		spec = ProductSpec.objects.get(id = pk_spec)
+	except ProductSpec.DoesNotExist:
+		return returnJson([], 404)
+
+	try:
+		cart = Cart.objects.filter(customer=request.user).get(productSpec=spec)
+	except Cart.DoesNotExist:
+		return returnJson([], 404)
+
+	if cart.customer != request.user:
+		return returnJson([],403)
+
+	
+	return returnJson([dict(cart.body())])
+
+
+@login_required
 def edit_customer_cart(request, pk_spec):
 	try:
 		spec = ProductSpec.objects.get(id = pk_spec)
@@ -74,5 +93,5 @@ def edit_customer_cart(request, pk_spec):
 		return returnJson([],403)
 
 	if request.method == 'DELETE':
-		comment.delete()
+		cart.delete()
 		return returnJson()

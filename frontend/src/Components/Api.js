@@ -273,6 +273,14 @@ class Api {
 		return data;
 	}
 
+	getCustomerCollection = async (productId) => {
+		//login required
+		//403 : user is not collection.customer
+		//404 : collection not found
+		let data = await this.get(`collections/products/${productId}/`);
+		return data;
+	}
+
 	createCustomerCollection = async (productId) => {
 		//login required
 		//403 : user is not customer
@@ -311,6 +319,14 @@ class Api {
 		return data;
 	}
 
+	getCustomerFollowship = async (sellerId) => {
+		//login required
+		//403 : user is not followship.customer
+		//404 : followship not found
+		let data = await this.get(`followships/sellers/${sellerId}/`);
+		return data;
+	}
+
 	createCustomerFollowship = async (sellerId) => {
 		//login required
 		//403 : user is not customer
@@ -346,6 +362,14 @@ class Api {
 		//login required
 		//403 : user is not customer
 		let data = await this.get(`carts/latest/pages/${pageNum}/`);
+		return data;
+	}
+
+	getCustomerCart = async (specId) => {
+		//login required
+		//403 : user is not cart.customer
+		//404 : cart not found
+		let data = await this.get(`carts/productSpecs/${specId}/`);
 		return data;
 	}
 
