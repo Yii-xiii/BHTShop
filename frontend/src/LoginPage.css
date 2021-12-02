@@ -83,3 +83,13 @@ input {
     font-size: 13px;
     color: grey;
 }
+
+.alert {
+    font-size: 13px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f54337; /* Red */
+    color: white;
+    margin-bottom: 15px;
+  }

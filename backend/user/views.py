@@ -7,10 +7,10 @@ import json
 
 
 # Create your views here.
-def returnJson(data=None, errorCode=0, cookie=''):
+def returnJson(data=None, errorCode=0, cookies=''):
 	if data is None:
 		data = []
-	return JsonResponse({'errorCode': errorCode, 'data': data, 'cookie': cookie})
+	return JsonResponse({'errorCode': errorCode, 'data': data, 'cookies': cookies})
 
 
 def customer_list(request):
@@ -126,10 +126,11 @@ def edit_seller(request, pk):
 
 def user_login(request):
 	data = json.loads(request.body)
+	print(data)
 
 	username = data["username"]
 	password = data["password"]
-	user = authenticate(request, username, password)
+	user = authenticate(request, username=username, password=password)
 
 	if user is not None:
 		login(request, user)
