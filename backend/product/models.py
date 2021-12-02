@@ -5,9 +5,28 @@ from django.utils import timezone
 # Create your models here.
 
 class Product(models.Model):
+    WOMEN_CLOTHES = 'women clothes'
+    MEN_CLOTHES = 'men clothes'
+    SPORTS = 'sports'
+    COSMETICS = 'cosmetics'
+    DRINKS = 'drinks'
+    SNACKS = 'snacks'
+    OTHERS = 'others'
+
+    CATEGORIES = [
+        (WOMEN_CLOTHES, 'women clothes'),
+        (MEN_CLOTHES, 'men clothes'),
+        (SPORTS, 'sports'),
+        (COSMETICS, 'cosmetics'),
+        (DRINKS, 'drinks'),
+        (SNACKS, 'snacks'),
+        (OTHERS, 'others'),
+    ]
+
     title = models.CharField(max_length=50,null=False,blank=False)
     description = models.TextField(blank=True,null=False)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, null=False)
+    category = models.CharField(max_length=50, choices=CATEGORIES, default=OTHERS)
     soldAmount = models.IntegerField(default = 0)
 
     def __str__(self):
@@ -19,6 +38,7 @@ class Product(models.Model):
                 'title': self.title,
                 'description': self.description,
                 'soldAmount': self.soldAmount,
+                'category' : self.category,
                 }
 
 

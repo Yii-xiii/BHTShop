@@ -66,6 +66,7 @@ def create_product(request):
 
 			product.title = data["title"]
 			product.description = data["description"]
+			product.category = data["category"]
 			# product.soldAmount = 0
 
 			product.save()
