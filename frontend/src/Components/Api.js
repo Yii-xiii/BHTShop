@@ -266,7 +266,7 @@ class Api {
 		return data;
 	}
 
-	getLatestCustomerCollectionListByPage = async () => {
+	getLatestCustomerCollectionListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not customer
 		let data = await this.get(`collections/latest/pages/${pageNum}/`);
@@ -312,7 +312,7 @@ class Api {
 		return data;
 	}
 
-	getLatestCustomerFollowshipListByPage = async () => {
+	getLatestCustomerFollowshipListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not customer
 		let data = await this.get(`followships/latest/pages/${pageNum}/`);
@@ -358,7 +358,7 @@ class Api {
 		return data;
 	}
 
-	getLatestCustomerCartListByPage = async () => {
+	getLatestCustomerCartListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not customer
 		let data = await this.get(`carts/latest/pages/${pageNum}/`);
