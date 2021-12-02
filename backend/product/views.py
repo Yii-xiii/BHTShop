@@ -105,6 +105,7 @@ def edit_product(request, pk):
 		data = json.loads(request.body)
 		product.title = data["title"]
 		product.description = data["description"]
+		product.category = data["category"]
 		product.save()
 		return returnJson([dict(product.body())])
 

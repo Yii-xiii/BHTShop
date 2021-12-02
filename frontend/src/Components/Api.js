@@ -96,11 +96,11 @@ class Api {
 		return data;
 	}
 
-	updateProduct = async (id,title, description) => {
+	updateProduct = async (id,title, description,category) => {
 		//login required
 		//404 : product not found
 		//403 : user is not a seller
-		let data = await this.put(`/products/${id}/edit/`,{title, description});
+		let data = await this.put(`/products/${id}/edit/`,{title, description,category});
 		return data;
 	}
 

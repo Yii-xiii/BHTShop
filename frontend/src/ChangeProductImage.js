@@ -33,7 +33,7 @@ const ChangeProductImage = ({product}) => {
                             name={images}
                             onChange={event => setImages(event.target.files[0])}
                             type="file" 
-                            multiple required/>
+                            required/>
                     </div>
 
                     <div className='button-submit-box'>

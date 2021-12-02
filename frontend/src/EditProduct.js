@@ -1,27 +1,19 @@
 import React, { useState } from 'react'
 import Footer from './Components/Footer'
 import Header from './Components/Header'
-import './AddProductPage.css'
 import api from './Components/Api'
-import axios from 'axios'
 
-const AddProductPage = () => {
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [category, setCategory] = useState('')
-    const [images,setImages] = useState([])
+const EditProduct = ({product}) => {
+    const [title, setTitle] = useState(product.title)
+    const [description, setDescription] = useState(product.description)
+    const [category, setCategory] = useState(product.category)
 
-    const addProduct = async(e) => {
+    const editProduct = async(e) => {
         e.preventDefault()
 
-        const uploadData = new FormData()
-        uploadData.append('images',images)
-
-        const data = await api.createProduct(title,description,category)
-        const imageData = await api.createProductImage(data.data[0].id, uploadData)
+        const data = await api.updateProduct(title,description,category)
 
         console.log(data)
-        console.log(imageData)
     }
 
     return (
@@ -29,7 +21,7 @@ const AddProductPage = () => {
             <Header />
 
             <div className="box">
-                <form onSubmit={addProduct}>
+                <form onSubmit={editProduct}>
 
                     <div class="form-group m-3" style={{margin: 'auto'}}>
                         <label>类型</label>
@@ -62,18 +54,9 @@ const AddProductPage = () => {
                             onChange={event => setDescription(event.target.value)}
                             placeholder='输入描述'/>
                     </div>
-                    
-                    <div>
-                        <label>图片</label>
-                        <input 
-                            name={images}
-                            onChange={event => setImages(event.target.files[0])}
-                            type="file" 
-                            required/>
-                    </div>
 
                     <div className='button-submit-box'>
-                        <button onSubmit={addProduct} type='submit' className='button-submit'>提交</button>
+                        <button onSubmit={editProduct} type='submit' className='button-submit'>提交</button>
                     </div>
                 </form>
             </div>
@@ -84,4 +67,4 @@ const AddProductPage = () => {
     )
 }
 
-export default AddProductPage
+export default EditProduct
