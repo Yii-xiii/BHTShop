@@ -8,6 +8,7 @@ const RegLog = () => {
     const navigate = useNavigate()
     const loggedInType = Cookies.get('user')
     const username = Cookies.get('username')
+    const userId = Cookies.get('user_id')
 
     const logoutAction = async(e) => {
         e.preventDefault()
@@ -21,6 +22,8 @@ const RegLog = () => {
     }
 
     if (loggedInType === 'Customer') {
+        const path = `/user/${userId}`
+
         return (
             <div className='div-reglog'>
                 <Link className='reglog-link' to='/'>
@@ -29,7 +32,7 @@ const RegLog = () => {
                     </button>
                 </Link>
 
-                <Link className='reglog-link' to=''>
+                <Link className='reglog-link' to={path}>
                     <h5 className='login-status'>{username}，已登录。</h5>
                 </Link>
             </div>
