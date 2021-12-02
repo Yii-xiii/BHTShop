@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom'
 import Footer from './Components/Footer'
 import Header from './Components/Header'
 
-const SellerPage = () => {
+const SellerHomePage = () => {
     const { sellerId } = useParams()
 
     return (
@@ -15,4 +15,4 @@ const SellerPage = () => {
     )
 }
 
-export default SellerPage
+export default SellerHomePage

@@ -8,7 +8,7 @@ import RegisterPage from './RegisterPage'
 import ProductPage from './ProductPage'
 import PersonalInfoPage from './PersonalInfoPage'
 import OrderListPage from './OrderListPage'
-import SellerPage from './SellerPage'
+import SellerHomePage from './SellerHomePage'
 import AddProductPage from './AddProductPage'
 import SellerOrdersPage from './SellerOrdersPage';
 
@@ -24,7 +24,7 @@ function App() {
           <Route path='/cart' element={<CartPage />}/>
           <Route path='/addProduct' element={<AddProductPage />}/>
           <Route path='/sellerOrders' element={<SellerOrdersPage />}/>
-          <Route path='/seller/:sellerId' element={<SellerPage />}/>
+          <Route path='/seller/:sellerId' element={<SellerHomePage />}/>
           <Route path='/product/:productId' element={<ProductPage />}/>
           <Route path='/user/:userId' element={<PersonalInfoPage />}/>
           <Route path='/orderList/:userId' element={<OrderListPage />}/>
