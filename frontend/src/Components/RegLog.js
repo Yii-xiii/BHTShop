@@ -23,8 +23,8 @@ const RegLog = () => {
     if (loggedInType === 'Customer') {
         return (
             <div className='div-reglog'>
-                <Link className='reglog-link' to='/login'>
-                    <button className='btn btn-reglog'>
+                <Link className='reglog-link' to='/'>
+                    <button onClick={logoutAction} className='btn btn-reglog'>
                         登出
                     </button>
                 </Link>
