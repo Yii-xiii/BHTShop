@@ -541,6 +541,7 @@ class Api {
 			const cookies = data["cookies"]
 			Cookies.set("user",cookies["user"])
 			Cookies.set("username",cookies["username"])
+			Cookies.set("user_id",cookies["user_id"])
 		}
 
 		return data;
@@ -552,6 +553,7 @@ class Api {
 		if (data["errorCode"] !== 403) {
 			Cookies.remove("user")
 			Cookies.remove("username")
+			Cookies.remove("user_id")
 		}
 		return data;
 	}
