@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './RegisterPage.css'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import api from './Components/Api'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
@@ -8,7 +8,7 @@ import Cookies from 'js-cookie'
 import HomePage from './HomePage'
 
 const RegisterPage = () => {
-
+    const navigate = useNavigate()
     const [username,setUsername] = useState([])
     const [password, setPassword] = useState([])
     const [phoneNum, setPhoneNumber] = useState([])
@@ -19,6 +19,23 @@ const RegisterPage = () => {
     const validUsername = /^[A-Za-z0-9._]+$/;
     const validPassword = /^[A-Za-z0-9._]+$/;
     const validPhoneNumber = /^[0-9]+$/;
+
+    const loginAction = async() => {
+        const data = await api.login(username, password)
+
+        if (data.errorCode === 403) {
+            console.log(data)
+            setPassword('')
+            setErrorMessage("Invalid username or password.")
+        } else {
+            if (Cookies.get('user') === 'Customer') {
+                navigate('/')
+            } else if (Cookies.get('user') === 'Seller') {
+                const sellerId = Cookies.get('user_id')
+                navigate(`/seller/${sellerId}`)
+            }
+        }
+    }
 
     const createUser = async (e) => {
         e.preventDefault()
@@ -31,7 +48,7 @@ const RegisterPage = () => {
             setErrorMessage("Invalid password : Only [A-Z,a-z,0-9,.,_] are allowed.")
         } else if (!validPhoneNumber.test(phoneNum)) {
             setErrorMessage("Invalid phone number : Only [0-9] are allowed.")
-        }else {
+        } else {
             setErrorMessage("")
             //console.log(data)
 
@@ -48,6 +65,7 @@ const RegisterPage = () => {
                 setErrorMessage("Username already exists")
             } else {
                 //TODO
+                loginAction()
             }
         }
     }
