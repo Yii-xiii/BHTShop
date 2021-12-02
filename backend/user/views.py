@@ -146,7 +146,7 @@ def user_login(request):
 		login(request, user)
 		try:
 			seller = Seller.objects.get(username = username)
-			return returnJson([dict(seller.body())], 0, {'user' : 'Seller', 'username' : username, 'id' : user.id})
+			return returnJson([dict(seller.body())], 0, {'user' : 'Seller', 'username' : username, 'user_id' : user.id})
 		except Seller.DoesNotExist:
 			try : 
 				customer = Customer.objects.get(username = username)
