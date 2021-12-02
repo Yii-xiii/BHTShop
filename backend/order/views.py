@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Order, OrderStatus
-from product.models import Product
+from product.models import ProductSpec, Product
 from user.models import Customer
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -40,7 +40,18 @@ def get_latest_product_order_list_by_page(request, productId, pageNum):
 	except Product.DoesNotExist:
 		return returnJson([],404)
 
-	orders = Order.objects.filter(product=product).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	specs = ProductSpec.objects.filter(product=product)
+
+	orders = Order.objects.filter(spec__in=specs).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(order.body()) for order in orders])
+
+def get_latest_product_spec_order_list_by_page(request, specId, pageNum):
+	try:
+		spec = ProductSpec.objects.get(id=specId)
+	except ProductSpec.DoesNotExist:
+		return returnJson([],404)
+
+	orders = Order.objects.filter(spec=spec).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(order.body()) for order in orders])
 
 
@@ -54,8 +65,11 @@ def create_order(request):
 	data = json.loads(request.body)
 
 	try:
-		product = Product.objects.get(id=data["productId"])
-	except Product.DoesNotExist:
+		spec = ProductSpec.objects.get(id=data["specId"])
+	except ProductSpec.DoesNotExist:
+		return returnJson([],404)
+
+	if (spec.stock < data["quantity"]):
 		return returnJson([],404)
 
 	quantity = data["quantity"]
@@ -67,9 +81,9 @@ def create_order(request):
 	if phoneNumber == '':
 		phoneNumber = customer.phoneNumber
 
-	order = Order.objects.create(customer=customer, product=product,quantity=quantity,totalPrice=totalPrice,address=address,phoneNumber=phoneNumber)
-	order.save()
-	product.soldAmount += 1
+	order = Order.objects.create(customer=customer, spec=spec,quantity=quantity,totalPrice=totalPrice,address=address,phoneNumber=phoneNumber)
+	spec.product.soldAmount += quantity
+	spec.stock -= quantity
 	status = OrderStatus.objects.create(order=order)
 
 	return returnJson([dict(order.body())])
@@ -81,7 +95,7 @@ def get_order(request,orderId):
 	except Order.DoesNotExist:
 		return returnJson([],404)
 
-	if request.user is not order.customer and request.user is not order.product.seller:
+	if request.user is not order.customer and request.user is not order.productSpec.product.seller:
 		return returnJson([],403)
 
 	return returnJson([dict(order.body())])
