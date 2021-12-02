@@ -58,6 +58,18 @@ class Api {
 		return data;
 	}
 
+	getSellerLatestProductList = async () => {
+		//login required
+		let data = await this.get(`/products/sellers/best_selling/`);
+		return data;
+	}
+
+	getSellerBestSellingProductList = async () => {
+		//login required
+		let data = await this.get(`/products/sellers/best_selling/`);
+		return data;
+	}
+
 	getProductListByPage = async (pageNum) => { 
 		//10 per page
 		let data = await this.get(`/products/pages/${pageNum}/`);
