@@ -16,3 +16,13 @@
     display: flex;
     margin-left: 25px;
 }
+
+.operatebar-addItem {
+    display: flex;
+    margin-left: 25px;
+}
+
+.operatebar-orders {
+    display: flex;
+    margin-left: 25px;
+}

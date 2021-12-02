@@ -42,7 +42,7 @@ const RegisterPage = () => {
                 console.log(data)
             }
 
-            if (data.errorCode == 400) {
+            if (data.errorCode === 400) {
                 setErrorMessage("Username already exists")
             } else {
                 //TODO
