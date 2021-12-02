@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from .models import Product, ProductSpec, ProductImage
+from user.models import Seller
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .serializers import ProductImageSerializer
+from rest_framework.viewsets import ModelViewSet
 import json
 import os
 
@@ -58,13 +60,16 @@ def create_product(request):
 			seller = Seller.objects.get(username=request.user.username)
 			product = Product.objects.create(seller=seller)
 			data = json.loads(request.body)
+			# print(data)
+			# print(request.FILES)
+			# print(request.stream)
 
 			product.title = data["title"]
 			product.description = data["description"]
 			# product.soldAmount = 0
 
 			product.save()
-			return returnJson()
+			return returnJson([dict(product.body())])
 			# products = Product.objects.filter(seller = request.user).order_by('-id')
 			# return returnJson([dict(product.body()) for product in products])
 
@@ -221,11 +226,9 @@ def create_product_image(request, pk):
 	except Product.DoesNotExist:
 		return JsonResponse([], 404)
 
-	serializer = ProductImageSerializer(data=request.data, context={'request':request})
-	serializer.save()
+	image = ProductImage.objects.create(product=product,image=request.FILES.get("images"))
 
-	productImages = ProductImage.objects.filter(product=product)
-	return returnJson([dict(image.body()) for image in productImages])
+	return returnJson([dict(image.body())])
 
 
 def product_image(request, pk, pk_image):

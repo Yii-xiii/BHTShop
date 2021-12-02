@@ -89,10 +89,10 @@ class Api {
 		return data;
 	}
 
-	createProduct = async (title, description) => {
+	createProduct = async (title, description, category) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.post(`/products/create/`,{title, description});
+		let data = await this.post(`/products/create/`,{title, description, category});
 		return data;
 	}
 
@@ -181,17 +181,24 @@ class Api {
 		//login required
 		//404 : product not found
 		//403 : user is not a seller
-		let data = await this.post(`/products/${productId}/images/create/`,{form});
+		// let data = await this.post(`/products/${productId}/images/create/`,{form});
+
+		let data = await axios({
+            method: 'post',
+            url: `/products/${productId}/images/create/`,
+            data: form
+        })
+
 		return data;
 	}
 
-	updateProductImage = async (productId, imageId, form) => {
-		//login required
-		//404 : product image not found
-		//403 : user is not a seller
-		let data = await this.put(`/products/${productId}/images/${imageId}/edit/`,{form});
-		return data;
-	}
+	// updateProductImage = async (productId, imageId, form) => {
+	// 	//login required
+	// 	//404 : product image not found
+	// 	//403 : user is not a seller
+	// 	let data = await this.put(`/products/${productId}/images/${imageId}/edit/`,{form});
+	// 	return data;
+	// }
 
 	deleteProductImage = async (productId, imageId) => {
 		//login required

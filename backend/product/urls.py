@@ -31,5 +31,4 @@ urlpatterns = [
     path('<int:pk>/images/<int:pk_image>/edit/', views.edit_product_image),
     path('<int:pk>/images/create/', views.create_product_image),
 
-    # path('<int:pk>/images/<int:pk_image>/delete/', views.delete_image),
 ]
