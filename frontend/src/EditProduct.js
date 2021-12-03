@@ -7,6 +7,8 @@ const EditProduct = ({product}) => {
     const [title, setTitle] = useState(product.title)
     const [description, setDescription] = useState(product.description)
     const [category, setCategory] = useState(product.category)
+    const [specs,setSpecs] = useState() //TODO
+    const [errorMessage,setErrorMessage] = useState("")
 
     const editProduct = async(e) => {
         e.preventDefault()

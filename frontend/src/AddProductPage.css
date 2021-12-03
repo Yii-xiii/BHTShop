@@ -3,3 +3,13 @@
     justify-content: center;
     align-items: center;
 }
+
+.alert {
+    font-size: 13px;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f54337; /* Red */
+    color: white;
+    margin-bottom: 15px;
+  }
