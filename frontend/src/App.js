@@ -12,6 +12,7 @@ import SellerHomePage from './SellerHomePage'
 import AddProductPage from './AddProductPage'
 import SellerOrdersPage from './SellerOrdersPage';
 import PersonalOrdersPage from './PersonalOrdersPage';
+import AdminPage from './AdminPage';
 import SellerAnalysisPage from './SellerAnalysisPage';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path='/seller' element={<SellerHomePage />}/>
           <Route path='/product/:productId' element={<ProductPage />}/>
           <Route path='/profile' element={<ProfilePage />}/>
+          <Route path='/admin' element={<AdminPage />}/>
           <Route path='/sellerProfile' element={<ProfilePage />}/>
           <Route path='/sellerAnalysis' element={<SellerAnalysisPage />}/>
           <Route path='/orderList/' element={<OrderListPage />}/>

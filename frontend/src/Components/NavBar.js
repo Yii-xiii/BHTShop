@@ -45,6 +45,17 @@ const NavBar = () => {
                 <hr className='navbar-line'/>
             </header>
         )
+    } else if (loggedInType === 'Admin') {
+        return (
+            <header>
+                <nav className='navbar'>
+                    <Link className='home-logo' to='/admin'>
+                        <img className='navbar-logo' src={Logo} alt='logo'/>
+                    </Link>
+                </nav>
+                <hr className='navbar-line'/>
+            </header>
+        )
     }
 
     return (
