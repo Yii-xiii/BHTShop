@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.product_list),
+    path('randoms/', views.random_product_list),
     path('best_selling/', views.best_selling_product_list),
     path('pages/<int:pageNum>/', views.product_list_by_page),
     path('latest/', views.latest_product_list),
@@ -31,4 +32,6 @@ urlpatterns = [
     path('<int:pk>/images/<int:pk_image>/edit/', views.edit_product_image),
     path('<int:pk>/images/create/', views.create_product_image),
 
+    path('search/pages/<int:pageNum>/', views.search_product),
+    path('search/price_range/pages/<int:pageNum>/', views.random_product_by_price_range),
 ]

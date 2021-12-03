@@ -28,6 +28,7 @@ class Product(models.Model):
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, null=False)
     category = models.CharField(max_length=50, choices=CATEGORIES, default=OTHERS)
     soldAmount = models.IntegerField(default = 0)
+    rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
 
     def __str__(self):
         return self.title

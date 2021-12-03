@@ -5,8 +5,10 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .serializers import ProductImageSerializer
 from rest_framework.viewsets import ModelViewSet
+from django.db.models import Count
 import json
 import os
+import random
 
 
 def returnJson(data=None, errorCode=0):
@@ -16,6 +18,11 @@ def returnJson(data=None, errorCode=0):
 
 
 # Create your views here.
+
+def random_product_list(request):
+	productList = list(Product.objects.all())
+	randoms = random.sample(productList,10)
+	return returnJson([dict(random.body()) for random in randoms])
 
 def product_list(request):
 	products = Product.objects.all()
@@ -84,7 +91,12 @@ def product(request, pk):
 	except Product.DoesNotExist:
 		return returnJson([], 404)
 
-	return returnJson([dict(product.body())])
+	specs = ProductSpec.objects.filter(product=product)
+	stock = 0
+	for spec in specs:
+		stock+=spec.stock
+
+	return returnJson([dict(product.body(), stock=stock)])
 
 
 @login_required
@@ -279,12 +291,141 @@ def edit_product_image(request, pk, pk_image):
 		productImages = ProductImage.objects.filter(product=product)
 		return returnJson([dict(image.body()) for image in productImages])
 
-# def delete_image(request,pk,pk_image):
-# 	try:
-# 		image = ProductImage.objects.get(id=pk_image)
-# 	except ProductImage.DoesNotExist:
-# 		return returnJson([], 404)
-# 	os.system("rm %s" % image.image.path)
-# 	image.delete()
-# 	productImages = ProductImage.objects.filter(product=pk)
-# 	return returnJson([dict(image.body()) for image in productImages])
+
+# filter product
+def random_product_list_by_category(request):
+	data =json.loads(request.body)
+	productList = list(Product.objects.filter(category=data["category"]))
+	randoms = random.sample(productList,10)
+	return returnJson([dict(random.body()) for random in randoms])
+
+
+def latest_product_list_by_category(request, pageNum):
+	data =json.loads(request.body)
+	products = Product.objects.filter(category=data["category"]).order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products])
+
+
+def highest_rating_product_list_by_category(request, pageNum):
+	data =json.loads(request.body)
+	products = Product.objects.filter(category=data["category"]).order_by('-rating')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products])
+
+
+def lowest_rating_product_list_by_category(request, pageNum):
+	products = Product.objects.filter(category=data["category"]).order_by('-rating')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products])
+
+
+def cheapest_product_list_by_category(request, pageNum):
+	specs = ProductSpec.objects.filter(category=data["category"]).order_by('price')
+	products = []
+	size = 0
+	for spec in specs:
+		if spec.product not in products:
+			products += [spec.product]
+			size += 1
+			if size == pageNum*10:
+				break
+
+	products = products[-10:]
+	return returnJson([dict(product.body()) for product in products])
+
+
+def most_expensive_product_list_by_category(request, pageNum):
+	specs = ProductSpec.objects.filter(category=data["category"]).order_by('-price')
+	products = []
+	size = 0
+	for spec in specs:
+		if spec.product not in products:
+			products += [spec.product]
+			size += 1
+			if size == pageNum*10:
+				break
+
+	products = products[-10:]
+	return returnJson([dict(product.body()) for product in products])
+
+
+def random_product_by_price_range_and_category(request):
+	data = json.loads(request.body)
+	specs = ProductSpec.objects.filter(category=data["category"],price__gte=data["minPrice"],price__lte=data["maxPrice"])
+	products = []
+	for spec in specs:
+		products += [spec.product]
+	products = set(products)
+	if len(products) >= 10:
+		length = 10
+	else:
+		length = len(products)
+	results = random.sample(products,length)
+	return returnJson([dict(product.body()) for product in results])
+
+
+def highest_rating_product_list(request, pageNum):
+	products = Product.objects.all().order_by('-rating')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products])
+
+def lowest_rating_product_list(request, pageNum):
+	products = Product.objects.all().order_by('rating')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products])
+
+
+def cheapest_product_list(request, pageNum):
+	specs = ProductSpec.objects.all().order_by('price')
+	products = []
+	size = 0
+	for spec in specs:
+		if spec.product not in products:
+			products += [spec.product]
+			size += 1
+			if size == pageNum*10:
+				break
+
+	products = products[-10:]
+	return returnJson([dict(product.body()) for product in products])
+
+
+def most_expensive_product_list(request, pageNum):
+	specs = ProductSpec.objects.all().order_by('-price')
+	products = []
+	size = 0
+	for spec in specs:
+		if spec.product not in products:
+			products += [spec.product]
+			size += 1
+			if size == pageNum*10:
+				break
+
+	products = products[-10:]
+	return returnJson([dict(product.body()) for product in products])
+
+
+def search_product(request, pageNum):
+	data = json.loads(request.body)
+	specs = ProductSpec.objects.filter(description__contains=data["keyword"])
+	products = []
+	for spec in specs:
+		products += [spec.product]
+	products += Product.objects.filter(title__contains=data["keyword"])
+	products += Product.objects.filter(description__contains=data["keyword"])
+	products = set([product.id for product in products])
+	results = Product.objects.filter(id__in=products).order_by('-soldAmount')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in results])
+
+
+def random_product_by_price_range(request):
+	data = json.loads(request.body)
+	specs = ProductSpec.objects.filter(price__gte=data["minPrice"],price__lte=data["maxPrice"])
+	products = []
+	for spec in specs:
+		products += [spec.product]
+	products = set(products)
+	if len(products) >= 10:
+		length = 10
+	else:
+		length = len(products)
+	results = random.sample(products,length)
+	return returnJson([dict(product.body()) for product in results])
+
+

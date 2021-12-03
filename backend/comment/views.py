@@ -84,9 +84,12 @@ def create_product_comment(request, pk_order):
 	comment.rating = data["rating"]
 	comment.save()
 
-	product = order.product
-
 	comments = ProductComment.objects.filter(product=product)
+	size = len(comments)
+	product = Product.objects.get(id=order.productSpec.product.id)
+	product.rating += (comment.rating - product.rating)/float(size)
+	product.save()
+
 	return returnJson([dict(comment.body()) for comment in comments])
 
 
