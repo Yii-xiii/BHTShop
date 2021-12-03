@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'collection',
     'followship',
     'cart',
+    'adminUser',
 ]
 
 MIDDLEWARE = [
