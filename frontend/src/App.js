@@ -41,7 +41,7 @@ function App() {
             <Route path='/login' element={<LoginPage />}/>
             <Route path='/addProduct' element={<AddProductPage />}/>
             <Route path='/sellerOrders' element={<SellerOrdersPage />}/>
-            <Route path='/seller/:sellerId' element={<SellerHomePage />}/>
+            <Route path='/seller' element={<SellerHomePage />}/>
             <Route path='/product/:productId' element={<ProductPage />}/>
             <Route path='/orderList/:userId' element={<OrderListPage />}/>
           </Routes>
@@ -60,7 +60,7 @@ function App() {
           <Route path='/cart' element={<CartPage />}/>
           <Route path='/addProduct' element={<AddProductPage />}/>
           <Route path='/sellerOrders' element={<SellerOrdersPage />}/>
-          <Route path='/seller/:sellerId' element={<SellerHomePage />}/>
+          <Route path='/seller' element={<SellerHomePage />}/>
           <Route path='/product/:productId' element={<ProductPage />}/>
           <Route path='/user/:userId' element={<PersonalInfoPage />}/>
           <Route path='/orderList/:userId' element={<OrderListPage />}/>
