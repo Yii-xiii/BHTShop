@@ -71,14 +71,14 @@ const AddProductPage = () => {
             <Header />
 
             <div className="box">
-
-                <form onSubmit={addProduct}>
+                <div className='inner-box'>
+                    <form onSubmit={addProduct}>
 
                     <Error />
 
-                    <div class="form-group m-3" style={{margin: 'auto'}}>
-                        <label>类型</label>
-                        <select name="category" class="form-control" value={category} onChange={event => setCategory(event.target.value)}>
+                    <div class="form-type-group">
+                        <h5>类型</h5>
+                        <select name="category" class="form-type-select" value={category} onChange={event => setCategory(event.target.value)}>
                             <option value='none'>-----</option>
 
                             <option value='women clothes'>女装</option>
@@ -92,33 +92,45 @@ const AddProductPage = () => {
                         </select>
                     </div>
 
-                    <div className='form'>
-                        <label>标题</label>
-                        <input 
-                            value={title}
-                            onChange={event => setTitle(event.target.value)}
-                            placeholder='输入标题' required/>
+                    <div className='form-title-group'>
+                        <h5>标题</h5>
+
+                        <div className='form-title-input'>
+                            <textarea
+                                value={title}
+                                onChange={event => setTitle(event.target.value)}
+                                placeholder='输入标题' required/>
+                        </div>
                     </div>
 
-                    <div className='form'>
-                        <label>描述</label>
-                        <input 
-                            value={description}
-                            onChange={event => setDescription(event.target.value)}
-                            placeholder='输入描述'/>
-                    </div>
-                    
-                    <div>
-                        <label>图片</label>
-                        <input 
-                            name={images}
-                            onChange={event => setImages(event.target.files[0])}
-                            type="file" 
-                            required/>
+                    <div className='form-title-group'>
+                        <h5>描述</h5>
+
+                        <div className='form-title-input'>
+                            <textarea 
+                                value={description}
+                                onChange={event => setDescription(event.target.value)}
+                                placeholder='输入描述'/>
+                        </div>
                     </div>
 
-                    <div>
-                        <label>规格</label>
+                    <div className='form-image-group'>
+                        <h5>图片</h5>
+
+                        <div className='form-image-input'>
+                            <input 
+                                name={images}
+                                onChange={event => setImages(event.target.files[0])}
+                                type="file" 
+                                required/>
+                        </div>
+                    </div>
+
+                    <div className='form-title-group'>
+                        <h5>规格</h5>
+                    </div>
+
+                    <div className='form-table'>
                         <table>
                             <tr>
                                 <th>描述</th>
@@ -130,34 +142,43 @@ const AddProductPage = () => {
                             {specs.map((spec, index) => (
                                 <tr>
                                     <td>
-                                        <input 
-                                            type="text" 
-                                            name="description"
-                                            value={spec.description}
-                                            onChange={event => handleSpecChange(index, event)} 
-                                            placeholder="输入描述"
-                                            required/>
+                                        <div className='spec-form'>
+                                            <input 
+                                                className='spec-description'
+                                                type="text" 
+                                                name="description"
+                                                value={spec.description}
+                                                onChange={event => handleSpecChange(index, event)} 
+                                                placeholder="输入描述"
+                                                required/>
+                                        </div>
                                     </td>
 
                                     <td>
-                                        <input 
-                                            type="number"
-                                            step="0.01" 
-                                            name="price"
-                                            value={spec.price}
-                                            onChange={event => handleSpecChange(index, event)} 
-                                            min = "0"
-                                            required/>
+                                        <div className='spec-form'>
+                                            <input 
+                                                className='spec-price'
+                                                type="number"
+                                                step="0.01" 
+                                                name="price"
+                                                value={spec.price}
+                                                onChange={event => handleSpecChange(index, event)} 
+                                                min = "0"
+                                                required/>
+                                        </div>
                                     </td>
 
                                     <td>
-                                        <input 
-                                            type="number"
-                                            name="stock"
-                                            value={spec.stock}
-                                            onChange={event => handleSpecChange(index, event)} 
-                                            min = "0"
-                                            required/>
+                                        <div className='spec-form'>
+                                            <input 
+                                                className='spec-stock'
+                                                type="number"
+                                                name="stock"
+                                                value={spec.stock}
+                                                onChange={event => handleSpecChange(index, event)} 
+                                                min = "0"
+                                                required/>
+                                        </div>
                                     </td>
 
                                     <td>
@@ -169,14 +190,15 @@ const AddProductPage = () => {
 
                     </div>
 
-                    <div>
+                    <div className='addSpecButton-box'>
                         <button onClick={addSpec}>+</button>
                     </div>
 
                     <div className='button-submit-box'>
                         <button onSubmit={addProduct} type='submit' className='button-submit'>提交</button>
                     </div>
-                </form>
+                    </form>
+                </div>
             </div>
 
             <Footer />

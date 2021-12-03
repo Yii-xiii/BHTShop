@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 850px;
 }
 
 .alert {
@@ -13,3 +14,130 @@
     color: white;
     margin-bottom: 15px;
   }
+
+  .inner-box {
+    max-width: 1000px;
+    min-width: 400px;
+    margin: 50px 50px;
+    overflow: auto;
+    min-height: 100px;
+    border: 1px solid black;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.form-type-group {
+    margin: 10px;
+    margin-left: 20px;
+    margin-right: 0px;
+    display: flex;
+}
+
+.form-type-group h5 {
+    font-size: 16px;
+}
+
+.form-type-select {
+    margin-left: 50px;
+}
+
+.form-title-group {
+    margin: 30px;
+    margin-left: 20px;
+    margin-right: 0px;
+    display: flex;
+}
+
+.form-title-input {
+    margin-left: 13px;
+    width: 100%;
+}
+
+.form-title-group h5 {
+    width: 50px;
+    margin-top: 10px;
+    margin-right: 20px;
+    display: block;
+    font-size: 16px;
+}
+
+.form-title-input textarea {
+    min-height: 33px;
+    height: 33px;
+    font-size: 15px;
+    background-color: white;
+    border-radius: 10px;
+    border: 0px solid black;
+    width: 85%;
+    padding-top: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    resize: vertical;
+}
+
+.form-table {
+    display: flex;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.form-image-group {
+    margin: 30px;
+    margin-left: 20px;
+    margin-right: 0px;
+    display: flex;
+}
+
+.form-image-group h5 {
+    font-size: 16px;
+}
+
+.form-image-input {
+    margin-left: 35px;
+}
+
+.spec-form input {
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.spec-description {
+    width: 150px;
+    background-color: white;
+    border-radius: 10px;
+    border: 0px solid black;
+    font-size: 15px;
+    padding-top: 12px;
+    padding-right: 10px;
+}
+
+.spec-price {
+    width: 80px;
+    background-color: white;
+    border-radius: 10px;
+    border: 0px solid black;
+    font-size: 15px;
+    padding-top: 12px;
+    padding-right: 10px;
+}
+
+.spec-stock {
+    width: 80px;
+    background-color: white;
+    border-radius: 10px;
+    border: 0px solid black;
+    font-size: 15px;
+    padding-top: 12px;
+    padding-right: 10px;
+}
+
+.form-table button {
+    margin-top: 8px;
+    margin-left: 5px;
+}
+
+.addSpecButton-box {
+    margin-top: 10px;
+    margin-left: 20px;
+}
