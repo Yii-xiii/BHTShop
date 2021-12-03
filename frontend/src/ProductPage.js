@@ -8,7 +8,7 @@ import Header from './Components/Header'
 import api from './Components/Api'
 import Footer from './Components/Footer'
 
-const ProductPage = () => {
+const ProductPage = ({ paramId }) => {
     const { productId } = useParams()
     const [product, setProduct] = useState([])
 
@@ -32,15 +32,14 @@ const ProductPage = () => {
         getProduct()
     }, [])
 
-   
-
     return (
         <div>
             <Header />
 
             <div className='product-page-box'>
                 <ProductMainInfo productId={ productId }/>
-                <ProductDescription productId={ productId } description={ product.description } seller={ product.seller }/>
+                
+                <ProductDescription product={product} />
                 <ProductReviews productId={ productId }/>
             </div>
 

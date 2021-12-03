@@ -1,10 +1,10 @@
 import React from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import './ProductDescription.css'
 
-const ProductDescription = ({ productId, description, seller }) => {    
-    const sellerUsername = seller['username']
-    
+const ProductDescription = ({ product }) => {    
+    let seller = product.seller
+
     return (
         <div className='description-outer-box'>
             <div className='description-spec-title'>
@@ -15,14 +15,14 @@ const ProductDescription = ({ productId, description, seller }) => {
                 <h5>商家</h5>
                 {/* link to seller page */}
                 <Link className='seller-page-link' to=''>
-                    <span>{sellerUsername}</span>
+                    <span>{seller.username}</span>
                 </Link>
             </div>
 
             <div className='description-seller-box'>
                 <h5>库存</h5>
                 {/* stock count here */}
-                <span>{sellerUsername}</span>
+                <span>{seller.username}</span>
             </div>
 
             <div className='description-details-title'>
@@ -30,7 +30,7 @@ const ProductDescription = ({ productId, description, seller }) => {
             </div>
 
             <div className='description-details-text-box'>
-                <span>{description}</span> 
+                <span>{product.description}</span> 
             </div>
         </div>
     )
