@@ -705,6 +705,79 @@ class Api {
 	}
 
 
+	//product filter
+	//return 10 products
+	randomProductListByCategory = async (category) => {
+		let data = await this.get(`/products/filter/categories/randoms/`,{category});
+		return data;
+	}
+
+	latestProductListByCategory = async (pageNum, category) => {
+		let data = await this.get(`/products/filter/categories/latest/pages/${pageNum}/`,{category});
+		return data;
+	}
+
+	highestRatingProductListByCategory = async (pageNum, category) => {
+		let data = await this.get(`/products/filter/categories/highest_rating/pages/${pageNum}/`,{category});
+		return data;
+	}
+
+	lowestRatingProductListByCategory = async (pageNum, category) => {
+		let data = await this.get(`/products/filter/categories/lowest_rating/pages/${pageNum}/`,{category});
+		return data;
+	}
+
+	cheapestProductListByCategory = async (pageNum, category) => {
+		let data = await this.get(`/products/filter/categories/cheapest/pages/${pageNum}/`,{category});
+		return data;
+	}
+
+	mostExpensiveProductListByCategory = async (pageNum, category) => {
+		let data = await this.get(`/products/filter/categories/most_expensive/pages/${pageNum}/`,{category});
+		return data;
+	}
+
+	randomProductListByCategoryAndPriceRange = async (category, maxPrice, minPrice) => {
+		let data = await this.get(`/products/filter/categories/price_range/randoms/`,{category, maxPrice, minPrice});
+		return data;
+	}
+
+	randomProductList = async () => {
+		let data = await this.get(`/products/filter/randoms/`);
+		return data;
+	}
+
+	highestRatingProductList = async (pageNum) => {
+		let data = await this.get(`/products/filter/highest_rating/pages/${pageNum}/`);
+		return data;
+	}
+
+	lowestRatingProductList = async (pageNum) => {
+		let data = await this.get(`/products/filter/lowest_rating/pages/${pageNum}/`);
+		return data;
+	}
+
+	cheapestProductList = async (pageNum) => {
+		let data = await this.get(`/products/filter/cheapest/pages/${pageNum}/`);
+		return data;
+	}
+
+	mostExpensiveProductList = async (pageNum) => {
+		let data = await this.get(`/products/filter/most_expensive/pages/${pageNum}/`);
+		return data;
+	}
+
+	randomProductListByPriceRange = async (maxPrice, minPrice) => {
+		let data = await this.get(`/products/filter/price_range/randoms/`,{maxPrice, minPrice});
+		return data;
+	}
+
+	searchProduct = async (pageNum, keyword) => {
+		//order by highest sold
+		let data = await this.get(`/products/search/pages/${pageNum}/`,{keyword});
+		return data;
+	}
+
 	//login logout
 	login = async (username, password) => {
 		//403 : wrong username or password

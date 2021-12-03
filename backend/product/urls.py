@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.product_list),
     path('latest/', views.latest_product_list),
+    path('latest/pages/<int:pageNum>/', views.latest_product_list_by_page),
     path('best_selling/', views.best_selling_product_list),
     path('pages/<int:pageNum>/', views.product_list_by_page),
 
@@ -40,7 +41,6 @@ urlpatterns = [
 
 
     path('filter/randoms/', views.random_product_list),
-    path('filter/latest/pages/<int:pageNum>/', views.latest_product_list_by_page), # changed
     path('filter/highest_rating/pages/<int:pageNum>/', views.highest_rating_product_list),
     path('filter/lowest_rating/pages/<int:pageNum>/', views.lowest_rating_product_list),
     path('filter/cheapest/pages/<int:pageNum>/', views.cheapest_product_list),

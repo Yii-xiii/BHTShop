@@ -296,7 +296,10 @@ def edit_product_image(request, pk, pk_image):
 def random_product_list_by_category(request):
 	data =json.loads(request.body)
 	productList = list(Product.objects.filter(category=data["category"]))
-	randoms = random.sample(productList,10)
+	length = len(productList)
+	if length > 10:
+		length = 10
+	randoms = random.sample(productList,length)
 	return returnJson([dict(random.body()) for random in randoms])
 
 
@@ -313,11 +316,13 @@ def highest_rating_product_list_by_category(request, pageNum):
 
 
 def lowest_rating_product_list_by_category(request, pageNum):
+	data =json.loads(request.body)
 	products = Product.objects.filter(category=data["category"]).order_by('-rating')[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(product.body()) for product in products])
 
 
 def cheapest_product_list_by_category(request, pageNum):
+	data =json.loads(request.body)
 	specs = ProductSpec.objects.filter(category=data["category"]).order_by('price')
 	products = []
 	size = 0
@@ -333,6 +338,7 @@ def cheapest_product_list_by_category(request, pageNum):
 
 
 def most_expensive_product_list_by_category(request, pageNum):
+	data =json.loads(request.body)
 	specs = ProductSpec.objects.filter(category=data["category"]).order_by('-price')
 	products = []
 	size = 0
@@ -354,10 +360,9 @@ def random_product_by_price_range_and_category(request):
 	for spec in specs:
 		products += [spec.product]
 	products = set(products)
-	if len(products) >= 10:
+	length = len(products)
+	if length > 10:
 		length = 10
-	else:
-		length = len(products)
 	results = random.sample(products,length)
 	return returnJson([dict(product.body()) for product in results])
 
@@ -408,10 +413,9 @@ def random_product_by_price_range(request):
 	for spec in specs:
 		products += [spec.product]
 	products = set(products)
-	if len(products) >= 10:
+	length = len(products)
+	if length > 10:
 		length = 10
-	else:
-		length = len(products)
 	results = random.sample(products,length)
 	return returnJson([dict(product.body()) for product in results])
 
