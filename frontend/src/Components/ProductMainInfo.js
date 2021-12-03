@@ -1,9 +1,11 @@
 import {useState, useEffect} from 'react'
+import {useParams} from 'react-router-dom'
 import './ProductMainInfo.css'
 import api from './Api'
 
-const ProductMainInfo = ({ productId }) => {
+const ProductMainInfo = () => {
     // Initializing
+    const { productId } = useParams()
     const [product, setProduct] = useState([])
     const [image, setImages] = useState([])
     const [specs, setSpecs] = useState([])
