@@ -161,13 +161,12 @@ def create_product_spec(request, pk):
 	except Product.DoesNotExist:
 		return JsonResponse([], 404)
 
-	spec = ProductSpec.objects.create(product=product)
-
 	data = json.loads(request.body)
-	spec.description = data["description"]
-	spec.price = data["price"]
-	spec.stock = data["stock"]
-	spec.save()
+	description = data["description"]
+	price = data["price"]
+	stock = data["stock"]
+
+	spec = ProductSpec.objects.create(product=product, description=description, price=price, stock=stock)
 
 	productSpecs = ProductSpec.objects.filter(product=pk)
 	return returnJson([dict(spec.body()) for spec in productSpecs])
