@@ -27,13 +27,11 @@ const NavBar = () => {
             </header>
         )
     } else if (loggedInType === 'Seller') {
-        const userId = Cookies.get('user_id')
-        const path = `/seller/${userId}`
 
         return (
             <header>
                 <nav className='navbar'>
-                    <Link className='home-logo' to={path}>
+                    <Link className='home-logo' to='/seller'>
                         <img className='navbar-logo' src={Logo} alt='logo'/>
                     </Link>
     
