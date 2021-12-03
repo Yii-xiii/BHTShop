@@ -6,7 +6,7 @@ const SellerOrdersPage = () => {
     return (
         <div>
             <Header />
-                <h1>TODO SELLER ORDERS LIST</h1>
+                <h1>TODO 商家已完成/待完成订单管理页面</h1>
             <Footer />
         </div>
     )

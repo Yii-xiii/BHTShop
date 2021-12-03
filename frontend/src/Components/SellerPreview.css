@@ -1,0 +1,9 @@
+.preview-box {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.preview-box span {
+    font-size: 15px;
+}

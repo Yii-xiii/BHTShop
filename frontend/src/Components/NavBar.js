@@ -5,9 +5,10 @@ import Operate from './Operate'
 import {Link} from 'react-router-dom'
 import Search from './Search'
 import Cookies from 'js-cookie'
+import SellerPreview from './SellerPreview'
 
 const NavBar = () => {
-    const loggedInType = Cookies.get('user')
+    let loggedInType = Cookies.get('user')
 
     if (loggedInType === 'Customer') {
         return (
@@ -35,7 +36,7 @@ const NavBar = () => {
                         <img className='navbar-logo' src={Logo} alt='logo'/>
                     </Link>
     
-                    <Search />
+                    <SellerPreview />
     
                     <div>
                         <Operate className='operate-box'/>
