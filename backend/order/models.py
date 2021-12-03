@@ -52,3 +52,47 @@ class OrderStatus(models.Model):
 				'status': self.status,
 				'description': self.description,
 				'time': self.time}
+
+class ReturnRequest(models.Model):
+	R1 = "incorrect product"
+	R2 = "incorrect spec"
+	R3 = "product does not match description"
+	R4 = "product was damaged"
+	R5 = "product does not meet customer’s expectation"
+	R6 = "others"
+
+	REASONS	= [
+		(R1, "incorrect product"),
+		(R2, "incorrect spec"),
+		(R3, "product does not match description"),
+		(R4, "product was damaged"),
+		(R5, "product does not meet customer’s expectation"),
+		(R6, "others"),
+	]
+
+	S1 = "pending"
+	S2 = "succesful"
+	S3 = "failed"
+
+	STATUSES = [
+		(S1, "pending"),
+		(S2, "succesful"),
+		(S3, "failed"),
+	]
+
+	order = models.OneToOneField(Order, on_delete=models.CASCADE)
+	reason = models.CharField(max_length=50, choices=REASONS, default=R6)
+	status = models.TextField(max_length=50, choices=STATUSES, default=S1)
+	description = models.TextField(blank=True)
+	time = models.DateTimeField(default=timezone.now)
+
+	def __str__(self):
+		return self.order.customer.username + " wants to return " + self.order.productSpec.product.title + " status " + self.status
+
+	def body(self):
+		return {'id': self.id,
+				'order' : self.order.body(),
+				'reason' : self.reason,
+				'status': self.status,
+				'description': self.description,
+				'time': self.time}

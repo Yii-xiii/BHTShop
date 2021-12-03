@@ -19,4 +19,13 @@ urlpatterns = [
 	path('<int:orderId>/statuses/create/',views.create_order_status),
 	path('<int:orderId>/statuses/<int:statusId>/',views.get_order_status),
 	path('<int:orderId>/statuses/<int:statusId>/edit/',views.edit_order_status),
+
+	path('return_requests/',views.get_return_request_list),
+	path('return_requests/customers/<int:customerId>/latest_list/',views.get_customer_latest_return_request_list),
+	path('return_requests/products/<int:productId>/latest_list/',views.get_product_latest_return_request),
+	path('return_requests/productSpecs/<int:specId>/latest_list/',views.get_product_spec_latest_return_request),
+
+	path('<int:orderId>/return_requests/create/',views.create_return_request),
+	path('<int:orderId>/return_requests/',views.get_return_request),
+	path('<int:orderId>/return_requests/edit/',views.edit_return_request),
 ]
