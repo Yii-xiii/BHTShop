@@ -1,19 +1,25 @@
-﻿.personalinfopage text {
+.head {
     margin-left: 50px;
-    margin-top: 180px;
+    margin-top: 50px;
 }
 
-.personalinfopage text {
+.text {
+    line-height: 40px;
     margin-left: 50px;
     margin-right: 200px;
     margin-top: 70px;
+    margin-bottom: 50px;
     border: 5px solid lightgray;
     border-radius: 15px;
     padding-left: 20px;
     padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-.personalinfopage textinfo {
+.textinfo {
     margin-left: 180px;
-    margin-top: -195px;
+    margin-top: -232px;
+    line-height: 40px;
+    margin-bottom: 50px;
 }
