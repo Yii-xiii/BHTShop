@@ -177,15 +177,15 @@ def current_user(request):
 
 	try:
 		seller = Seller.objects.get(username = username)
-		return returnJson([dict(seller.body)])
+		return returnJson([dict(seller.body())])
 	except Seller.DoesNotExist:
 		try : 
 			customer = Customer.objects.get(username = username)
-			return returnJson([dict(customer.body)])
+			return returnJson([dict(customer.body())])
 		except Customer.DoesNotExist:
 			try : 
 				admin = AdminUser.objects.get(username = username)
-				return returnJson([dict(admin.body)])
+				return returnJson([dict(admin.body())])
 			except AdminUser.DoesNotExist:
 				return returnJson([{'username' : username}])
 
