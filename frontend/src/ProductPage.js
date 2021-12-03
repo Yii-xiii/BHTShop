@@ -8,7 +8,7 @@ import Header from './Components/Header'
 import api from './Components/Api'
 import Footer from './Components/Footer'
 
-const ProductPage = ({ paramId }) => {
+const ProductPage = () => {
     const { productId } = useParams()
     const [product, setProduct] = useState([])
 
@@ -18,7 +18,6 @@ const ProductPage = ({ paramId }) => {
         const data = await api.getProduct(productId)
         // const data = await response.json()
 
-        console.log(data.data[0])
         return data.data[0]
     }
 
@@ -39,7 +38,7 @@ const ProductPage = ({ paramId }) => {
             <div className='product-page-box'>
                 <ProductMainInfo productId={ productId }/>
                 
-                <ProductDescription product={product} />
+                <ProductDescription product={ productId } />
                 <ProductReviews productId={ productId }/>
             </div>
 
