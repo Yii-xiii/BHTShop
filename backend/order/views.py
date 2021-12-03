@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Order, OrderStatus
+from .models import Order, OrderStatus, ReturnRequest
 from product.models import ProductSpec, Product
 from user.models import Customer
 from django.contrib.auth.decorators import login_required
@@ -194,7 +194,7 @@ def edit_order_status(request,orderId,statusId):
 	except OrderStatus.DoesNotExist:
 		return returnJson([],404)
 
-	if request.user is not status.order.product.seller:
+	if request.user is not status.order.productSpec.product.seller:
 		return returnJson([],403)
 	
 	if request.method == 'PUT':
@@ -203,9 +203,126 @@ def edit_order_status(request,orderId,statusId):
 		status.description = data["description"]
 		status.save()
 
-		return returnJson([dict(order.body())])
+		return returnJson([dict(status.body())])
 	elif request.method == 'DELETE':
 		status.delete()
 		return returnJson()
+
+
+# return request
+def get_return_request_list(request):
+	reqs = ReturnRequest.objects.all()
+	return returnJson([dict(req.body()) for req in reqs])
+
+
+def get_customer_latest_return_request_list(request, customerId):
+	try:
+		customer = Customer.objects.get(id=customerId)
+	except Customer.DoesNotExist:
+		return returnJson([],404)
+
+	orders = Order.objects.filter(customer=customer)
+
+	reqs = ReturnRequest.objects.filter(order__in=orders).order_by('-id')
+	return returnJson([dict(req.body()) for req in reqs])
+
+
+def get_product_latest_return_request(request, productId):
+	try:
+		product = Product.objects.get(id=productId)
+	except Product.DoesNotExist:
+		return returnJson([],404)
+
+	specs = ProductSpec.objects.filter(product=product)
+
+	orders = Order.objects.filter(productSpec__in=specs)
+
+	reqs = ReturnRequest.objects.filter(order__in=orders).order_by('-id')
+	return returnJson([dict(req.body()) for req in reqs])
+
+
+def get_product_spec_latest_return_request(request, specId):
+	try:
+		spec = ProductSpec.objects.get(id=specId)
+	except ProductSpec.DoesNotExist:
+		return returnJson([],404)
+
+	orders = Order.objects.filter(productSpec=spec)
+
+	reqs = ReturnRequest.objects.filter(order__in=orders).order_by('-id')
+	return returnJson([dict(req.body()) for req in reqs])
+
+
+@login_required
+def create_return_request(request,orderId):
+	if request.COOKIES["user"] != "Customer":
+		return returnJson([],403)
+
+	customer = Customer.objects.get(username=request.COOKIES["username"])
+
+	try:
+		order = Order.objects.get(id=orderId)
+	except Order.DoesNotExist:
+		return returnJson([],404)
+
+	data = json.loads(request.body)
+	reason = data["reason"]
+	description = data["description"]
+
+	req = ReturnRequest.objects.create(order=order,reason=reason, description=description)
+
+	return returnJson([dict(req.body())])
+
+
+def get_return_request(request, orderId):
+	try:
+		order = Order.objects.get(id=orderId)
+	except Order.DoesNotExist:
+		return returnJson([],404)
+
+	try:
+		req = ReturnRequest.objects.get(order=order)
+	except ReturnRequest.DoesNotExist:
+		return returnJson([],404)
+
+	return returnJson([dict(req.body())])
+
+
+@login_required
+def edit_return_request(request, orderId):
+	try:
+		order = Order.objects.get(id=orderId)
+	except Order.DoesNotExist:
+		return returnJson([],404)
+
+	try:
+		req = ReturnRequest.objects.get(order=order)
+	except ReturnRequest.DoesNotExist:
+		return returnJson([],404)
+
+	if request.COOKIES["user"] == "Customer":
+		if request.user != order.customer:
+			return returnJson(403)
+
+		if request.method == 'PUT':
+			data = json.loads(request.body)
+			req.reason = data["reason"]
+			req.description = data["description"]
+			req.save()
+
+			return returnJson([dict(req.body())])
+		elif request.method == 'DELETE':
+			req.delete()
+			return returnJson()
+
+	elif request.COOKIES["user"] == "Seller":
+		if request.user != order.productSpec.product.seller:
+			return returnJson(403)
+
+		if request.method == 'PUT':
+			data = json.loads(request.body)
+			req.status = data["status"]
+			req.save()
+			return returnJson([dict(req.body())])
 
 
