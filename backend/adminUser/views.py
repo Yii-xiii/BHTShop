@@ -14,10 +14,10 @@ def returnJson(data=None, errorCode=0, cookies=''):
 
 @login_required
 def get_report_list(request):
-	# try:
-	# 	admin = AdminUser.objects.get(id=request.user.id)
-	# except AdminUser.DoesNotExist:
-	# 	return returnJson([], 403)
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
 
 	reports = Report.objects.all()
 	return returnJson([dict(report.body()) for report in reports])
@@ -25,10 +25,10 @@ def get_report_list(request):
 
 @login_required
 def get_all_latest_customer_reporting_list_by_page(request, pageNum):
-	# try:
-	# 	admin = AdminUser.objects.get(id=request.user.id)
-	# except AdminUser.DoesNotExist:
-	# 	return returnJson([], 403)
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
 
 	customers = Customer.objects.all()
 
@@ -77,12 +77,16 @@ def get_all_latest_reported_seller_list_by_page(request, pageNum):
 
 @login_required
 def get_latest_customer_reporting_list_by_page(request, pk_customer, pageNum):
-	try:
-		admin = AdminUser.objects.get(id=request.user.id)
-	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+	if request.user.id != pk_customer: 
+		try:
+			admin = AdminUser.objects.get(id=request.user.id)
+		except AdminUser.DoesNotExist:
+			return returnJson([], 403)
 
-	customer = Customer.objects.get(id=pk_customer)
+	try:
+		customer = Customer.objects.get(id=pk_customer)
+	except Customer.DoesNotExist:
+		return returnJson([],404)
 
 	reports = Report.objects.filter(reportingUser=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(report.body()) for report in reports])
@@ -95,7 +99,10 @@ def get_latest_reported_customer_list_by_page(request, pk_customer, pageNum):
 	except AdminUser.DoesNotExist:
 		return returnJson([], 403)
 
-	customer = Customer.objects.get(id=pk_customer)
+	try:
+		customer = Customer.objects.get(id=pk_customer)
+	except Customer.DoesNotExist:
+		return returnJson([],404)
 
 	reports = Report.objects.filter(reportedUser=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(report.body()) for report in reports])
@@ -103,14 +110,18 @@ def get_latest_reported_customer_list_by_page(request, pk_customer, pageNum):
 
 @login_required
 def get_latest_seller_reporting_list_by_page(request, pk_seller, pageNum):
+	if request.user.id != pk_seller:
+		try:
+			admin = AdminUser.objects.get(id=request.user.id)
+		except AdminUser.DoesNotExist:
+			return returnJson([], 403)
+
 	try:
-		admin = AdminUser.objects.get(id=request.user.id)
-	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		seller = Seller.objects.get(id=pk_seller)
+	except Seller.DoesNotExist:
+		return returnJson([],404)
 
-	seller = Seller.objects.get(id=pk_seller)
-
-	reports = Report.objects.filter(reportingUser__in=seller).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	reports = Report.objects.filter(reportingUser=seller).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(report.body()) for report in reports])
 
 
@@ -121,9 +132,12 @@ def get_latest_reported_seller_list_by_page(request, pk_seller, pageNum):
 	except AdminUser.DoesNotExist:
 		return returnJson([], 403)
 
-	seller = Seller.objects.get(id=pk_seller)
+	try:
+		seller = Seller.objects.get(id=pk_seller)
+	except Seller.DoesNotExist:
+		return returnJson([],404)
 
-	reports = Report.objects.filter(reportedUser__in=seller).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	reports = Report.objects.filter(reportedUser=seller).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(report.body()) for report in reports])
 
 
@@ -134,7 +148,13 @@ def getReport(request, pk):
 	except Report.DoesNotExist:
 		return returnJson([], 404)
 
-	return returnJson([dict(report.body)])
+	if request.user.id != report.reportingUser.id:
+		try:
+			admin = AdminUser.objects.get(id=request.user.id)
+		except AdminUser.DoesNotExist:
+			return returnJson([], 403)
+
+	return returnJson([dict(report.body())])
 
 
 @login_required
@@ -150,7 +170,7 @@ def createReport(request):
 	description = data["description"]
 
 	report = Report.objects.create(reportingUser=request.user, reportedUser=user, reason=reason, description=description)
-	return returnJson([dict(report.body)])
+	return returnJson([dict(report.body())])
 
 
 @login_required
@@ -160,10 +180,10 @@ def editReport(request, pk):
 	except Report.DoesNotExist:
 		return returnJson([], 404)
 
-	try:
-		admin = AdminUser.objects.get(id=request.user.id)
-	except AdminUser.DoesNotExist:
-		if request.user != report.reportingUser:
+	if request.user != report.reportingUser:
+		try:
+			admin = AdminUser.objects.get(id=request.user.id)
+		except AdminUser.DoesNotExist:
 			return returnJson([], 403)
 
 	if request.method == 'PUT':
@@ -173,7 +193,7 @@ def editReport(request, pk):
 		report.description = data["description"]
 		report.save()
 
-		return returnJson([dict(report.body)])
+		return returnJson([dict(report.body())])
 
 	elif request.method == 'DELETE':
 		report.delete()

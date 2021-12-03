@@ -616,6 +616,95 @@ class Api {
 		return data;
 	}
 
+	//Report CRUD
+	getAllCustomerReportingList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/customers/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllReportedCustomerList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reported/customers/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllSellerReportingList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/sellers/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllReportedSellerList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reported/sellers/pages/${pageNum}/`);
+		return data;
+	}
+
+	getCustomerReportingList = async (pageNum, customerId) => {
+		//login required
+		//403 : user is neither admin nor reporting customer
+		let data = await this.get(`/adminUsers/reports/reporting/customers/${customerId}/pages/${pageNum}/`);
+		return data;
+	}
+
+	getReportedCustomerList = async (pageNum, customerId) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reported/customers/${customerId}/pages/${pageNum}/`);
+		return data;
+	}
+
+	getSellerReportingList = async (pageNum, sellerId) => {
+		//login required
+		//403 : user is neither admin nor reporting seller
+		let data = await this.get(`/adminUsers/reports/reporting/sellers/${sellerId}/pages/${pageNum}/`);
+		return data;
+	}
+
+	getReportedSellerList = async (pageNum, sellerId) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reported/sellers/${sellerId}/pages/${pageNum}/`);
+		return data;
+	}
+
+	getReport = async (reportId) => {
+		//login required
+		//404 : report not found
+		//403 : user is neither admin nor reporting user
+		let data = await this.get(`/adminUsers/reports/${reportId}/`);
+		return data;
+	}
+
+	createReport = async (reportedUserId, reason, description) => {
+		//login required
+		//404 : reported user not found
+		let data = await this.post(`/adminUsers/reports/create/`,{reportedUserId, reason, description});
+		return data;
+	}
+
+	updateReport = async (reportId, reason, description) => {
+		//login required
+		//404 : report not found
+		//403 : user is neither admin nor reporting user
+		let data = await this.put(`/adminUsers/reports/${reportId}/edit/`,{reason, description});
+		return data;
+	}
+
+	deleteReport = async (reportId) => {
+		//login required
+		//404 : report not found
+		//403 : user is neither admin nor reporting user
+		let data = await this.delete(`/adminUsers/reports/${reportId}/edit/`);
+		return data;
+	}
+
+
 	//login logout
 	login = async (username, password) => {
 		//403 : wrong username or password
