@@ -1,15 +1,20 @@
 ﻿import './PersonalInfo.css'
-
 import React from 'react'
-import { Link } from 'react-router-dom'
+import PersonalOptions from './PersonalOptions'
+import PersonalDetails from './PersonalDetails'
 
 const PersonalInfo = () => {
     return (
-        <Link className='personal-link' to='/personalinfo'>
-            <div className='text'>
+        <div className='personal-info-box'>
+            <div className="info-title">
                 <h1>个人信息</h1>
             </div>
-        </Link>
+
+            <div className='display-box'>
+                <PersonalOptions />
+                <PersonalDetails />
+            </div>
+        </div>
     )
 }
 

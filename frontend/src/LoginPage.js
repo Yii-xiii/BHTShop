@@ -44,14 +44,6 @@ const LoginPage = () => {
             )
         }
     }
-
-    const loggedInType = Cookies.get('user')
-
-    if (loggedInType === 'Customer') {
-        return (
-            <HomePage />
-        )
-    }
     
     return (
         <div className='login'>

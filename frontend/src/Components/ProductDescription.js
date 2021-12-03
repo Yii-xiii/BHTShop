@@ -13,7 +13,7 @@ const ProductDescription = () => {
     const fetchProduct = async() => {
         const data = await api.getProduct(productId)
         // const data = await response.json()
-
+        console.log(data.data[0])
         return data.data[0]
     }
 
@@ -45,7 +45,7 @@ const ProductDescription = () => {
             <div className='description-seller-box'>
                 <h5>库存</h5>
                 {/* stock count here */}
-                <span>{sellerName}</span>
+                <span>{product.stock}</span>
             </div>
 
             <div className='description-details-title'>
