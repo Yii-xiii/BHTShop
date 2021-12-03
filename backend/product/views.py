@@ -401,19 +401,6 @@ def most_expensive_product_list(request, pageNum):
 	return returnJson([dict(product.body()) for product in products])
 
 
-def search_product(request, pageNum):
-	data = json.loads(request.body)
-	specs = ProductSpec.objects.filter(description__contains=data["keyword"])
-	products = []
-	for spec in specs:
-		products += [spec.product]
-	products += Product.objects.filter(title__contains=data["keyword"])
-	products += Product.objects.filter(description__contains=data["keyword"])
-	products = set([product.id for product in products])
-	results = Product.objects.filter(id__in=products).order_by('-soldAmount')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in results])
-
-
 def random_product_by_price_range(request):
 	data = json.loads(request.body)
 	specs = ProductSpec.objects.filter(price__gte=data["minPrice"],price__lte=data["maxPrice"])
@@ -426,6 +413,19 @@ def random_product_by_price_range(request):
 	else:
 		length = len(products)
 	results = random.sample(products,length)
+	return returnJson([dict(product.body()) for product in results])
+
+
+def search_product(request, pageNum):
+	data = json.loads(request.body)
+	specs = ProductSpec.objects.filter(description__contains=data["keyword"])
+	products = []
+	for spec in specs:
+		products += [spec.product]
+	products += Product.objects.filter(title__contains=data["keyword"])
+	products += Product.objects.filter(description__contains=data["keyword"])
+	products = set([product.id for product in products])
+	results = Product.objects.filter(id__in=products).order_by('-soldAmount')[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(product.body()) for product in results])
 
 

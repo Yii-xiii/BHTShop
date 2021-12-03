@@ -3,11 +3,9 @@ from . import views
 
 urlpatterns = [
     path('', views.product_list),
-    path('randoms/', views.random_product_list),
+    path('latest/', views.latest_product_list),
     path('best_selling/', views.best_selling_product_list),
     path('pages/<int:pageNum>/', views.product_list_by_page),
-    path('latest/', views.latest_product_list),
-    path('latest/pages/<int:pageNum>/', views.latest_product_list_by_page),
 
     path('sellers/latest/', views.seller_latest_product_list),
     path('sellers/best_selling/', views.seller_best_selling_product_list),
@@ -32,6 +30,23 @@ urlpatterns = [
     path('<int:pk>/images/<int:pk_image>/edit/', views.edit_product_image),
     path('<int:pk>/images/create/', views.create_product_image),
 
-    path('search/pages/<int:pageNum>/', views.search_product),
-    path('search/price_range/pages/<int:pageNum>/', views.random_product_by_price_range),
+    path('filter/categories/randoms/', views.random_product_list_by_category),
+    path('filter/categories/latest/pages/<int:pageNum>/', views.latest_product_list_by_category),
+    path('filter/categories/highest_rating/pages/<int:pageNum>/', views.highest_rating_product_list_by_category),
+    path('filter/categories/lowest_rating/pages/<int:pageNum>/', views.lowest_rating_product_list_by_category),
+    path('filter/categories/cheapest/pages/<int:pageNum>/', views.cheapest_product_list_by_category),
+    path('filter/categories/most_expensive/pages/<int:pageNum>/', views.most_expensive_product_list_by_category),
+    path('filter/categories/price_range/randoms/', views.random_product_by_price_range_and_category),
+
+
+    path('filter/randoms/', views.random_product_list),
+    path('filter/latest/pages/<int:pageNum>/', views.latest_product_list_by_page), # changed
+    path('filter/highest_rating/pages/<int:pageNum>/', views.highest_rating_product_list),
+    path('filter/lowest_rating/pages/<int:pageNum>/', views.lowest_rating_product_list),
+    path('filter/cheapest/pages/<int:pageNum>/', views.cheapest_product_list),
+    path('filter/most_expensive/pages/<int:pageNum>/', views.most_expensive_product_list),
+    path('filter/price_range/randoms/', views.random_product_by_price_range),
+
+
+    path('search/pages/<int:pageNum>/',views.search_product),
 ]
