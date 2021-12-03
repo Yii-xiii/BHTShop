@@ -428,7 +428,7 @@ class Api {
 	getOrder = async (orderId) => {
 		//login required
 		//404 : order not found
-		//403 : user is neither order.customer nor order.seller
+		//403 : user is neither order.customer nor order.productSpec.product.seller
 		let data = await this.get(`/orders/${orderId}/`);
 		return data;
 	}
@@ -488,7 +488,7 @@ class Api {
 	updateOrderStatus = async (orderId, statusId, status, description) => {
 		//login required
 		//404 : status not found
-		//403 : user is not order.product.seller
+		//403 : user is not order.productSpec.product.seller
 		let data = await this.put(`/orders/${orderId}/statuses/${statusId}/edit/`,{status, description});
 		return data;
 	}
@@ -496,10 +496,69 @@ class Api {
 	deleteOrderStatus = async (orderId, statusId) => {
 		//login required
 		//404 : status not found
-		//403 : user is not order.product.seller
+		//403 : user is not order.productSpec.product.seller
 		let data = await this.delete(`/orders/${orderId}/statuses/${statusId}/edit/`);
 		return data;
 	}
+
+	//ReturnRequest CRUD
+	getCustomerLatestReturnRequestList = async (customerId) => {
+		//404 : customer not found
+		let data = await this.get(`/orders/return_requests/customers/${customerId}/latest_list/`);
+		return data;
+	}
+
+	getProductLatestReturnRequestList = async (productId) => {
+		//404 : product not found
+		let data = await this.get(`/orders/return_requests/products/${productId}/latest_list/`);
+		return data;
+	}
+
+	getProductSpecLatestReturnRequestList = async (specId) => {
+		//404 : spec not found
+		let data = await this.get(`/orders/return_requests/productSpecs/${specId}/latest_list/`);
+		return data;
+	}
+
+	getReturnRequest = async (orderId) => {
+		//404 : order not found
+		let data = await this.get(`/orders/${orderId}/return_requests/`);
+		return data;
+	}
+
+	createReturnRequest = async (orderId, reason, description) => {
+		//login required
+		//404 : order not found
+		//403 : user is not a customer
+		//status = pending
+		let data = await this.post(`/orders/${orderId}/return_requests/create/`,{reason, description});
+		return data;
+	}
+
+	sellerUpdateReturnRequest = async (orderId, status) => {
+		//login required
+		//404 : req not found
+		//403 : user is not order.productSpec.product.seller
+		let data = await this.put(`/orders/${orderId}/return_requests/edit/`,{status});
+		return data;
+	}
+
+	customerUpdateReturnRequest = async (orderId, reason, description) => {
+		//login required
+		//404 : req not found
+		//403 : user is not order.customer
+		let data = await this.put(`/orders/${orderId}/return_requests/edit/`,{reason, description});
+		return data;
+	}
+
+	customerDeleteReturnRequest = async (orderId) => {
+		//login required
+		//404 : req not found
+		//403 : user is not order.customer
+		let data = await this.delete(`/orders/${orderId}/return_requests/edit/`);
+		return data;
+	}
+
 
 	//Customer CRUD
 	getCustomer = async (id) => {
