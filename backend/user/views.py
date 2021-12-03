@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Customer, Seller, User
+from adminUser.models import AdminUser
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -152,7 +153,12 @@ def user_login(request):
 				customer = Customer.objects.get(username = username)
 				return returnJson([dict(customer.body())], 0, {'user' : 'Customer', 'username' : username, 'user_id' : user.id})
 			except Customer.DoesNotExist:
-				return returnJson([],403)
+				try:
+					admin = AdminUser.objects.get(username=username)
+					return returnJson([dict(admin.body())], 0, {'user' : 'Admin', 'username' : username, 'user_id' : user.id})
+				except AdminUser.DoesNotExist:
+					logout(request)
+					return returnJson([],403)
 	else:
 		return returnJson([], 403)
 
@@ -177,6 +183,10 @@ def current_user(request):
 			customer = Customer.objects.get(username = username)
 			return returnJson([dict(customer.body)])
 		except Customer.DoesNotExist:
-			return returnJson([{'username' : username}]) #TODO admin
+			try : 
+				admin = AdminUser.objects.get(username = username)
+				return returnJson([dict(admin.body)])
+			except AdminUser.DoesNotExist:
+				return returnJson([{'username' : username}])
 
 

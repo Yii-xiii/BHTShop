@@ -14,6 +14,6 @@ urlpatterns = [
 	path('reports/reported/sellers/<int:pk_seller>/pages/<int:pageNum>/', views.get_latest_reported_seller_list_by_page),
 
 	path('reports/<int:pk>/', views.getReport),
-	path('reports/', views.createReport),
+	path('reports/create/', views.createReport),
 	path('reports/<int:pk>/edit/', views.editReport),
 ]

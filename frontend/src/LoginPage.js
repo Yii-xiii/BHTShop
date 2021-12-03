@@ -28,6 +28,8 @@ const LoginPage = () => {
             } else if (Cookies.get('user') === 'Seller') {
                 const sellerId = Cookies.get('user_id')
                 navigate(`/seller/${sellerId}`)
+            } else if (Cookies.get('user' === 'Admin')) {
+                //TODO
             }
         }
     }
