@@ -1,10 +1,33 @@
-import React from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import {useState, useEffect} from 'react'
+import {Link, useParams} from 'react-router-dom'
 import './ProductDescription.css'
+import api from './Api'
 
-const ProductDescription = ({ productId, description, seller }) => {    
-    const sellerUsername = seller['username']
-    
+const ProductDescription = () => {    
+    const { productId } = useParams()
+    const [product, setProduct] = useState([])
+    const [sellerName, setSellerName] = useState([])
+
+    // Fetch data from database
+    // Fetch Product from database
+    const fetchProduct = async() => {
+        const data = await api.getProduct(productId)
+        // const data = await response.json()
+
+        return data.data[0]
+    }
+
+    // Importing data
+    useEffect(() => {
+        const getProduct = async() => {
+            const productFromServer = await fetchProduct()
+            setProduct(productFromServer)
+            setSellerName(productFromServer.seller.username)
+        }
+
+        getProduct()
+    }, [])
+
     return (
         <div className='description-outer-box'>
             <div className='description-spec-title'>
@@ -15,14 +38,14 @@ const ProductDescription = ({ productId, description, seller }) => {
                 <h5>商家</h5>
                 {/* link to seller page */}
                 <Link className='seller-page-link' to=''>
-                    <span>{sellerUsername}</span>
+                    <span>{sellerName}</span>
                 </Link>
             </div>
 
             <div className='description-seller-box'>
                 <h5>库存</h5>
                 {/* stock count here */}
-                <span>{sellerUsername}</span>
+                <span>{sellerName}</span>
             </div>
 
             <div className='description-details-title'>
@@ -30,7 +53,7 @@ const ProductDescription = ({ productId, description, seller }) => {
             </div>
 
             <div className='description-details-text-box'>
-                <span>{description}</span> 
+                <span>{product.description}</span> 
             </div>
         </div>
     )
