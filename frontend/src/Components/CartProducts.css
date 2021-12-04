@@ -20,8 +20,9 @@
     border-radius: 30px;
     height: auto;
     min-height: 300px;
-    margin-right: 5%;
-    width: 70%;
+    min-width: 600px;
+    margin-right: 2%;
+    width: 73%;
 }
 
 .cart-price-show-box {
@@ -31,6 +32,7 @@
     border-radius: 30px;
     height: 230px;
     max-height: 250px;
+    min-width: 200px;
     width: 25%;
 }
 

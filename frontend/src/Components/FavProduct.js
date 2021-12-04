@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom'
 
 const FavProduct = ({ favProduct }) => {
     const [image, setImages] = useState([])
+    const [stock, setStock] = useState('')
+    const [price, setPrice] = useState('0.00')
 
     // Fetch data from database
     const fetchImages = async() => {
@@ -13,32 +15,68 @@ const FavProduct = ({ favProduct }) => {
         if (data !== undefined) return data.errorCode === '404' ? (console.log('image not found')) : data.data[0]
     }
 
+    const fetchSpecs = async() => {
+        const data = await api.getProductSpecList(favProduct.id)
+        // const data = await response.json()
+
+        if (data !== undefined) return data.data
+    }
+
     useEffect(() => {
         const getImages = async() => {
             const imageFromServer = await fetchImages()
             setImages(imageFromServer)
         }
 
+        const getSpecs = async() => {
+            const specsFromServer = await fetchSpecs()
+            setStock(specsFromServer[0].stock)
+            setPrice(specsFromServer[0].price)
+        }
+
+        getSpecs()
         getImages()
     }, [])
 
     const path = `/product/${favProduct.id}`
 
+    const deleteCollection = async(favProductId) => {
+        const data = await api.deleteCustomerCollection(favProductId)
+        window.location.reload(false)
+    }
+
     return (
         <div>
-            <Link to={path}>
-                <div className='fav-product-box'>
-                    <div className='fav-image-box'>
-                        <img src={ image? image.image_url : '0'} alt='img'/>
+            <div className='fav-product-box'>
+                <Link className='image-link' to={path}>
+                    <div>
+                        <img className='image-item' src={ image? image.image_url : '0'} alt='img'/>
+                    </div>
+                </Link>
+
+                <div className='fav-details-box'>
+                    <div className='fav-product-description'>
+                        <h3>商品: </h3> 
+                        <span>{favProduct.title}</span>
                     </div>
 
-                    <div className='fav-details-box'>
-                        <span>商品名称: {favProduct.title}</span>
-                        <span>商品价格: {favProduct.title}</span>
-                        <span>商品库存: {favProduct.title}</span>
+                    <div className='fav-product-description'>
+                        <h3>描述: </h3>
+                        <span>{favProduct.description}</span>
+                    </div>
+                    
+                    <div className='fav-product-description'>
+                        <h3>价格: </h3>
+                        <span>{price}</span>
+                    </div>
+
+                    <div className='fav-buttons-box'>
+                        <button className='delete-item-button' onClick={() => deleteCollection(favProduct.id)}>
+                            删除
+                        </button>
                     </div>
                 </div>
-            </Link>
+            </div>
         </div>
     )
 }

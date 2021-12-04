@@ -17,8 +17,8 @@ const RegLog = () => {
         if (data.errorCode === 403) {
             console.log('not logged in yet.')
         } else {
-            window.location.reload(false)
             navigate('/')
+            window.location.reload(false)
         }
     }
 

@@ -36,16 +36,41 @@ const CartProduct = ({ cartProduct }) => {
             </div>
             
             <div className='cart-product-descriptions-box'>
-                <h3>商品: {cartProduct.productSpec.product.title}</h3>
-                <h3>规格: {cartProduct.productSpec.description}</h3>
-                <h3>价格: {cartProduct.productSpec.price}</h3>
-                <h3>数量: {cartProduct.quantity}</h3>
-                <h3>总付金额: ¥ {cartProduct.productSpec.price * cartProduct.quantity}</h3>
-            </div>
+                <div className='cart-product-description'>
+                    <h3>商品: </h3> 
+                    <span>{cartProduct.productSpec.product.title}</span>
+                </div>
+                
+                <div className='cart-product-description'>
+                    <h3>规格: </h3>
+                    <span>{cartProduct.productSpec.description}</span>
+                </div>
 
-            <button className='delete-item-button' onClick={() => deleteItem(cartProduct.productSpec.id)}>
-                删除
-            </button>
+                <div className='cart-product-description'>
+                    <h3>价格: </h3>
+                    <span>¥ {cartProduct.productSpec.price}</span>
+                </div>
+
+                <div className='cart-product-description'>
+                    <h3>数量: </h3>
+                    <span>{cartProduct.quantity}</span>
+                </div>
+
+                <div className='cart-product-description'>
+                    <h3>总金额: </h3>
+                    <span>¥ {(cartProduct.productSpec.price * cartProduct.quantity).toFixed(2)}</span>
+                </div>
+
+                <div className='buttons-box'>
+                    <button className='edit-item-button'>
+                        修改
+                    </button>
+
+                    <button className='delete-item-button' onClick={() => deleteItem(cartProduct.productSpec.id)}>
+                        删除
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }
