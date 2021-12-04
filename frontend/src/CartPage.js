@@ -3,6 +3,7 @@ import Header from './Components/Header'
 import Footer from './Components/Footer'
 import Cookies from 'js-cookie'
 import LoginPage from './LoginPage'
+import CartProducts from './Components/CartProducts'
 
 const CartPage = () => {
     const loggedInType = Cookies.get('user')
@@ -11,9 +12,7 @@ const CartPage = () => {
         return (
             <div>
                 <Header />
-    
-                <h1>TODO User Cart List</h1>
-    
+                <CartProducts />
                 <Footer />
             </div>
         )

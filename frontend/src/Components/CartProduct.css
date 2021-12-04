@@ -1,0 +1,39 @@
+.cart-product-outer-box {
+    display: inline-flex;
+    flex-direction: row;
+    height: 180px;
+    width: 90%;
+    margin-bottom: 50px;
+}
+
+.cart-product-image-box {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    min-width: 180px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.cart-product-image-box img {
+    position: absolute;
+    min-width: 100%;
+}
+
+.cart-product-descriptions-box {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.delete-item-button {
+    height: 30px;
+    width: 60px;
+    margin-top: 10px;
+    background-color: pink;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}

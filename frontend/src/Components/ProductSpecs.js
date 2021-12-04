@@ -4,6 +4,7 @@ import './ProductSpecs.css'
 import api from './Api'
 import { useNavigate, useParams } from 'react-router'
 import Cookies from 'js-cookie'
+import Cart from './Cart'
 
 const ProductSpecs = () => {
     const navigate = useNavigate()
@@ -64,7 +65,7 @@ const ProductSpecs = () => {
             // check if spec found
             const data = await api.createCustomerCart(cartSpec, cartQuantity)
             
-            console.log(data)
+            window.location.reload(false)
         } else if (Cookies.get('user') === 'Seller') {
             // DO SOMETHING TO LIMIT THE SELLER
         } else {
