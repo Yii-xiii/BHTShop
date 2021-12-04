@@ -21,7 +21,7 @@ const ProductMainInfo = () => {
     const fetchSpecs = async() => {
         const data = await api.getProductSpecList(productId)
         // const data = await response.json()
-
+        console.log(data.data)
         return data.data
     } 
 
