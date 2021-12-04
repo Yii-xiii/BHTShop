@@ -1,19 +1,18 @@
 import React from 'react'
-import Header from './Components/Header'
+import FavSellers from './Components/FavSellers'
 import Footer from './Components/Footer'
+import Header from './Components/Header'
 import Cookies from 'js-cookie'
 import LoginPage from './LoginPage'
 
-const FavPage = () => {
+const FavSellerPage = () => {
     const loggedInType = Cookies.get('user')
 
     if (loggedInType === 'Customer') {
         return (
             <div>
                 <Header />
-    
-                <h1>TODO User Favourite List</h1>
-    
+                <FavSellers />
                 <Footer />
             </div>
         )
@@ -25,4 +24,4 @@ const FavPage = () => {
     )
 }
 
-export default FavPage
+export default FavSellerPage

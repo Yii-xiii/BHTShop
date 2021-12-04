@@ -11,7 +11,7 @@ const Favourite = () => {
     if (loggedInType === 'Customer') {
         return (
             // link to userId fav list
-            <Link className='fav-link' to='/fav'>
+            <Link className='fav-link' to='/favProducts'>
                 <img className='fav-logo' src={favLogo} alt='logo'/>
                 {/* getting favourite count and pass in */}
                 <Notification count='0' type='fav'/>
