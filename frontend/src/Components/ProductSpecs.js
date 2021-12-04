@@ -6,7 +6,8 @@ import { useParams } from 'react-router'
 
 const ProductSpecs = () => {
     const { productId } = useParams()
-    let [specs, setSpecs] = useState([])
+    const [specs, setSpecs] = useState([])
+    const [price, setPrice] = useState('0.00')
 
     const fetchSpecs = async() => {
         const data = await api.getProductSpecList(productId)
@@ -19,16 +20,21 @@ const ProductSpecs = () => {
         const getSpecs = async() => {
             const specsFromServer = await fetchSpecs()
             setSpecs(specsFromServer)
+            setPrice(specsFromServer[0].price)
         }
 
         getSpecs()
     }, [])
 
+    const changePrice = (newPrice) => {
+        setPrice(newPrice)
+    }
+
     return (
         <div>
             <div className='spec-choose-box'>
-                { specs ? (specs.map((spec) => (
-                    <button className='spec-button'>
+                { specs ? (specs.map((spec, index) => (
+                    <button key={index} onClick={() => changePrice(spec.price)}>
                         {spec.description}
                     </button>
                 ))) : console.log('specs not found.')}
@@ -36,7 +42,13 @@ const ProductSpecs = () => {
 
             <div className='price-box'>
                 {/* selected variant price */}
-                <span>¥ </span>
+                <span>¥ {price}</span>
+            </div>
+
+            <div className='add-to-cart-box'>
+                <button>
+                    加入购物车
+                </button>
             </div>
         </div>
     )

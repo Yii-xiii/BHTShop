@@ -12,6 +12,7 @@
     display: inline-block;
     flex-direction: column;
     width: 700px;
+    margin-left: 10px;
 }
 
 .main-info-show-box {

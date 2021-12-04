@@ -18,9 +18,6 @@ const Product = ({ product, type }) => {
     const fetchSpec = async() => {
         const data = await api.getProductSpecList(product.id)
         // const data = await response.json()
-        console.log(data.data)
-
-        if (data === 'undefined') console.log(product.title + ' spec undefined')
         
         if (data !== 'undefined') return data.data[0]
     } 

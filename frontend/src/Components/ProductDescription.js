@@ -13,7 +13,6 @@ const ProductDescription = () => {
     const fetchProduct = async() => {
         const data = await api.getProduct(productId)
         // const data = await response.json()
-        console.log(data.data[0])
         return data.data[0]
     }
 
