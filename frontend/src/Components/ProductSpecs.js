@@ -46,10 +46,22 @@ const ProductSpecs = () => {
         setQuantity(value)
     }
 
+    const addCollection = async(collectionId) => {
+        if (Cookies.get('user') === 'Customer') {
+            // check if spec found
+            const data = await api.createCustomerCollection(collectionId)
+
+            console.log(data)
+        } else if (Cookies.get('user') === 'Seller') {
+            // DO SOMETHING TO LIMIT THE SELLER
+        } else {
+            navigate('/login')
+        }
+    }
+
     const addCart = async(cartSpec, cartQuantity) => {
         if (Cookies.get('user') === 'Customer') {
             // check if spec found
-            console.log(cartSpec + ' ' + cartQuantity)
             const data = await api.createCustomerCart(cartSpec, cartQuantity)
             
             console.log(data)
@@ -89,7 +101,11 @@ const ProductSpecs = () => {
             </div>
 
             <div className='add-to-cart-box'>
-                <button onClick={() => addCart(selectedSpec, quantity)}>
+                <button className='fav-button' onClick={() => addCollection(productId)}>
+                    收藏
+                </button>
+
+                <button className='add-cart-button' onClick={() => addCart(selectedSpec, quantity)}>
                     加入购物车
                 </button>
                 

@@ -25,19 +25,21 @@ const FavProduct = ({ favProduct }) => {
     const path = `/product/${favProduct.id}`
 
     return (
-        <Link to={path}>
-            <div className='fav-product-box'>
-                <div className='fav-image-box'>
-                    <img src={ image? image.image_url : '0'} alt='img'/>
-                </div>
+        <div>
+            <Link to={path}>
+                <div className='fav-product-box'>
+                    <div className='fav-image-box'>
+                        <img src={ image? image.image_url : '0'} alt='img'/>
+                    </div>
 
-                <div className='fav-details-box'>
-                    <span>商品名称: {favProduct.title}</span>
-                    <span>商品价格: {favProduct.title}</span>
-                    <span>商品库存: {favProduct.title}</span>
+                    <div className='fav-details-box'>
+                        <span>商品名称: {favProduct.title}</span>
+                        <span>商品价格: {favProduct.title}</span>
+                        <span>商品库存: {favProduct.title}</span>
+                    </div>
                 </div>
-            </div>
-        </Link>
+            </Link>
+        </div>
     )
 }
 
