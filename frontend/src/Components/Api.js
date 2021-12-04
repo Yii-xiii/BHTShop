@@ -393,11 +393,19 @@ class Api {
 		return data;
 	}
 
-	createCustomerCart = async (specId) => {
+	createCustomerCart = async (specId, quantity) => {
 		//login required
 		//403 : user is not customer
 		//404 : spec not found
-		let data = await this.post(`carts/create/`,{specId});
+		let data = await this.post(`carts/create/`,{specId, quantity});
+		return data;
+	}
+
+	updateCustomerCart = async (specId, quantity) => {
+		//login required
+		//403 : user is not cart.customer
+		//404 : cart not found
+		let data = await this.delete(`carts/productSpecs/${specId}/edit/`,{quantity});
 		return data;
 	}
 
