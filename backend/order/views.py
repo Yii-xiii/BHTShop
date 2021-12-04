@@ -70,7 +70,7 @@ def create_order(request):
 		return returnJson([],404)
 
 	if (spec.stock < data["quantity"]):
-		return returnJson([],404)
+		return returnJson([],400)
 
 	quantity = data["quantity"]
 	totalPrice = data["totalPrice"]

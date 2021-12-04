@@ -437,6 +437,7 @@ class Api {
 		//login required
 		//404 : spec not found
 		//403 : user is not a customer
+		//400 : quantity > stock
 		let data = await this.post(`/orders/create/`,{specId, quantity, totalPrice, address, phoneNumber});
 		return data;
 	}
