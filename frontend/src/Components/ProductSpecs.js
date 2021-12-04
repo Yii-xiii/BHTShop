@@ -2,9 +2,11 @@ import React from 'react'
 import {useState, useEffect} from 'react'
 import './ProductSpecs.css'
 import api from './Api'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
+import Cookies from 'js-cookie'
 
 const ProductSpecs = () => {
+    const navigate = useNavigate()
     const { productId } = useParams()
     const [specs, setSpecs] = useState([])
     const [price, setPrice] = useState('0.00')
@@ -44,6 +46,20 @@ const ProductSpecs = () => {
         setQuantity(value)
     }
 
+    const addCart = async(cartSpec, cartQuantity) => {
+        if (Cookies.get('user') === 'Customer') {
+            // check if spec found
+            console.log(cartSpec + ' ' + cartQuantity)
+            const data = await api.createCustomerCart(cartSpec, cartQuantity)
+            
+            console.log(data)
+        } else if (Cookies.get('user') === 'Seller') {
+            // DO SOMETHING TO LIMIT THE SELLER
+        } else {
+            navigate('/login')
+        }
+    }
+
     return (
         <div>
             <div className='price-box'>
@@ -70,12 +86,10 @@ const ProductSpecs = () => {
                     value={quantity}
                     onChange={event => changeQuantity(event)} 
                     required/>
-
-                selected: {quantity}
             </div>
 
             <div className='add-to-cart-box'>
-                <button>
+                <button onClick={() => addCart(selectedSpec, quantity)}>
                     加入购物车
                 </button>
                 
