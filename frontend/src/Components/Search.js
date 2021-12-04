@@ -1,8 +1,11 @@
 import React from 'react'
 import SearchIcon from '@material-ui/icons/Search'
+import { Link } from 'react-router-dom'
 import './Search.css'
 
 const Search = () => {
+    let searchName = ''
+
     return (
         <div className='navbar-search'>
             <form action='/' method='get' className='navbar-search'>
@@ -12,6 +15,7 @@ const Search = () => {
                     placeholder='搜索'
                     id='header-search'
                     name='s'/>
+                
                 <button type='submit' className='navbar-search-button'><SearchIcon className='navbar-search-icon' /></button>
             </form>
         </div>

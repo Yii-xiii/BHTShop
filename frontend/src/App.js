@@ -35,6 +35,7 @@ function App() {
           <Route path='/sellerAnalysis' element={<SellerAnalysisPage />}/>
           <Route path='/orderList/' element={<OrderListPage />}/>
           <Route path='/orders' element={<PersonalOrdersPage />}/>
+          
         </Routes>
       </div>
     </Router>

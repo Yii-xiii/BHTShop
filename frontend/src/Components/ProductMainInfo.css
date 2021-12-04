@@ -8,18 +8,24 @@
     min-width: 300px;
 }
 
+.right-side-box {
+    display: inline-block;
+    flex-direction: column;
+    width: 700px;
+}
+
 .main-info-show-box {
     width: 100%;
     height: auto;
-    display: inline-flex;
+    display: flex;
 }
 
 .main-info-name-box {
     display: flex;
     margin-top: 30px;
     margin-left: 10px;
-    width: 50%;
-    height: 100px;
+    width: 85%;
+    height: 50px;
 }
 
 .main-info-name-box h2 {
@@ -29,7 +35,7 @@
 .main-info-photo-box {
     width: 300px;
     height: 300px;
-    max-width: 300px;
+    min-width: 300px;
     margin: 30px;
     background: linear-gradient(lightgrey, transparent);
     background-color: grey;

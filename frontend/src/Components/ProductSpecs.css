@@ -1,0 +1,29 @@
+.spec-choose-box {
+    margin: 10px;
+    margin-top: 20px;
+    height: 150px;
+    display: flex;
+    max-height: 200px;
+}
+
+.spec-button {
+    width: auto;
+    height: 35px;
+    margin-right: 20px;
+    border-radius: 10px;
+    border: 0px;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.spec-button:active {
+    transform: scale(0.95);
+}
+
+.price-box {
+    margin: 10px;
+}
+
+.price-box span {
+    font-size: 25px;
+}

@@ -2,13 +2,13 @@ import {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import './ProductMainInfo.css'
 import api from './Api'
+import ProductSpecs from './ProductSpecs'
 
 const ProductMainInfo = () => {
     // Initializing
     const { productId } = useParams()
     const [product, setProduct] = useState([])
     const [image, setImages] = useState([])
-    const [specs, setSpecs] = useState([])
 
     // Fetch Product from database
     const fetchProduct = async() => {
@@ -17,13 +17,6 @@ const ProductMainInfo = () => {
 
         return data.data[0]
     }
-
-    const fetchSpecs = async() => {
-        const data = await api.getProductSpecList(productId)
-        // const data = await response.json()
-        console.log(data.data)
-        return data.data
-    } 
 
     const fetchImages = async() => {
         const data = await api.getFirstProductImage(productId)
@@ -43,14 +36,8 @@ const ProductMainInfo = () => {
             setImages(imageFromServer)
         }
 
-        const getSpecs = async() => {
-            const specsFromServer = await fetchSpecs()
-            setSpecs(specsFromServer)
-        }
-
         getProduct()
         getImages()
-        getSpecs()
     }, [])
 
     return (
@@ -60,9 +47,16 @@ const ProductMainInfo = () => {
                     <img className='main-image' src={ image? image.image_url : '0'} alt='img'/>
                 </div>
                 
-                <div className='main-info-name-box'>
-                    <h2>{product.title}</h2>
+                <div className='right-side-box'>
+                    <div className='main-info-name-box'>
+                        <h2>{product.title}</h2>
+                    </div>
+
+                    <div className='spec-choice-box'>
+                        <ProductSpecs />
+                    </div>
                 </div>
+                
             </div>
         </div>
     )

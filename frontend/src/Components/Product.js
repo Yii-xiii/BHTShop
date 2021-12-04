@@ -72,7 +72,7 @@ const Product = ({ product, type }) => {
                         </div>
 
                         <h3 className='title-text'>{product.title}</h3>
-                        <h5 className='desc-text'>¥{spec.price}</h5>
+                        <h5 className='desc-text'>¥ {spec.price}</h5>
                     </div>
                 </Link>
             ) : console.log('Empty title product found.')}
