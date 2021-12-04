@@ -35,7 +35,7 @@ const FavProducts = () => {
 
                 <div className='fav-list-box'>
                     {favProducts.map((favProduct, index) => (
-                    <FavProduct key={index} favProduct={favProduct.product}/>
+                        <FavProduct key={index} favProduct={favProduct.product}/>
                     ))} 
                 </div>
                 
