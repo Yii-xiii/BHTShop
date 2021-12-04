@@ -8,7 +8,6 @@ const FavSellers = () => {
             
             <div className='fav-show-box'>
                 <FavSellerOptions />
-                
             </div>
         </div>
     )

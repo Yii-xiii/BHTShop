@@ -1,5 +1,31 @@
 .fav-product-box {
-    display: flex;
-    align-items: center;
+    display: inline-flex;
+    flex-direction: row;
+    height: auto;
     margin: 50px;
+    margin-bottom: 50px;
+    margin-top: 0px;
+}
+
+.fav-image-box {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.fav-image-box img {
+    position: absolute;
+    min-width: 100%;
+}
+
+.fav-details-box {
+    margin-left: 40px;
+    margin-top: 20px;
+    height: 100px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
 }
