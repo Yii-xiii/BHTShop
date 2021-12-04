@@ -89,7 +89,11 @@ const ProductSpecs = () => {
             </div>
 
             <div className='add-to-cart-box'>
-                <button onClick={() => addCart(selectedSpec, quantity)}>
+                <button className='fav-button' onClick={() => addCart(selectedSpec, quantity)}>
+                    收藏
+                </button>
+
+                <button className='add-cart-button' onClick={() => addCart(selectedSpec, quantity)}>
                     加入购物车
                 </button>
                 

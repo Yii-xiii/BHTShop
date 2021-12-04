@@ -34,7 +34,7 @@
     margin-top: 25px;
 }
 
-.add-to-cart-box button {
+.add-cart-button {
     background-color: tan;
     color: white;
     width: auto;
@@ -72,4 +72,17 @@
     padding: 0px 5px;
     margin-left: 20px;
     height: 35px;
+}
+
+.fav-button {
+    background-color: pink;
+    color: white;
+    width: auto;
+    font-size: 15px;
+    height: 35px;
+    margin-right: 20px;
+    border-radius: 10px;
+    border: 0px;
+    padding: 5px 20px;
+    cursor: pointer;
 }
