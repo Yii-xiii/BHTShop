@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import './FavProduct.css'
 import api from './Api'
+import {Link} from 'react-router-dom'
 
 const FavProduct = ({ favProduct }) => {
     const [image, setImages] = useState([])
@@ -21,19 +22,22 @@ const FavProduct = ({ favProduct }) => {
         getImages()
     }, [])
 
-    return (
-        <div className='fav-product-box'>
-            <div className='fav-image-box'>
-                <img src={ image? image.image_url : '0'} alt='img'/>
-            </div>
+    const path = `/product/${favProduct.id}`
 
-            <div className='fav-details-box'>
-                <span>商品名称: {favProduct.title}</span>
-                <span>商品价格: {favProduct.title}</span>
-                <span>商品库存: {favProduct.title}</span>
+    return (
+        <Link to={path}>
+            <div className='fav-product-box'>
+                <div className='fav-image-box'>
+                    <img src={ image? image.image_url : '0'} alt='img'/>
+                </div>
+
+                <div className='fav-details-box'>
+                    <span>商品名称: {favProduct.title}</span>
+                    <span>商品价格: {favProduct.title}</span>
+                    <span>商品库存: {favProduct.title}</span>
+                </div>
             </div>
-           
-        </div>
+        </Link>
     )
 }
 
