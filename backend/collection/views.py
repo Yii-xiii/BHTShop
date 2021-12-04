@@ -19,7 +19,9 @@ def customer_collection_list(request):
 	if request.COOKIES["user"] != "Customer":
 		return returnJson([], 403)
 
-	collections = Collection.objects.filter(customer=request.user)
+	customer = Customer.objects.get(id=request.user.id)
+
+	collections = Collection.objects.filter(customer=customer)
 
 	return returnJson([dict(collection.body()) for collection in collections])
 
@@ -29,7 +31,9 @@ def latest_customer_collection_list(request):
 	if request.COOKIES["user"] != "Customer":
 		return returnJson([], 403)
 
-	collections = Collection.objects.filter(customer=request.user).order_by('-id')
+	customer = Customer.objects.get(id=request.user.id)
+
+	collections = Collection.objects.filter(customer=customer).order_by('-id')
 
 	return returnJson([dict(collection.body()) for collection in collections])
 
@@ -38,7 +42,9 @@ def latest_customer_collection_list_by_page(request, pageNum):
 	if request.COOKIES["user"] != "Customer":
 		return returnJson([], 403)
 
-	collections = Collection.objects.filter(customer=request.user).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	customer = Customer.objects.get(id=request.user.id)
+
+	collections = Collection.objects.filter(customer=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 
 	return returnJson([dict(collection.body()) for collection in collections])
 
@@ -53,25 +59,33 @@ def create_customer_collection(request, pk_product):
 	except Product.DoesNotExist:
 		return returnJson([], 404)
 
-	collection = Collection.objects.create(product=product, customer=request.user)
+	customer = Customer.objects.get(id=request.user.id)
 
-	return returnJson([dict(collection.body()) for collection in collections])
+	try:
+		collection = Collection.objects.get(customer=customer, product=product)
+	except Collection.DoesNotExist:
+		collection = Collection.objects.create(product=product, customer=customer)
+		return returnJson([dict(collection.body())])
+
+	return returnJson([], 400)
 
 
 @login_required
 def get_customer_collection(request, pk_product):
+	if request.COOKIES["user"] != "Customer":
+		return returnJson([],403)
+
 	try:
 		product = Product.objects.get(id = pk_product)
 	except Product.DoesNotExist:
 		return returnJson([], 404)
 
+	customer = Customer.objects.get(id=request.user.id)
+
 	try:
-		collection = Collection.objects.filter(customer=request.user).get(product=product)
+		collection = Collection.objects.get(customer=customer, product=product)
 	except Collection.DoesNotExist:
 		return returnJson([], 404)
-
-	if collection.customer != request.user:
-		return returnJson([],403)
 
 	
 	return returnJson([dict(collection.body())])
@@ -79,18 +93,20 @@ def get_customer_collection(request, pk_product):
 
 @login_required
 def edit_customer_collection(request, pk_product):
+	if request.COOKIES["user"] != "Customer":
+		return returnJson([],403)
+
 	try:
 		product = Product.objects.get(id = pk_product)
 	except Product.DoesNotExist:
 		return returnJson([], 404)
 
+	customer = Customer.objects.get(id=request.user.id)
+
 	try:
-		collection = Collection.objects.filter(customer=request.user).get(product=product)
+		collection = Collection.objects.get(customer=customer, product=product)
 	except Collection.DoesNotExist:
 		return returnJson([], 404)
-
-	if collection.customer != request.user:
-		return returnJson([],403)
 
 	if request.method == 'DELETE':
 		collection.delete()

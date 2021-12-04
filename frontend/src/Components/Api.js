@@ -1,9 +1,14 @@
 import axios from "axios";
 import Cookies from "js-cookie"
 
+const proxy = "http://localhost:8000";
+
 class Api {
+
 	async post(path, item) {
 		try {
+			// console.log(path)
+			// console.log(proxy + path)
 			const res = await axios.post(path,item);
 			const res_data = await res.data;
 			//console.log(res.data);
@@ -16,7 +21,7 @@ class Api {
 
 	async put(path, item) {
 		try {
-			const res = await axios.post(path,item);
+			const res = await axios.put(path,item);
 			const res_data = await res.data;
 			//console.log(res.data);
 			return res_data;
@@ -61,12 +66,14 @@ class Api {
 
 	getSellerLatestProductList = async () => {
 		//login required
+		//404 : seller not found
 		let data = await this.get(`/products/sellers/best_selling/`);
 		return data;
 	}
 
 	getSellerBestSellingProductList = async () => {
 		//login required
+		//404 : seller not found
 		let data = await this.get(`/products/sellers/best_selling/`);
 		return data;
 	}
@@ -211,37 +218,37 @@ class Api {
 	//Product Comment CRUD
 	getProductCommentList = async (productId) => {
 		//404 : product not found
-		let data = await this.get(`comments/products/${productId}/`);
+		let data = await this.get(`/comments/products/${productId}/`);
 		return data;
 	}
 
 	getProductCommentListByPage = async (productId,pageNum) => {
 		//404 : product not found
-		let data = await this.get(`comments/products/${productId}/pages/${pageNum}/`);
+		let data = await this.get(`/comments/products/${productId}/pages/${pageNum}/`);
 		return data;
 	}
 
 	getLatestProductCommentList = async (productId) => {
 		//404 : product not found
-		let data = await this.get(`comments/products/${productId}/latest/`);
+		let data = await this.get(`/comments/products/${productId}/latest/`);
 		return data;
 	}
 
 	getLatestProductCommentListByPage = async (productId,pageNum) => {
 		//404 : product not found
-		let data = await this.get(`comments/products/${productId}/latest/pages/${pageNum}/`);
+		let data = await this.get(`/comments/products/${productId}/latest/pages/${pageNum}/`);
 		return data;
 	}
 
 	getOrderComment = async (orderId) => {
 		//404 : order not found
-		let data = await this.get(`comments/orders/${orderId}/`);
+		let data = await this.get(`/comments/orders/${orderId}/`);
 		return data;
 	}
 
 	getProductComment = async (commentId) => {
 		//404 : comment not found
-		let data = await this.get(`comments/${commentId}/`);
+		let data = await this.get(`/comments/${commentId}/`);
 		return data;
 	}
 
@@ -250,7 +257,7 @@ class Api {
 		//404 : order not found
 		//403 : user is not a customer or not order.customer
 		//400 : customer had alrdy left a comment for this order
-		let data = await this.post(`comments/orders/${orderId}/create/`,{description, rating});
+		let data = await this.post(`/comments/orders/${orderId}/create/`,{description, rating});
 		return data;
 	}
 
@@ -258,7 +265,7 @@ class Api {
 		//login required
 		//404 : comment not found
 		//403 : user is not a comment.order.customer
-		let data = await this.put(`comments/${commentId}/edit/`,{description, rating});
+		let data = await this.put(`/comments/${commentId}/edit/`,{description, rating});
 		return data;
 	}
 
@@ -266,7 +273,7 @@ class Api {
 		//login required
 		//404 : comment not found
 		//403 : user is not a comment.order.customer
-		let data = await this.delete(`comments/${commentId}/edit/`);
+		let data = await this.delete(`/comments/${commentId}/edit/`);
 		return data;
 	}
 
@@ -275,21 +282,21 @@ class Api {
 	getCustomerCollectionList = async () => {
 		//login required
 		//403 : user is not customer
-		let data = await this.get(`collections/`);
+		let data = await this.get(`/collections/`);
 		return data;
 	}
 
 	getLatestCustomerCollectionList = async () => {
 		//login required
 		//403 : user is not customer
-		let data = await this.get(`collections/latest/`);
+		let data = await this.get(`/collections/latest/`);
 		return data;
 	}
 
 	getLatestCustomerCollectionListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not customer
-		let data = await this.get(`collections/latest/pages/${pageNum}/`);
+		let data = await this.get(`/collections/latest/pages/${pageNum}/`);
 		return data;
 	}
 
@@ -297,7 +304,7 @@ class Api {
 		//login required
 		//403 : user is not collection.customer
 		//404 : collection not found
-		let data = await this.get(`collections/products/${productId}/`);
+		let data = await this.get(`/collections/products/${productId}/`);
 		return data;
 	}
 
@@ -305,7 +312,8 @@ class Api {
 		//login required
 		//403 : user is not customer
 		//404 : product not found
-		let data = await this.post(`collections/create/`,{productId});
+		//400 : alrdy exists
+		let data = await this.post(`/collections/create/`,{productId});
 		return data;
 	}
 
@@ -313,7 +321,7 @@ class Api {
 		//login required
 		//403 : user is not collection.customer
 		//404 : collection not found
-		let data = await this.delete(`collections/products/${productId}/edit/`);
+		let data = await this.delete(`/collections/products/${productId}/edit/`);
 		return data;
 	}
 
@@ -321,21 +329,21 @@ class Api {
 	getCustomerFollowshipList = async () => {
 		//login required
 		//403 : user is not customer
-		let data = await this.get(`followships/`);
+		let data = await this.get(`/followships/`);
 		return data;
 	}
 
 	getLatestCustomerFollowshipList = async () => {
 		//login required
 		//403 : user is not customer
-		let data = await this.get(`followships/latest/`);
+		let data = await this.get(`/followships/latest/`);
 		return data;
 	}
 
 	getLatestCustomerFollowshipListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not customer
-		let data = await this.get(`followships/latest/pages/${pageNum}/`);
+		let data = await this.get(`/followships/latest/pages/${pageNum}/`);
 		return data;
 	}
 
@@ -343,7 +351,7 @@ class Api {
 		//login required
 		//403 : user is not followship.customer
 		//404 : followship not found
-		let data = await this.get(`followships/sellers/${sellerId}/`);
+		let data = await this.get(`/followships/sellers/${sellerId}/`);
 		return data;
 	}
 
@@ -351,7 +359,8 @@ class Api {
 		//login required
 		//403 : user is not customer
 		//404 : seller not found
-		let data = await this.post(`followships/create/`,{sellerId});
+		//400 : alrdy exists
+		let data = await this.post(`/followships/create/`,{sellerId});
 		return data;
 	}
 
@@ -359,7 +368,7 @@ class Api {
 		//login required
 		//403 : user is not followship.customer
 		//404 : followship not found
-		let data = await this.delete(`followships/sellers/${sellerId}/edit/`);
+		let data = await this.delete(`/followships/sellers/${sellerId}/edit/`);
 		return data;
 	}
 
@@ -367,21 +376,21 @@ class Api {
 	getCustomerCartList = async () => {
 		//login required
 		//403 : user is not customer
-		let data = await this.get(`carts/`);
+		let data = await this.get(`/carts/`);
 		return data;
 	}
 
 	getLatestCustomerCartList = async () => {
 		//login required
 		//403 : user is not customer
-		let data = await this.get(`carts/latest/`);
+		let data = await this.get(`/carts/latest/`);
 		return data;
 	}
 
 	getLatestCustomerCartListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not customer
-		let data = await this.get(`carts/latest/pages/${pageNum}/`);
+		let data = await this.get(`/carts/latest/pages/${pageNum}/`);
 		return data;
 	}
 
@@ -389,7 +398,7 @@ class Api {
 		//login required
 		//403 : user is not cart.customer
 		//404 : cart not found
-		let data = await this.get(`carts/productSpecs/${specId}/`);
+		let data = await this.get(`/carts/productSpecs/${specId}/`);
 		return data;
 	}
 
@@ -397,7 +406,8 @@ class Api {
 		//login required
 		//403 : user is not customer
 		//404 : spec not found
-		let data = await this.post(`carts/create/`,{specId, quantity});
+		//400 : quantity > stock
+		let data = await this.post(`/carts/create/`,{specId, quantity});
 		
 		return data;
 	}
@@ -406,7 +416,8 @@ class Api {
 		//login required
 		//403 : user is not cart.customer
 		//404 : cart not found
-		let data = await this.delete(`carts/productSpecs/${specId}/edit/`,{quantity});
+		//400 : quantity > stock
+		let data = await this.delete(`/carts/productSpecs/${specId}/edit/`,{quantity});
 		return data;
 	}
 
@@ -414,7 +425,7 @@ class Api {
 		//login required
 		//403 : user is not cart.customer
 		//404 : cart not found
-		let data = await this.delete(`carts/productSpecs/${specId}/edit/`);
+		let data = await this.delete(`/carts/productSpecs/${specId}/edit/`);
 		return data;
 	}
 
@@ -793,7 +804,7 @@ class Api {
 		//403 : wrong username or password
 		let data = await this.post(`/users/login/`, {username, password});
 
-		if (data["errorCode"] !== 403) {
+		if (data["errorCode"] === 0) {
 			const cookies = data["cookies"]
 			Cookies.set("user",cookies["user"])
 			Cookies.set("username",cookies["username"])
@@ -806,7 +817,7 @@ class Api {
 	logout = async () => {
 		//403 : user is not logged in
 		let data = await this.post(`/users/logout/`);
-		if (data["errorCode"] !== 403) {
+		if (data["errorCode"] === 0) {
 			Cookies.remove("user")
 			Cookies.remove("username")
 			Cookies.remove("user_id")

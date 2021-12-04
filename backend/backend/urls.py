@@ -29,6 +29,7 @@ urlpatterns = [
     path('followships/', include('followship.urls')),
     path('carts/', include('cart.urls')),
     path('adminUsers/', include('adminUser.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -50,13 +50,23 @@ def latest_product_list_by_page(request, pageNum):
 
 @login_required
 def seller_latest_product_list(request):
-	products = Product.objects.filter(seller = request.user).order_by('-id')
+	try:
+		seller = Seller.objects.get(id=request.user.id)
+	except Seller.DoesNotExist:
+		return returnJson([],404)
+
+	products = Product.objects.filter(seller = seller).order_by('-id')
 	return returnJson([dict(product.body()) for product in products])
 
 
 @login_required
 def seller_best_selling_product_list(request):
-	products = Product.objects.filter(seller = request.user).order_by('-soldAmount')
+	try:
+		seller = Seller.objects.get(id=request.user.id)
+	except Seller.DoesNotExist:
+		return returnJson([],404)
+
+	products = Product.objects.filter(seller = seller).order_by('-soldAmount')
 	return returnJson([dict(product.body()) for product in products])
 
 
@@ -106,7 +116,7 @@ def edit_product(request, pk):
 	except Product.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user != product.seller:
+	if request.user.id != product.seller.id:
 		return returnJson([],403)
 
 	if request.method == 'DELETE':
@@ -200,7 +210,7 @@ def edit_product_spec(request, pk, pk_spec):
 	except ProductSpec.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user != spec.product.seller:
+	if request.user.id != spec.product.seller.id:
 		return returnJson([],403)
 
 	if request.method == 'PUT':
@@ -270,16 +280,16 @@ def edit_product_image(request, pk, pk_image):
 	except ProductImage.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user != image.product.seller:
+	if request.user.id != image.product.seller.id:
 		return returnJson([],403)
 
-	if request.method == 'PUT':
-		serializer = ProductImageSerializer(data=request.data, context={'request':request})
-		serializer.save()
+	# if request.method == 'PUT':
+	# 	serializer = ProductImageSerializer(data=request.data, context={'request':request})
+	# 	serializer.save()
 
-		return returnJson([dict(image.body())])
-
-	elif request.method == 'DELETE':
+	# 	return returnJson([dict(image.body())])
+	
+	if request.method == 'DELETE':
 		os.system("rm %s" % image.image.path)
 		image.delete()
 		

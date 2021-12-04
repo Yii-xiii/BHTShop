@@ -71,7 +71,7 @@ def create_product_comment(request, pk_order):
 	except Order.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user != order.customer:
+	if request.user.id != order.customer.id:
 		return returnJson([],403)
 
 	try:
@@ -119,7 +119,7 @@ def edit_product_comment(request, pk_comment):
 	except ProductComment.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user != comment.order.customer:
+	if request.user.id != comment.order.customer.id:
 		return returnJson([],403)
 
 	if request.method == 'PUT':

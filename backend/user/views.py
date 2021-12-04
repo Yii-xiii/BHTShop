@@ -54,7 +54,7 @@ def edit_customer(request, pk):
 	except Customer.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user != customer:
+	if request.user.id != customer.id:
 		return returnJson([], 403)
 
 	if request.method == 'PUT':
@@ -70,8 +70,7 @@ def edit_customer(request, pk):
 
 	elif request.method == 'DELETE':
 		customer.delete()
-		customers = Customer.objects.all()
-		return returnJson([dict(customer.body()) for customer in customers])
+		return returnJson()
 
 
 def seller_list(request):
@@ -114,7 +113,7 @@ def edit_seller(request, pk):
 	except Seller.DoesNotExist:
 		return returnJson([], 404)
 	
-	if request.user != seller:
+	if request.user.id != seller.id:
 		return returnJson([], 403)
 
 	if request.method == 'PUT':
@@ -130,14 +129,11 @@ def edit_seller(request, pk):
 
 	elif request.method == 'DELETE':
 		seller.delete()
-		sellers = Seller.objects.all()
-		return returnJson([dict(seller.body()) for seller in sellers])
-
+		return returnJson()
 
 
 def user_login(request):
 	data = json.loads(request.body)
-	print(data)
 
 	username = data["username"]
 	password = data["password"]

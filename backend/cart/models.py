@@ -15,4 +15,5 @@ class Cart(models.Model):
 	def body(self):
 		return {'id': self.id,
 				'productSpec': self.productSpec.body(),
-				'customer': self.customer.body(),}
+				'customer': self.customer.body(),
+				'quantity' : self.quantity}

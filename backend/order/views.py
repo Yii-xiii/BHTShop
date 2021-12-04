@@ -60,7 +60,7 @@ def create_order(request):
 	if request.COOKIES["user"] != "Customer":
 		return returnJson([],403)
 
-	customer = Customer.objects.get(username=request.COOKIES["username"])
+	customer = Customer.objects.get(id=request.user.id)
 
 	data = json.loads(request.body)
 
@@ -72,14 +72,10 @@ def create_order(request):
 	if (spec.stock < data["quantity"]):
 		return returnJson([],400)
 
-	quantity = data["quantity"]
+	quantity = int(data["quantity"])
 	totalPrice = data["totalPrice"]
 	address = data["address"]
 	phoneNumber = data["phoneNumber"]
-	if address == '':
-		address = customer.address
-	if phoneNumber == '':
-		phoneNumber = customer.phoneNumber
 
 	order = Order.objects.create(customer=customer, spec=spec,quantity=quantity,totalPrice=totalPrice,address=address,phoneNumber=phoneNumber)
 	spec.product.soldAmount += quantity
@@ -95,7 +91,7 @@ def get_order(request,orderId):
 	except Order.DoesNotExist:
 		return returnJson([],404)
 
-	if request.user is not order.customer and request.user is not order.productSpec.product.seller:
+	if request.user.id != order.customer.id and request.user.id != order.productSpec.product.seller.id:
 		return returnJson([],403)
 
 	return returnJson([dict(order.body())])
@@ -107,7 +103,7 @@ def edit_order(request,orderId):
 	except Order.DoesNotExist:
 		return returnJson([],404)
 
-	if request.user is not order.customer:
+	if request.user.id != order.customer.id:
 		return returnJson([],403)
 	
 	if request.method == 'PUT':
@@ -159,7 +155,7 @@ def create_order_status(request,orderId):
 	if request.COOKIES["user"] != "Seller":
 		return returnJson([],403)
 
-	seller = Seller.objects.get(username=request.COOKIES["username"])
+	seller = Seller.objects.get(id=request.user.id)
 
 	try:
 		order = Order.objects.get(id=orderId)
@@ -194,7 +190,7 @@ def edit_order_status(request,orderId,statusId):
 	except OrderStatus.DoesNotExist:
 		return returnJson([],404)
 
-	if request.user is not status.order.productSpec.product.seller:
+	if request.user.id != status.order.productSpec.product.seller.id:
 		return returnJson([],403)
 	
 	if request.method == 'PUT':
@@ -258,7 +254,7 @@ def create_return_request(request,orderId):
 	if request.COOKIES["user"] != "Customer":
 		return returnJson([],403)
 
-	customer = Customer.objects.get(username=request.COOKIES["username"])
+	customer = Customer.objects.get(id=request.user.id)
 
 	try:
 		order = Order.objects.get(id=orderId)
@@ -301,7 +297,7 @@ def edit_return_request(request, orderId):
 		return returnJson([],404)
 
 	if request.COOKIES["user"] == "Customer":
-		if request.user != order.customer:
+		if request.user.id != order.customer.id:
 			return returnJson(403)
 
 		if request.method == 'PUT':
@@ -316,7 +312,7 @@ def edit_return_request(request, orderId):
 			return returnJson()
 
 	elif request.COOKIES["user"] == "Seller":
-		if request.user != order.productSpec.product.seller:
+		if request.user.id != order.productSpec.product.seller.id:
 			return returnJson(403)
 
 		if request.method == 'PUT':

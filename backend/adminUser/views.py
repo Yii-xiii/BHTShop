@@ -169,7 +169,9 @@ def createReport(request):
 	reason = data["reason"]
 	description = data["description"]
 
-	report = Report.objects.create(reportingUser=request.user, reportedUser=user, reason=reason, description=description)
+	reportingUser = User.objects.get(id=request.user.id)
+
+	report = Report.objects.create(reportingUser=reportingUser, reportedUser=user, reason=reason, description=description)
 	return returnJson([dict(report.body())])
 
 
