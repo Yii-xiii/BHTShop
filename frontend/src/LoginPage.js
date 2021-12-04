@@ -17,6 +17,7 @@ const LoginPage = () => {
     const loginAction = async(e) => {
         e.preventDefault()
         const data = await api.login(username, password)
+        console.log(Cookies.get('user'))
 
         if (data.errorCode === 403) {
             console.log(data)
@@ -27,8 +28,8 @@ const LoginPage = () => {
                 navigate('/')
             } else if (Cookies.get('user') === 'Seller') {
                 navigate('/seller')
-            } else if (Cookies.get('user' === 'Admin')) {
-                //TODO
+            } else if (Cookies.get('user') === 'Admin') {
+                navigate('/admin')
             }
         }
     }
@@ -43,14 +44,6 @@ const LoginPage = () => {
                 </div>
             )
         }
-    }
-
-    const loggedInType = Cookies.get('user')
-
-    if (loggedInType === 'Customer') {
-        return (
-            <HomePage />
-        )
     }
     
     return (

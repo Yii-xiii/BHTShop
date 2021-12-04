@@ -126,14 +126,10 @@ const AddProductPage = () => {
                         </div>
                     </div>
 
-                    <div className='form-title-group'>
-                        <h5>规格</h5>
-                    </div>
-
                     <div className='form-table'>
                         <table>
                             <tr>
-                                <th>描述</th>
+                                <th>规格</th>
                                 <th>价格</th>
                                 <th>库存</th>
                                 <th></th>

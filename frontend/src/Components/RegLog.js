@@ -6,7 +6,7 @@ import api from './Api'
 
 const RegLog = () => {
     const navigate = useNavigate()
-    const loggedInType = Cookies.get('user')
+    let loggedInType = Cookies.get('user')
     const username = Cookies.get('username')
     const userId = Cookies.get('user_id')
 
@@ -22,8 +22,6 @@ const RegLog = () => {
     }
 
     if (loggedInType === 'Customer') {
-        const path = `/user/${userId}`
-
         return (
             <div className='div-reglog'>
                 <Link className='reglog-link' to='/'>
@@ -32,14 +30,12 @@ const RegLog = () => {
                     </button>
                 </Link>
 
-                <Link className='reglog-link' to={path}>
+                <Link className='reglog-link' to='/profile'>
                     <h5 className='login-status'>{username}，已登录。</h5>
                 </Link>
             </div>
         )
     } else if (loggedInType === 'Seller') {
-        const path = `/seller/${userId}`
-
         return (
             <div className='div-reglog'>
                 <Link className='reglog-link' to='/'>
@@ -48,8 +44,22 @@ const RegLog = () => {
                     </button>
                 </Link>
 
-                <Link className='reglog-link' to={path}>
+                <Link className='reglog-link' to='/sellerProfile'>
                     <h5 className='login-status'>{username}，已登录。</h5>
+                </Link>
+            </div>
+        )
+    } else if (loggedInType === 'Admin') {
+        return (
+            <div className='div-reglog'>
+                <Link className='reglog-link' to='/'>
+                    <button onClick={logoutAction} className='btn btn-reglog'>
+                        登出
+                    </button>
+                </Link>
+
+                <Link className='reglog-link' to='/admin'>
+                    <h5 className='login-status'>管理员，已登录。</h5>
                 </Link>
             </div>
         )
