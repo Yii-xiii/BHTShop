@@ -8,6 +8,7 @@ const ProductSpecs = () => {
     const { productId } = useParams()
     const [specs, setSpecs] = useState([])
     const [price, setPrice] = useState('0.00')
+    const [stock, setStock] = useState('')
 
     const fetchSpecs = async() => {
         const data = await api.getProductSpecList(productId)
@@ -21,20 +22,22 @@ const ProductSpecs = () => {
             const specsFromServer = await fetchSpecs()
             setSpecs(specsFromServer)
             setPrice(specsFromServer[0].price)
+            setStock(specsFromServer[0].stock)
         }
 
         getSpecs()
     }, [])
 
-    const changePrice = (newPrice) => {
+    const changeStatus = (newPrice, newStock) => {
         setPrice(newPrice)
+        setStock(newStock)
     }
 
     return (
         <div>
             <div className='spec-choose-box'>
                 { specs ? (specs.map((spec, index) => (
-                    <button key={index} onClick={() => changePrice(spec.price)}>
+                    <button key={index} onClick={() => changeStatus(spec.price, spec.stock)}>
                         {spec.description}
                     </button>
                 ))) : console.log('specs not found.')}
@@ -49,6 +52,8 @@ const ProductSpecs = () => {
                 <button>
                     加入购物车
                 </button>
+
+                <span>库存: {stock}</span>
             </div>
         </div>
     )
