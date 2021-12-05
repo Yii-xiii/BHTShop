@@ -763,6 +763,11 @@ class Api {
 		return data;
 	}
 
+	mostPopularProductListByCategory = async (pageNum, category) => {
+		let data = await this.get(`/collections/categories/most_popular/pages/${pageNum}/`,{category});
+		return data;
+	}
+
 	randomProductList = async () => {
 		let data = await this.get(`/products/filter/randoms/`);
 		return data;
@@ -790,6 +795,11 @@ class Api {
 
 	randomProductListByPriceRange = async (maxPrice, minPrice) => {
 		let data = await this.get(`/products/filter/price_range/randoms/`,{maxPrice, minPrice});
+		return data;
+	}
+
+	mostPopularProductList = async (pageNum) => {
+		let data = await this.get(`/collections/most_popular/pages/${pageNum}/`);
 		return data;
 	}
 
