@@ -53,12 +53,14 @@ const CartProduct = ({ cartProduct }) => {
 
                 <div className='cart-product-description'>
                     <h3>数量: </h3>
-                    <span>{cartProduct.quantity}</span>
+                    <span>{cartProduct.productSpec.stock > cartProduct.quantity ? cartProduct.quantity : cartProduct.productSpec.stock }</span>
                 </div>
 
                 <div className='cart-product-description'>
                     <h3>总金额: </h3>
-                    <span>¥ {(cartProduct.productSpec.price * cartProduct.quantity).toFixed(2)}</span>
+                    <span>¥ {cartProduct.productSpec.stock > cartProduct.quantity ?
+                            (cartProduct.productSpec.price * cartProduct.quantity).toFixed(2)
+                            : (cartProduct.productSpec.price * cartProduct.productSpec.stock).toFixed(2)}</span>
                 </div>
 
                 <div className='buttons-box'>

@@ -24,7 +24,9 @@ const CartProducts = () => {
     }, [])
 
     {cart.map((cartProduct) => (
-        total += cartProduct.productSpec.price * cartProduct.quantity
+        cartProduct.productSpec.stock > cartProduct.quantity ?
+            (total += cartProduct.productSpec.price * cartProduct.quantity).toFixed(2)
+            : (total += cartProduct.productSpec.price * cartProduct.productSpec.stock).toFixed(2)
     ))}
 
     return (

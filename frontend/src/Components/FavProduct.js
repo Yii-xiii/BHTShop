@@ -67,7 +67,7 @@ const FavProduct = ({ favProduct }) => {
                     
                     <div className='fav-product-description'>
                         <h3>价格: </h3>
-                        <span>{price}</span>
+                        <span>¥ {price}</span>
                     </div>
 
                     <div className='fav-buttons-box'>
