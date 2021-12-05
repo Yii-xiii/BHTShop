@@ -4,6 +4,7 @@ from product.models import Product
 from user.models import Customer
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+import json
 
 # Create your views here.
 
@@ -16,10 +17,10 @@ def returnJson(data=None, errorCode=0):
 # collection
 @login_required
 def customer_collection_list(request):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	collections = Collection.objects.filter(customer=customer)
 
@@ -28,10 +29,10 @@ def customer_collection_list(request):
 
 @login_required
 def latest_customer_collection_list(request):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	collections = Collection.objects.filter(customer=customer).order_by('-id')
 
@@ -39,10 +40,10 @@ def latest_customer_collection_list(request):
 
 
 def latest_customer_collection_list_by_page(request, pageNum):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	collections = Collection.objects.filter(customer=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 
@@ -50,16 +51,18 @@ def latest_customer_collection_list_by_page(request, pageNum):
 
 
 @login_required
-def create_customer_collection(request, pk_product):
-	if request.COOKIES["user"] != "Customer":
-		return returnJson([],403)
+def create_customer_collection(request):
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
 
 	try:
-		product = Product.objects.get(id = pk_product)
+		product = Product.objects.get(id = data["productId"])
 	except Product.DoesNotExist:
 		return returnJson([], 404)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	try:
 		collection = Collection.objects.get(customer=customer, product=product)
@@ -72,15 +75,15 @@ def create_customer_collection(request, pk_product):
 
 @login_required
 def get_customer_collection(request, pk_product):
-	if request.COOKIES["user"] != "Customer":
-		return returnJson([],403)
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
 
 	try:
 		product = Product.objects.get(id = pk_product)
 	except Product.DoesNotExist:
 		return returnJson([], 404)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	try:
 		collection = Collection.objects.get(customer=customer, product=product)
@@ -93,15 +96,15 @@ def get_customer_collection(request, pk_product):
 
 @login_required
 def edit_customer_collection(request, pk_product):
-	if request.COOKIES["user"] != "Customer":
-		return returnJson([],403)
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
 
 	try:
 		product = Product.objects.get(id = pk_product)
 	except Product.DoesNotExist:
 		return returnJson([], 404)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	try:
 		collection = Collection.objects.get(customer=customer, product=product)

@@ -3,6 +3,7 @@ from .models import Followship
 from user.models import Seller, Customer
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+import json
 
 # Create your views here.
 
@@ -15,10 +16,10 @@ def returnJson(data=None, errorCode=0):
 # followship
 @login_required
 def customer_followship_list(request):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	followships = Followship.objects.filter(customer=customer)
 
@@ -27,10 +28,10 @@ def customer_followship_list(request):
 
 @login_required
 def latest_customer_followship_list(request):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	followships = Followship.objects.filter(customer=customer).order_by('-id')
 
@@ -38,10 +39,10 @@ def latest_customer_followship_list(request):
 
 
 def latest_customer_followship_list_by_page(request, pageNum):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	followships = Followship.objects.filter(customer=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 
@@ -49,16 +50,18 @@ def latest_customer_followship_list_by_page(request, pageNum):
 
 
 @login_required
-def create_customer_followship(request, pk_seller):
-	if request.COOKIES["user"] != "Customer":
-		return returnJson([],403)
+def create_customer_followship(request):
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
 
 	try:
-		seller = Seller.objects.get(id = pk_seller)
+		seller = Seller.objects.get(id = data["sellerId"])
 	except Seller.DoesNotExist:
 		return returnJson([], 404)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	try:
 		followship = Followship.objects.get(seller=seller, customer=customer)
@@ -71,10 +74,10 @@ def create_customer_followship(request, pk_seller):
 
 @login_required
 def get_customer_followship(request, pk_seller):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	try:
 		seller = Seller.objects.get(id = pk_seller)
@@ -91,10 +94,10 @@ def get_customer_followship(request, pk_seller):
 
 @login_required
 def edit_customer_followship(request, pk_seller):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	try:
 		seller = Seller.objects.get(id = pk_seller)

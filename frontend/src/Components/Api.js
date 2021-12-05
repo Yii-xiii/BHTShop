@@ -501,7 +501,7 @@ class Api {
 	createOrderStatus = async (orderId,status, description) => {
 		//login required
 		//404 : order not found
-		//403 : user is not a seller
+		//403 : user is not a seller or not order.productSpec.product.seller
 		let data = await this.post(`/orders/${orderId}/statuses/create/`,{status, description});
 		return data;
 	}

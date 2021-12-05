@@ -57,10 +57,10 @@ def get_latest_product_spec_order_list_by_page(request, specId, pageNum):
 
 @login_required
 def create_order(request):
-	if request.COOKIES["user"] != "Customer":
-		return returnJson([],403)
-
-	customer = Customer.objects.get(id=request.user.id)
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
 
 	data = json.loads(request.body)
 
@@ -152,15 +152,18 @@ def get_latest_order_status(request, orderId):
 
 @login_required
 def create_order_status(request,orderId):
-	if request.COOKIES["user"] != "Seller":
-		return returnJson([],403)
-
-	seller = Seller.objects.get(id=request.user.id)
+	try:
+		seller = Seller.objects.get(id=request.user.id)
+	except Seller.DoesNotExist:
+		return returnJson([], 403)
 
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
 		return returnJson([],404)
+
+	if seller.id != order.productSpec.product.seller.id:
+		return returnJson([], 403)
 
 	data = json.loads(request.body)
 
@@ -251,10 +254,10 @@ def get_product_spec_latest_return_request(request, specId):
 
 @login_required
 def create_return_request(request,orderId):
-	if request.COOKIES["user"] != "Customer":
-		return returnJson([],403)
-
-	customer = Customer.objects.get(id=request.user.id)
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
 
 	try:
 		order = Order.objects.get(id=orderId)
