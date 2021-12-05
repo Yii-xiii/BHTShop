@@ -27,7 +27,7 @@ const LoginPage = () => {
             if (Cookies.get('user') === 'Customer') {
                 navigate('/')
             } else if (Cookies.get('user') === 'Seller') {
-                navigate('/seller')
+                navigate('/sellerHome')
             } else if (Cookies.get('user') === 'Admin') {
                 navigate('/admin')
             }
