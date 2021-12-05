@@ -4,6 +4,7 @@ from product.models import Product
 from user.models import Customer
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.db.models import Count
 import json
 
 # Create your views here.
