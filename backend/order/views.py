@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Order, OrderStatus, ReturnRequest
 from product.models import ProductSpec, Product
-from user.models import Customer
+from user.models import Customer, Seller
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
@@ -42,7 +42,7 @@ def get_latest_product_order_list_by_page(request, productId, pageNum):
 
 	specs = ProductSpec.objects.filter(product=product)
 
-	orders = Order.objects.filter(spec__in=specs).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	orders = Order.objects.filter(productSpec__in=specs).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(order.body()) for order in orders])
 
 def get_latest_product_spec_order_list_by_page(request, specId, pageNum):
@@ -51,7 +51,7 @@ def get_latest_product_spec_order_list_by_page(request, specId, pageNum):
 	except ProductSpec.DoesNotExist:
 		return returnJson([],404)
 
-	orders = Order.objects.filter(spec=spec).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	orders = Order.objects.filter(productSpec=spec).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(order.body()) for order in orders])
 
 
@@ -69,7 +69,7 @@ def create_order(request):
 	except ProductSpec.DoesNotExist:
 		return returnJson([],404)
 
-	if (spec.stock < data["quantity"]):
+	if (spec.stock < int(data["quantity"])):
 		return returnJson([],400)
 
 	quantity = int(data["quantity"])
@@ -77,7 +77,7 @@ def create_order(request):
 	address = data["address"]
 	phoneNumber = data["phoneNumber"]
 
-	order = Order.objects.create(customer=customer, spec=spec,quantity=quantity,totalPrice=totalPrice,address=address,phoneNumber=phoneNumber)
+	order = Order.objects.create(customer=customer, productSpec=spec,quantity=quantity,totalPrice=totalPrice,address=address,phoneNumber=phoneNumber)
 	spec.product.soldAmount += quantity
 	spec.stock -= quantity
 	status = OrderStatus.objects.create(order=order)
@@ -264,6 +264,9 @@ def create_return_request(request,orderId):
 	except Order.DoesNotExist:
 		return returnJson([],404)
 
+	if request.user.id != order.customer.id:
+		return returnJson([],403)
+
 	data = json.loads(request.body)
 	reason = data["reason"]
 	description = data["description"]
@@ -299,9 +302,10 @@ def edit_return_request(request, orderId):
 	except ReturnRequest.DoesNotExist:
 		return returnJson([],404)
 
-	if request.COOKIES["user"] == "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
 		if request.user.id != order.customer.id:
-			return returnJson(403)
+			return returnJson([],403)
 
 		if request.method == 'PUT':
 			data = json.loads(request.body)
@@ -314,14 +318,18 @@ def edit_return_request(request, orderId):
 			req.delete()
 			return returnJson()
 
-	elif request.COOKIES["user"] == "Seller":
-		if request.user.id != order.productSpec.product.seller.id:
-			return returnJson(403)
+	except Customer.DoesNotExist:
+		try:
+			seller = Seller.objects.get(id=request.user.id)
+			if request.user.id != order.productSpec.product.seller.id:
+				return returnJson([],403)
 
-		if request.method == 'PUT':
-			data = json.loads(request.body)
-			req.status = data["status"]
-			req.save()
-			return returnJson([dict(req.body())])
+			if request.method == 'PUT':
+				data = json.loads(request.body)
+				req.status = data["status"]
+				req.save()
+				return returnJson([dict(req.body())])
+		except Seller.DoesNotExist:
+			return returnJson([],403)
 
 

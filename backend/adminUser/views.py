@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import AdminUser, Report
-from user.models import Customer, Seller
+from user.models import Customer, Seller, User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json

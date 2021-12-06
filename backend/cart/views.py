@@ -16,10 +16,10 @@ def returnJson(data=None, errorCode=0):
 # cart
 @login_required
 def customer_cart_list(request):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	carts = Cart.objects.filter(customer=customer)
 
@@ -28,10 +28,10 @@ def customer_cart_list(request):
 
 @login_required
 def latest_customer_cart_list(request):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	carts = Cart.objects.filter(customer=customer).order_by('-id')
 
@@ -39,10 +39,10 @@ def latest_customer_cart_list(request):
 
 
 def latest_customer_cart_list_by_page(request, pageNum):
-	if request.COOKIES["user"] != "Customer":
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
 		return returnJson([], 403)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	carts = Cart.objects.filter(customer=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 
@@ -51,8 +51,10 @@ def latest_customer_cart_list_by_page(request, pageNum):
 
 @login_required
 def create_customer_cart(request):
-	if request.COOKIES["user"] != "Customer":
-		return returnJson([],403)
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
 
 	data = json.loads(request.body)
 
@@ -63,8 +65,6 @@ def create_customer_cart(request):
 
 	if spec.stock < int(data["quantity"]):
 		return returnJson([], 400)
-
-	customer = Customer.objects.get(id=request.user.id)
 
 	try:
 		cart = Cart.objects.get(productSpec=spec, customer=customer)
@@ -80,22 +80,22 @@ def create_customer_cart(request):
 
 @login_required
 def get_customer_cart(request, pk_spec):
-	if request.COOKIES["user"] != "Customer":
-		return returnJson([],403)
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
 
 	try:
 		spec = ProductSpec.objects.get(id = pk_spec)
 	except ProductSpec.DoesNotExist:
 		return returnJson([], 404)
 
-	customer = Customer.objects.get(id=request.user.id)
-
 	try:
 		cart = Cart.objects.get(customer=customer, productSpec=spec)
 	except Cart.DoesNotExist:
 		return returnJson([], 404)
 
-	if cart.customer != request.user:
+	if cart.customer.id != request.user.id:
 		return returnJson([],403)
 
 	
@@ -104,20 +104,22 @@ def get_customer_cart(request, pk_spec):
 
 @login_required
 def edit_customer_cart(request, pk_spec):
-	if request.COOKIES["user"] != "Customer":
-		return returnJson([],403)
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
 
 	try:
 		spec = ProductSpec.objects.get(id = pk_spec)
 	except ProductSpec.DoesNotExist:
 		return returnJson([], 404)
 
-	customer = Customer.objects.get(id=request.user.id)
-
 	try:
 		cart = Cart.objects.get(customer=customer, productSpec=spec)
 	except Cart.DoesNotExist:
 		return returnJson([], 404)
+
+	data = json.loads(request.body)
 
 	if request.method == 'PUT':
 		if spec.stock < int(data["quantity"]):

@@ -40,6 +40,7 @@ class Product(models.Model):
                 'description': self.description,
                 'soldAmount': self.soldAmount,
                 'category' : self.category,
+                'rating' : self.rating,
                 }
 
 

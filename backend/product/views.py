@@ -241,13 +241,18 @@ def product_image_list(request, pk):
 
 @login_required
 def create_product_image(request, pk):
-	if request.COOKIES["user"] != "Seller":
+	try:
+		seller = Seller.objects.get(id=request.user.id)
+	except Seller.DoesNotExist:
 		return returnJson([],403)
 
 	try:
 		product = Product.objects.get(id = pk)
 	except Product.DoesNotExist:
 		return JsonResponse([], 404)
+
+	if seller.id != product.seller.id:
+		return returnJson([],403)
 
 	image = ProductImage.objects.create(product=product,image=request.FILES.get("images"))
 
@@ -292,14 +297,7 @@ def edit_product_image(request, pk, pk_image):
 	if request.method == 'DELETE':
 		os.system("rm %s" % image.image.path)
 		image.delete()
-		
-		try:
-			product = Product.objects.get(id=pk)
-		except Product.DoesNotExist:
-			return returnJson([])
-
-		productImages = ProductImage.objects.filter(product=product)
-		return returnJson([dict(image.body()) for image in productImages])
+		return returnJson()
 
 
 # filter product
@@ -327,48 +325,49 @@ def highest_rating_product_list_by_category(request, pageNum):
 
 def lowest_rating_product_list_by_category(request, pageNum):
 	data =json.loads(request.body)
-	products = Product.objects.filter(category=data["category"]).order_by('-rating')[((pageNum - 1) * 10):(pageNum * 10)]
+	products = Product.objects.filter(category=data["category"]).order_by('rating')[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(product.body()) for product in products])
 
 
 def cheapest_product_list_by_category(request, pageNum):
 	data =json.loads(request.body)
-	specs = ProductSpec.objects.filter(category=data["category"]).order_by('price')
+	specs = ProductSpec.objects.order_by('price')
 	products = []
 	size = 0
 	for spec in specs:
-		if spec.product not in products:
+		if spec.product.category == data["category"] and spec.product not in products:
 			products += [spec.product]
 			size += 1
 			if size == pageNum*10:
 				break
 
-	products = products[-10:]
+	products = products[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(product.body()) for product in products])
 
 
 def most_expensive_product_list_by_category(request, pageNum):
 	data =json.loads(request.body)
-	specs = ProductSpec.objects.filter(category=data["category"]).order_by('-price')
+	specs = ProductSpec.objects.order_by('-price')
 	products = []
 	size = 0
 	for spec in specs:
-		if spec.product not in products:
+		if spec.product.category == data["category"] and spec.product not in products:
 			products += [spec.product]
 			size += 1
 			if size == pageNum*10:
 				break
 
-	products = products[-10:]
+	products = products[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(product.body()) for product in products])
 
 
 def random_product_by_price_range_and_category(request):
 	data = json.loads(request.body)
-	specs = ProductSpec.objects.filter(category=data["category"],price__gte=data["minPrice"],price__lte=data["maxPrice"])
+	specs = ProductSpec.objects.filter(price__gte=data["minPrice"],price__lte=data["maxPrice"])
 	products = []
 	for spec in specs:
-		products += [spec.product]
+		if spec.product.category == data["category"]:
+			products += [spec.product]
 	products = set(products)
 	length = len(products)
 	if length > 10:
