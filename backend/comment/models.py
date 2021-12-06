@@ -11,7 +11,7 @@ class ProductComment(models.Model):
     time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.order.product.title + " comment"
+        return self.order.productSpec.product.title + " comment"
 
     def body(self):
         return {'id': self.id,
