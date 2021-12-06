@@ -118,18 +118,11 @@ def edit_customer_collection(request, pk_product):
 
 
 def most_popular_product_list_by_page(request,pageNum):
-	collections = Collection.objects.annotate(count = Count('product')).order_by('-count')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(collection.product.body()) for collection in collections])
+	products = Product.objects.annotate(count = Count('collection')).order_by('-count')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(product.body()) for product in products])
 
 def most_popular_product_list_by_category_and_page(request,pageNum):
-	collections = Collection.objects.annotate(count = Count('product')).order_by('-count')
 	data = json.loads(request.body)
+	products = Product.objects.filter(category=data["category"]).annotate(count = Count('collection')).order_by('-count')[((pageNum-1)*10):(pageNum*10)]
 
-	products = []
-	category = data["category"]
-	for collection in collections:
-		if collection.product.category == category:
-			products += [collection.product]
-			if len(products) == pageNum*10:
-				break
 	return returnJson([dict(product.body()) for product in products])
