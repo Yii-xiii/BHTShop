@@ -3,13 +3,16 @@ import Footer from './Components/Footer'
 import Header from './Components/Header'
 import './AddProductPage.css'
 import api from './Components/Api'
+import { useNavigate } from 'react-router'
 import axios from 'axios'
 
 const AddProductPage = () => {
+    const navigate = useNavigate()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [category, setCategory] = useState('')
     const [images,setImages] = useState([])
+    const [imagePath, setImagePath] = useState([])
     const [specs,setSpecs] = useState([{description : "", price : 0, stock : 0}])
     const [errorMessage,setErrorMessage] = useState("")
 
@@ -46,6 +49,8 @@ const AddProductPage = () => {
                 await api.createProductSpec(data.data[0].id, spec.description, spec.price, spec.stock)
             }))
 
+            navigate('/sellerHome')    
+        
             // const specsData = await api.getProductSpecList(data.data[0].id)
             // console.log(data)
             // console.log(imageData)
@@ -118,9 +123,13 @@ const AddProductPage = () => {
                         <h5>图片</h5>
 
                         <div className='form-image-input'>
+                            <div className='image-preview-box'>
+                                <img src={imagePath} alt='img'/>
+                            </div>
+
                             <input 
                                 name={images}
-                                onChange={event => setImages(event.target.files[0])}
+                                onChange={event => {setImages(event.target.files[0]); setImagePath(URL.createObjectURL(event.target.files[0]))}}
                                 type="file" 
                                 required/>
                         </div>

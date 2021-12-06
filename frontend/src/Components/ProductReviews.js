@@ -20,6 +20,7 @@ const ProductReviews = () => {
         const getComments = async() => {
             const productFromServer = await fetchComments()
             
+            // waiting for api fix
         }
 
         getComments()
