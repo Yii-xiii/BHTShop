@@ -61,7 +61,7 @@ const CartProduct = ({ cartProduct }) => {
                             : (cartProduct.productSpec.price * cartProduct.productSpec.stock).toFixed(2)}</span>
                 </div>
 
-                <div className='buttons-box'>
+                <div className='cart-buttons-box'>
                     <button className='edit-item-button'>
                         修改
                     </button>
