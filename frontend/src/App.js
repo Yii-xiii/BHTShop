@@ -16,6 +16,7 @@ import AdminPage from './AdminPage';
 import SellerAnalysisPage from './SellerAnalysisPage';
 import SellerPage from './SellerPage'
 import FavSellerPage from './FavSellerPage';
+import OrderPage from './OrderPage';
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
           <Route path='/sellerAnalysis' element={<SellerAnalysisPage />}/>
           <Route path='/orderList/' element={<OrderListPage />}/>
           <Route path='/orders/:pageNum' element={<PersonalOrdersPage />}/>
-          
+          <Route path='/order/:orderId' element={<OrderPage />}/>
         </Routes>
       </div>
     </Router>

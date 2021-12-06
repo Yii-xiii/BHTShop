@@ -4,6 +4,7 @@ import './PersonalOrder.css'
 import {useState, useEffect} from 'react'
 import DeliveryLogo from './Delivery.png'
 import StoreLogo from './Store.png'
+import { Link } from 'react-router-dom'
 
 const PersonalOrder = ({ order }) => {
     const [orderStatus, setOrderStatus] = useState([])
@@ -36,14 +37,17 @@ const PersonalOrder = ({ order }) => {
         getImages()
     }, [])
 
+    const orderPath = `/order/${order.id}`
+
     return (
         <div>
+            <Link className='order-link' to={orderPath}>
             <div className='order-show-box'>
                 <div className='order-image-box'>
                     <img src={ image? image.image_url : '0'} alt='img'/>
                 </div>
                 
-                <div className='order-description-box'>
+                <div className='order-description-box'>                    
                     <div className='seller-description'>
                         <img className='seller-logo' src={StoreLogo} alt='img'/>
                         <span>{order.productSpec.product.seller.username}</span>
@@ -71,6 +75,7 @@ const PersonalOrder = ({ order }) => {
                     </div>
                 </div>
             </div>
+            </Link>
         </div>
     )
 }
