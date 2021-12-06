@@ -35,6 +35,12 @@ const SellerProduct = ({ product }) => {
         getSpecs()
     }, [])
 
+    const deleteProduct = async() => {
+        await api.deleteProduct(product.id)
+
+        window.location.reload(false)
+    }
+
     return (
         <div className='seller-product-box'>
             <div className='seller-image-box'>
@@ -58,7 +64,7 @@ const SellerProduct = ({ product }) => {
                     修改
                 </button>
 
-                <button className='delete-button'>
+                <button className='delete-button' onClick={() => deleteProduct()}>
                     删除
                 </button>
             </div>
