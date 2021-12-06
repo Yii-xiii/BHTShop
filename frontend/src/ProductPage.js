@@ -1,9 +1,9 @@
 import ProductMainInfo from './Components/ProductMainInfo'
 import ProductDescription from './Components/ProductDescription'
-import ProductReviews from './Components/ProductReviews'
 import './ProductPage.css'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
+import ProductComments from './Components/ProductComments'
 
 const ProductPage = () => {
     return (
@@ -13,7 +13,7 @@ const ProductPage = () => {
             <div className='product-page-box'>
                 <ProductMainInfo />
                 <ProductDescription />
-                <ProductReviews />
+                <ProductComments />
             </div>
 
             <Footer />

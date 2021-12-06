@@ -54,7 +54,7 @@ const CartProducts = () => {
         await api.createOrderStatus(orderId, 'Paid', '')
 
         // delete from cart
-        await api.deleteCustomerCart(cartProduct.productSpec.id)
+        console.log(cartProduct.productSpec.id)
     }
 
     const placeOrder = async() => {

@@ -1,6 +1,5 @@
 .product-review-outer-box {
     min-height: 200px;
-    max-height: 500px;
     margin-bottom: 50px;
     height: auto;
     border-radius: 30px;
@@ -11,7 +10,7 @@
 
 .review-title {
     display: inline-flex;
-    height: 100px;
+    height: 25px;
     margin: 30px;
     margin-left: 40px;
     width: 100%;
@@ -19,4 +18,11 @@
 
 .review-title h5 {
     font-size: 20px;
+}
+
+.reviews-box {
+    margin-left: 40px;
+    margin-right: 40px;
+    display: flex;
+    flex-direction: column;
 }

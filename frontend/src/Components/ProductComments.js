@@ -1,26 +1,29 @@
 import React from 'react'
-import './ProductReviews.css'
+import './ProductComments.css'
 import { useParams } from 'react-router'
 import {useState, useEffect} from 'react'
 import api from './Api'
+import ProductComment from './ProductComment'
 
-const ProductReviews = () => {
+const ProductComments = () => {
     const { productId } = useParams()
     const [comments, setComments] = useState([])
 
     const fetchComments = async() => {
-        const data = await api.getProductCommentList(productId)
+        const data = await api.getLatestProductCommentList(productId)
         // const data = await response.json()
+
+        console.log(data.data)
         
-        return data
+        return data.data
     }
 
     // Importing data
     useEffect(() => {
         const getComments = async() => {
-            const productFromServer = await fetchComments()
+            const commentsFromServer = await fetchComments()
             
-            // waiting for api fix
+            setComments(commentsFromServer)
         }
 
         getComments()
@@ -31,8 +34,14 @@ const ProductReviews = () => {
             <div className='review-title'>
                 <h5>商品评价</h5>
             </div>
+
+            <div className='reviews-box'>
+                {comments.length > 0 ? comments.map((comment, index) => (
+                    <ProductComment key={index} comment={comment}/>
+                )) : <span>此商品暂时没有任何评价。</span>}
+            </div>
         </div>
     )
 }
 
-export default ProductReviews
+export default ProductComments

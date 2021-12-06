@@ -23,7 +23,7 @@ const CartProduct = ({ cartProduct }) => {
     }, [])
 
     const deleteItem = async(cartItemSpecId) => {
-        const data = await api.deleteCustomerCart(cartItemSpecId)
+        await api.deleteCustomerCart(cartItemSpecId)
         window.location.reload(false)
     }
 
