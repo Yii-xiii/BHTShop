@@ -7,6 +7,7 @@ const ProductDescription = () => {
     const { productId } = useParams()
     const [product, setProduct] = useState([])
     const [sellerName, setSellerName] = useState([])
+    const [sellerId, setSellerId] = useState([])
 
     // Fetch data from database
     // Fetch Product from database
@@ -22,10 +23,13 @@ const ProductDescription = () => {
             const productFromServer = await fetchProduct()
             setProduct(productFromServer)
             setSellerName(productFromServer.seller.username)
+            setSellerId(productFromServer.seller.id)
         }
 
         getProduct()
     }, [])
+
+    const sellerPath = `/seller/${sellerId}`
 
     return (
         <div className='description-outer-box'>
@@ -36,7 +40,7 @@ const ProductDescription = () => {
             <div className='description-seller-box'>
                 <h5>商家</h5>
                 {/* link to seller page */}
-                <Link className='seller-page-link' to=''>
+                <Link className='seller-page-link' to={sellerPath}>
                     <span>{sellerName}</span>
                 </Link>
             </div>

@@ -14,6 +14,7 @@ import SellerOrdersPage from './SellerOrdersPage';
 import PersonalOrdersPage from './PersonalOrdersPage';
 import AdminPage from './AdminPage';
 import SellerAnalysisPage from './SellerAnalysisPage';
+import SellerPage from './SellerPage'
 import FavSellerPage from './FavSellerPage';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path='/profile' element={<ProfilePage />}/>
           <Route path='/admin' element={<AdminPage />}/>
           <Route path='/sellerProfile' element={<ProfilePage />}/>
+          <Route path='/seller/:sellerId' element={<SellerPage />}/>
           <Route path='/sellerAnalysis' element={<SellerAnalysisPage />}/>
           <Route path='/orderList/' element={<OrderListPage />}/>
           <Route path='/orders/:pageNum' element={<PersonalOrdersPage />}/>
