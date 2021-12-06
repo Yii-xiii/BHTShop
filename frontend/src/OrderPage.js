@@ -1,17 +1,18 @@
 import React from 'react'
+import { useParams } from 'react-router'
 import Footer from './Components/Footer'
 import Header from './Components/Header'
-import SellerProducts from './Components/SellerProducts'
 
-const SellerHomePage = () => {
-    // if not logged in, redirect to login page
+const OrderPage = () => {
+    const { orderId } = useParams()
+
     return (
         <div>
             <Header />
-            <SellerProducts />
+            <h1>TODO ORDER PAGE</h1>
             <Footer />
         </div>
     )
 }
 
-export default SellerHomePage
+export default OrderPage

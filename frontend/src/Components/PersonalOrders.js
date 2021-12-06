@@ -1,6 +1,7 @@
 import React from 'react'
 import PersonalOrdersOption from './PersonalOrdersOption'
 import './PersonalOrders.css'
+import PersonalOrdersByPage from './PersonalOrdersByPage'
 
 const PersonalOrders = () => {
     return (
@@ -11,6 +12,7 @@ const PersonalOrders = () => {
 
             <div className='display-box'>
                 <PersonalOrdersOption />
+                <PersonalOrdersByPage />
             </div>
         </div>
     )

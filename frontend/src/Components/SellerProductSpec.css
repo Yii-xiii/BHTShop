@@ -1,0 +1,28 @@
+.spec-box {
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    min-width: 450px;
+}
+
+.spec-product-desc {
+    width: 50%;
+    font-size: 16px;
+}
+
+.spec-product-price {
+    width: 20%;
+    font-size: 16px;
+}
+
+.spec-product-stock {
+    width: 15%;
+    font-size: 16px;
+}
+
+.spec-product-sold {
+    width: 15%;
+    font-size: 16px;
+}

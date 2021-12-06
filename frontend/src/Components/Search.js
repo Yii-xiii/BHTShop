@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import './Search.css'
 
 const Search = () => {
-    let searchName = ''
-
     return (
         <div className='navbar-search'>
             <form action='/' method='get' className='navbar-search'>

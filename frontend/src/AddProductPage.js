@@ -3,13 +3,15 @@ import Footer from './Components/Footer'
 import Header from './Components/Header'
 import './AddProductPage.css'
 import api from './Components/Api'
-import axios from 'axios'
+import { useNavigate } from 'react-router'
 
 const AddProductPage = () => {
+    const navigate = useNavigate()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [category, setCategory] = useState('')
     const [images,setImages] = useState([])
+    const [imagePath, setImagePath] = useState([])
     const [specs,setSpecs] = useState([{description : "", price : 0, stock : 0}])
     const [errorMessage,setErrorMessage] = useState("")
 
@@ -46,6 +48,8 @@ const AddProductPage = () => {
                 await api.createProductSpec(data.data[0].id, spec.description, spec.price, spec.stock)
             }))
 
+            navigate('/sellerHome')    
+        
             // const specsData = await api.getProductSpecList(data.data[0].id)
             // console.log(data)
             // console.log(imageData)
@@ -72,127 +76,133 @@ const AddProductPage = () => {
 
             <div className="box">
                 <div className='inner-box'>
+                    <h1 className='add-product-title'>添加商品</h1>
+
                     <form onSubmit={addProduct}>
+                        <Error />
 
-                    <Error />
+                        <div class="form-type-group">
+                            <h5>类型</h5>
+                            <select name="category" class="form-type-select" value={category} onChange={event => setCategory(event.target.value)}>
+                                <option value='none'>-----</option>
 
-                    <div class="form-type-group">
-                        <h5>类型</h5>
-                        <select name="category" class="form-type-select" value={category} onChange={event => setCategory(event.target.value)}>
-                            <option value='none'>-----</option>
-
-                            <option value='women clothes'>女装</option>
-                            <option value='men clothes'>男装</option>
-                            <option value='sports'>运动</option>
-                            <option value='cosmetics'>美妆</option>
-                            <option value='drinks'>饮料</option>
-                            <option value='snacks'>零食</option>
-                            <option value='others'>其他</option>
-                            
-                        </select>
-                    </div>
-
-                    <div className='form-title-group'>
-                        <h5>标题</h5>
-
-                        <div className='form-title-input'>
-                            <textarea
-                                value={title}
-                                onChange={event => setTitle(event.target.value)}
-                                placeholder='输入标题' required/>
+                                <option value='women clothes'>女装</option>
+                                <option value='men clothes'>男装</option>
+                                <option value='sports'>运动</option>
+                                <option value='cosmetics'>美妆</option>
+                                <option value='drinks'>饮料</option>
+                                <option value='snacks'>零食</option>
+                                <option value='others'>其他</option>
+                                
+                            </select>
                         </div>
-                    </div>
 
-                    <div className='form-title-group'>
-                        <h5>描述</h5>
+                        <div className='form-title-group'>
+                            <h5>标题</h5>
 
-                        <div className='form-title-input'>
-                            <textarea 
-                                value={description}
-                                onChange={event => setDescription(event.target.value)}
-                                placeholder='输入描述'/>
+                            <div className='form-title-input'>
+                                <textarea
+                                    value={title}
+                                    onChange={event => setTitle(event.target.value)}
+                                    placeholder='输入标题' required/>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className='form-image-group'>
-                        <h5>图片</h5>
+                        <div className='form-title-group'>
+                            <h5>描述</h5>
 
-                        <div className='form-image-input'>
-                            <input 
-                                name={images}
-                                onChange={event => setImages(event.target.files[0])}
-                                type="file" 
-                                required/>
+                            <div className='form-title-input'>
+                                <textarea 
+                                    value={description}
+                                    onChange={event => setDescription(event.target.value)}
+                                    placeholder='输入描述'/>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className='form-table'>
-                        <table>
-                            <tr>
-                                <th>规格</th>
-                                <th>价格</th>
-                                <th>库存</th>
-                                <th></th>
-                            </tr>
+                        <div className='form-image-group'>
+                            <h5>图片</h5>
 
-                            {specs.map((spec, index) => (
+                            <div className='form-image-input'>
+                                <div className='image-preview-box'>
+                                    <img src={imagePath} alt='preview-img'/>
+                                </div>
+
+                                <input 
+                                    name={images}
+                                    onChange={event => {setImages(event.target.files[0]); setImagePath(URL.createObjectURL(event.target.files[0]))}}
+                                    type="file" 
+                                    accept='image/*'
+                                    required/>
+                            </div>
+                        </div>
+
+                        <div className='form-table'>
+                            <table>
                                 <tr>
-                                    <td>
-                                        <div className='spec-form'>
-                                            <input 
-                                                className='spec-description'
-                                                type="text" 
-                                                name="description"
-                                                value={spec.description}
-                                                onChange={event => handleSpecChange(index, event)} 
-                                                placeholder="输入描述"
-                                                required/>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div className='spec-form'>
-                                            <input 
-                                                className='spec-price'
-                                                type="number"
-                                                step="0.01" 
-                                                name="price"
-                                                value={spec.price}
-                                                onChange={event => handleSpecChange(index, event)} 
-                                                min = "0"
-                                                required/>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div className='spec-form'>
-                                            <input 
-                                                className='spec-stock'
-                                                type="number"
-                                                name="stock"
-                                                value={spec.stock}
-                                                onChange={event => handleSpecChange(index, event)} 
-                                                min = "0"
-                                                required/>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <button onClick={() => deleteSpec(index)}>-</button>
-                                    </td>
+                                    <th>规格</th>
+                                    <th>价格</th>
+                                    <th>库存</th>
+                                    <th></th>
                                 </tr>
-                            ))}
-                        </table>
 
-                    </div>
+                                {specs.map((spec, index) => (
+                                    <tr>
+                                        <td>
+                                            <div className='spec-form'>
+                                                <input 
+                                                    className='spec-description'
+                                                    type="text" 
+                                                    name="description"
+                                                    value={spec.description}
+                                                    onChange={event => handleSpecChange(index, event)} 
+                                                    placeholder="输入描述"
+                                                    required/>
+                                            </div>
+                                        </td>
 
-                    <div className='addSpecButton-box'>
-                        <button onClick={addSpec}>+</button>
-                    </div>
+                                        <td>
+                                            <div className='spec-form'>
+                                                <input 
+                                                    className='spec-price'
+                                                    type="number"
+                                                    step="0.01" 
+                                                    name="price"
+                                                    value={spec.price}
+                                                    onChange={event => handleSpecChange(index, event)} 
+                                                    min = "0"
+                                                    required/>
+                                            </div>
+                                        </td>
 
-                    <div className='button-submit-box'>
-                        <button onSubmit={addProduct} type='submit' className='button-submit'>提交</button>
-                    </div>
+                                        <td>
+                                            <div className='spec-form'>
+                                                <input 
+                                                    className='spec-stock'
+                                                    type="number"
+                                                    name="stock"
+                                                    value={spec.stock}
+                                                    onChange={event => handleSpecChange(index, event)} 
+                                                    min = "0"
+                                                    required/>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <button onClick={() => deleteSpec(index)}>-</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </table>
+
+                        </div>
+
+                        <div className='addSpecButton-box'>
+                            <button onClick={addSpec}>+</button>
+                        </div>
+
+                        <div className='button-submit-box'>
+                            <button onSubmit={addProduct} type='submit' className='button-submit'>提交</button>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -6,8 +6,6 @@ import Cookies from 'js-cookie'
 const CartProduct = ({ cartProduct }) => {
     const [image, setImages] = useState([])
 
-    console.log(cartProduct)
-
     // Fetch data from database
     const fetchImages = async() => {
         const data = await api.getFirstProductImage(cartProduct.productSpec.product.id)
@@ -63,7 +61,7 @@ const CartProduct = ({ cartProduct }) => {
                             : (cartProduct.productSpec.price * cartProduct.productSpec.stock).toFixed(2)}</span>
                 </div>
 
-                <div className='buttons-box'>
+                <div className='cart-buttons-box'>
                     <button className='edit-item-button'>
                         修改
                     </button>

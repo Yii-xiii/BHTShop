@@ -61,7 +61,7 @@
     text-overflow: ellipsis;
 }
 
-.buttons-box {
+.cart-buttons-box {
     display: flex;
     width: 100%;
     align-items: center;

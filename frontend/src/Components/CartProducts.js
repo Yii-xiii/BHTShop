@@ -3,15 +3,22 @@ import './CartProducts.css'
 import {useState, useEffect} from 'react'
 import api from './Api'
 import CartProduct from './CartProduct'
-import { CardHeader } from '@material-ui/core'
+import Cookies, { get } from 'js-cookie'
 
 const CartProducts = () => {
     const [cart, setCart] = useState([])
+    const [customer, setCustomer] = useState([])
     let total = 0.00
 
     const fetchCart = async() => {
         const data = await api.getCustomerCartList()
         return data.data
+    }
+
+    const fetchCustomer = async() => {
+        const data = await api.getCustomer(Cookies.get('user_id'))
+
+        return data.data[0]
     }
 
     useEffect(() => {
@@ -20,7 +27,13 @@ const CartProducts = () => {
             setCart(specsFromServer)
         }
 
+        const getCustomer = async() => {
+            const customerFromServer = await fetchCustomer()
+            setCustomer(customerFromServer)
+        }
+
         getCart()
+        getCustomer()
     }, [])
 
     {cart.map((cartProduct) => (
@@ -28,6 +41,27 @@ const CartProducts = () => {
             (total += cartProduct.productSpec.price * cartProduct.quantity).toFixed(2)
             : (total += cartProduct.productSpec.price * cartProduct.productSpec.stock).toFixed(2)
     ))}
+
+    const settleOrder = async(cartProduct) => {
+        // create order
+        const orderId = await api.createOrder(cartProduct.productSpec.id, cartProduct.quantity, 
+            (cartProduct.quantity * cartProduct.productSpec.price).toFixed(2),
+            customer.address, customer.phoneNumber);
+
+        console.log(orderId);
+        
+        // update order status to paid
+        await api.createOrderStatus(orderId, 'Paid', '')
+
+        // delete from cart
+        await api.deleteCustomerCart(cartProduct.productSpec.id)
+    }
+
+    const placeOrder = async() => {
+        {cart.map((cartItem) => (
+            settleOrder(cartItem)
+        ))}
+    }
 
     return (
         <div className='cart-box'>
@@ -52,7 +86,7 @@ const CartProducts = () => {
                     </div>
                     
                     <div className='cart-pay-box'>
-                        <button>
+                        <button onClick={() => placeOrder()}>
                             付款
                         </button>
                     </div>

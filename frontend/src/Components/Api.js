@@ -219,6 +219,7 @@ class Api {
 	getProductCommentList = async (productId) => {
 		//404 : product not found
 		let data = await this.get(`/comments/products/${productId}/`);
+		
 		return data;
 	}
 
