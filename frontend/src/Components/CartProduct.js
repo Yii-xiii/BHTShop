@@ -6,8 +6,6 @@ import Cookies from 'js-cookie'
 const CartProduct = ({ cartProduct }) => {
     const [image, setImages] = useState([])
 
-    console.log(cartProduct)
-
     // Fetch data from database
     const fetchImages = async() => {
         const data = await api.getFirstProductImage(cartProduct.productSpec.product.id)

@@ -36,7 +36,7 @@ function App() {
           <Route path='/sellerProfile' element={<ProfilePage />}/>
           <Route path='/sellerAnalysis' element={<SellerAnalysisPage />}/>
           <Route path='/orderList/' element={<OrderListPage />}/>
-          <Route path='/orders' element={<PersonalOrdersPage />}/>
+          <Route path='/orders/:pageNum' element={<PersonalOrdersPage />}/>
           
         </Routes>
       </div>
