@@ -16,6 +16,7 @@ import SellerAnalysisPage from './SellerAnalysisPage';
 import SellerPage from './SellerPage'
 import FavSellerPage from './FavSellerPage';
 import OrderPage from './OrderPage';
+import ProductCommentsPage from './ProductCommentsPage'
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path='/sellerAnalysis' element={<SellerAnalysisPage />}/>
           <Route path='/orders/:pageNum' element={<PersonalOrdersPage />}/>
           <Route path='/order/:orderId' element={<OrderPage />}/>
+          <Route path='/product/:productId/comments' element={<ProductCommentsPage />}/>
         </Routes>
       </div>
     </Router>

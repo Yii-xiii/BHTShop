@@ -2,6 +2,7 @@ import React from 'react'
 import './ProductComments.css'
 import { useParams } from 'react-router'
 import {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import api from './Api'
 import ProductComment from './ProductComment'
 
@@ -33,6 +34,10 @@ const ProductComments = () => {
         <div className='product-review-outer-box'>
             <div className='review-title'>
                 <h5>商品评价</h5>
+
+                <Link className='comments-link' to='comments'>
+                    <span>查看所有评价</span>
+                </Link>
             </div>
 
             <div className='reviews-box'>

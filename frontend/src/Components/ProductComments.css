@@ -10,10 +10,17 @@
 
 .review-title {
     display: inline-flex;
+    align-items: center;
     height: 25px;
     margin: 30px;
     margin-left: 40px;
     width: 100%;
+}
+
+.review-title span {
+    margin-left: 30px;
+    color: grey;
+    font-size: 15px;
 }
 
 .review-title h5 {
@@ -25,4 +32,9 @@
     margin-right: 40px;
     display: flex;
     flex-direction: column;
+}
+
+.comments-link {
+    text-decoration: none;
+    color: grey;
 }
