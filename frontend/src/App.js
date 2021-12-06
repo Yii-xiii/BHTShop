@@ -7,7 +7,6 @@ import CartPage from './CartPage'
 import RegisterPage from './RegisterPage'
 import ProductPage from './ProductPage'
 import ProfilePage from './ProfilePage'
-import OrderListPage from './OrderListPage'
 import SellerHomePage from './SellerHomePage'
 import AddProductPage from './AddProductPage'
 import SellerOrdersPage from './SellerOrdersPage';
@@ -38,7 +37,6 @@ function App() {
           <Route path='/sellerProfile' element={<ProfilePage />}/>
           <Route path='/seller/:sellerId' element={<SellerPage />}/>
           <Route path='/sellerAnalysis' element={<SellerAnalysisPage />}/>
-          <Route path='/orderList/' element={<OrderListPage />}/>
           <Route path='/orders/:pageNum' element={<PersonalOrdersPage />}/>
           <Route path='/order/:orderId' element={<OrderPage />}/>
         </Routes>

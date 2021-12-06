@@ -1,10 +1,10 @@
-﻿import './Rating.css'
+﻿import './RatingPage.css'
 
 import React, { useState } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 
-const Rating = () => {
+const RatingPage = () => {
 
     const [images, setImages] = useState([])
 
@@ -54,4 +54,4 @@ const Rating = () => {
     )
 }
 
-export default Rating
+export default RatingPage
