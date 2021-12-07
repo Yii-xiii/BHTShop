@@ -182,7 +182,7 @@ def editReport(request, pk):
 	except Report.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user != report.reportingUser:
+	if request.user.id != report.reportingUser.id:
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
