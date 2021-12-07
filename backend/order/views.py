@@ -56,6 +56,45 @@ def get_latest_product_spec_order_list_by_page(request, specId, pageNum):
 
 
 @login_required
+def get_seller_order_by_order_status(request):
+	try:
+		seller = Seller.objects.get(id=request.user.id)
+	except Seller.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+
+	products = Product.objects.filter(seller=seller)
+	specs = ProductSpec.objects.filter(product__in=products)
+	orders = Order.objects.filter(productSpec__in=specs)
+	results = []
+	for order in orders:
+		status = OrderStatus.objects.filter(order=order).order_by('-id').first()
+		if status is not None and status.status == data["status"]:
+			results += [status]
+
+	return returnJson([dict(status.body()) for status in results])
+
+
+@login_required
+def get_customer_order_by_order_status(request):
+	try:
+		customer = Customer.objects.get(id=request.user.id)
+	except Customer.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+
+	orders = Order.objects.filter(customer=customer)
+	results = []
+	for order in orders:
+		status = OrderStatus.objects.filter(order=order).order_by('-id').first()
+		if status is not None and status.status == data["status"]:
+			results += [status]
+
+	return returnJson([dict(status.body()) for status in results])
+
+@login_required
 def create_order(request):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
