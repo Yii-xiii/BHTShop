@@ -47,19 +47,25 @@ const CartProducts = () => {
         const orderId = await api.createOrder(cartProduct.productSpec.id, cartProduct.quantity, 
             (cartProduct.quantity * cartProduct.productSpec.price).toFixed(2),
             customer.address, customer.phoneNumber);
-
-        console.log(orderId);
         
         // update order status to paid
         await api.createOrderStatus(orderId, 'Paid', '')
-
-        // delete from cart
-        console.log(cartProduct.productSpec.id)
     }
 
     const placeOrder = async() => {
         {cart.map((cartItem) => (
             settleOrder(cartItem)
+        ))}
+    }
+
+    const deleteItem = async(cartItemSpecId) => {
+        await api.deleteCustomerCart(cartItemSpecId)
+        window.location.reload(false)
+    }
+
+    const clearCart = async() => {
+        {cart.map((cartItem) => (
+            deleteItem(cartItem.productSpec.id)
         ))}
     }
 
@@ -86,7 +92,7 @@ const CartProducts = () => {
                     </div>
                     
                     <div className='cart-pay-box'>
-                        <button onClick={() => placeOrder()}>
+                        <button onClick={() => {placeOrder(); clearCart()}}>
                             付款
                         </button>
                     </div>
