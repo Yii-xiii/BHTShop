@@ -27,19 +27,21 @@ class Order(models.Model):
 				'time': self.time}
 
 class OrderStatus(models.Model):
-	PAID = "Paid"
-	DEL_ING = "Delivering"
-	DEL_ED = "Delivered"
-	RET = "Returned"
-	STATUS_CHOICES = [
-		(PAID, "Paid"),
-		(DEL_ING, "Delivering"),
-		(DEL_ED, "Delivered"),
-		(RET, "Returned"),
+	PAID = "paid"
+	SHP = "shipped"
+	DEL = "delivered"
+	RET_ING = "returning"
+	RET_ED = "returned"
+	STATUSES = [
+		(PAID, "paid"),
+		(SHP, "shipped"),
+		(DEL, "delivered"),
+		(RET_ING, "returning"),
+		(RET_ED, "returned"),
 	]
 
 	order = models.ForeignKey(Order, on_delete=models.CASCADE, null=False)
-	status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=PAID)
+	status = models.CharField(max_length=100, choices=STATUSES, default=PAID)
 	description = models.TextField(null=True)
 	time = models.DateTimeField(default=timezone.now)
 

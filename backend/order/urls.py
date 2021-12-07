@@ -31,4 +31,14 @@ urlpatterns = [
 	path('<int:orderId>/return_requests/create/',views.create_return_request),
 	path('<int:orderId>/return_requests/',views.get_return_request),
 	path('<int:orderId>/return_requests/edit/',views.edit_return_request),
+
+	path('sellers/in_days/<int:dayNum>/',views.get_seller_orders_in_days),
+	path('sellers/sales/in_days/<int:dayNum>/',views.get_seller_sales_in_days),
+
+	path('sellers/by_day/',views.get_seller_orders_by_day),
+	path('sellers/sales/by_day/',views.get_seller_sales_by_day),
+	path('sellers/by_month/',views.get_seller_orders_by_month),
+	path('sellers/sales/by_month/',views.get_seller_sales_by_month),
+	path('sellers/by_year/',views.get_seller_orders_by_year),
+	path('sellers/sales/by_year/',views.get_seller_sales_by_year),
 ]

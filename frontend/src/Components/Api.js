@@ -99,6 +99,7 @@ class Api {
 	createProduct = async (title, description, category) => {
 		//login required
 		//403 : user is not a seller
+		//400 : invalid category
 		let data = await this.post(`/products/create/`,{title, description, category});
 		return data;
 	}
@@ -107,6 +108,7 @@ class Api {
 		//login required
 		//404 : product not found
 		//403 : user is not a seller
+		//400 : invalid category
 		let data = await this.put(`/products/${id}/edit/`,{title, description,category});
 		return data;
 	}
@@ -448,14 +450,16 @@ class Api {
 
 	getSellerOrderListByStatus = async (status) => {
 		//login required
-		//403: seller not found
+		//403 : seller not found
+		//400 : Invalid status
 		let data = await this.get(`/orders/sellers/status/`,{status});
 		return data;
 	}
 
 	getCustomerOrderListByStatus = async (status) => {
 		//login required
-		//403: customer not found
+		//403 : customer not found
+		//400 : Invalid status
 		let data = await this.get(`/orders/customers/status/`,{status});
 		return data;
 	}
@@ -517,6 +521,7 @@ class Api {
 		//login required
 		//404 : order not found
 		//403 : user is not a seller or not order.productSpec.product.seller
+		//400 : Invalid status
 		let data = await this.post(`/orders/${orderId}/statuses/create/`,{status, description});
 		return data;
 	}
@@ -525,6 +530,7 @@ class Api {
 		//login required
 		//404 : status not found
 		//403 : user is not order.productSpec.product.seller
+		//400 : Invalid status
 		let data = await this.put(`/orders/${orderId}/statuses/${statusId}/edit/`,{status, description});
 		return data;
 	}
@@ -566,6 +572,7 @@ class Api {
 		//login required
 		//404 : order not found
 		//403 : user is not a customer
+		//400 : Invalid reason
 		//status = pending
 		let data = await this.post(`/orders/${orderId}/return_requests/create/`,{reason, description});
 		return data;
@@ -575,6 +582,7 @@ class Api {
 		//login required
 		//404 : req not found
 		//403 : user is not order.productSpec.product.seller
+		//400 : Invalid status
 		let data = await this.put(`/orders/${orderId}/return_requests/edit/`,{status});
 		return data;
 	}
@@ -583,6 +591,7 @@ class Api {
 		//login required
 		//404 : req not found
 		//403 : user is not order.customer
+		//400 : Invalid reason
 		let data = await this.put(`/orders/${orderId}/return_requests/edit/`,{reason, description});
 		return data;
 	}
@@ -821,6 +830,63 @@ class Api {
 	searchProduct = async (pageNum, keyword) => {
 		//order by highest sold
 		let data = await this.get(`/products/search/pages/${pageNum}/`,{keyword});
+		return data;
+	}
+
+	//filter order
+	getRecentSellerOrders = async (dayNum) => {
+		//login required
+		//403 : user is not a seller
+		let data = await this.get(`/orders/sellers/in_days/${dayNum}/`);
+		return data;
+	}
+
+	getRecentSellerSales = async (dayNum) => {
+		//login required
+		//403 : user is not a seller
+		let data = await this.get(`/orders/sellers/sales/in_days/${dayNum}/`);
+		return data;
+	}
+
+	getSellerOrdersByDay = async (year, month, day) => {
+		//login required
+		//403 : user is not a seller
+		let data = await this.get(`/orders/sellers/by_day/`,{year, month, day});
+		return data;
+	}
+
+	getSellerSalesByDay = async (year, month, day) => {
+		//login required
+		//403 : user is not a seller
+		let data = await this.get(`/orders/sellers/sales/by_day/`,{year, month, day});
+		return data;
+	}
+
+	getSellerOrdersByMonth = async (year, month) => {
+		//login required
+		//403 : user is not a seller
+		let data = await this.get(`/orders/sellers/by_month/`,{year, month});
+		return data;
+	}
+
+	getSellerSalesByMonth = async (year, month) => {
+		//login required
+		//403 : user is not a seller
+		let data = await this.get(`/orders/sellers/sales/by_month/`,{year, month});
+		return data;
+	}
+
+	getSellerOrdersByYear = async (year) => {
+		//login required
+		//403 : user is not a seller
+		let data = await this.get(`/orders/sellers/by_year/`,{year});
+		return data;
+	}
+
+	getSellerSalesByYear = async (year) => {
+		//login required
+		//403 : user is not a seller
+		let data = await this.get(`/orders/sellers/sales/by_year/`,{year});
 		return data;
 	}
 
