@@ -446,6 +446,20 @@ class Api {
 		return data;
 	}
 
+	getSellerOrderListByStatus = async (status) => {
+		//login required
+		//403: seller not found
+		let data = await this.get(`/orders/sellers/status/`,{status});
+		return data;
+	}
+
+	getCustomerOrderListByStatus = async (status) => {
+		//login required
+		//403: customer not found
+		let data = await this.get(`/orders/customers/status/`,{status});
+		return data;
+	}
+
 	getOrder = async (orderId) => {
 		//login required
 		//404 : order not found

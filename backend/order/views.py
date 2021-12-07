@@ -56,7 +56,7 @@ def get_latest_product_spec_order_list_by_page(request, specId, pageNum):
 
 
 @login_required
-def get_seller_order_by_order_status(request):
+def get_seller_order_list_by_order_status(request):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
@@ -77,7 +77,7 @@ def get_seller_order_by_order_status(request):
 
 
 @login_required
-def get_customer_order_by_order_status(request):
+def get_customer_order_list_by_order_status(request):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
