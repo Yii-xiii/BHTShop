@@ -11,11 +11,12 @@ const SellerOrdersBody = () => {
         const data = await api.getSellerOrderListByStatus(status)
 
         console.log(data)
+        return data
     }
 
     useEffect(() => {
         const getOrders = async() => {
-            const ordersFromServer = await fetchOrders(status)
+            const ordersFromServer = await fetchOrders()
             setOrders(ordersFromServer)
         }
 

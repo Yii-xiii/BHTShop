@@ -11,7 +11,7 @@ const SellerOrders = () => {
     if (loggedInType === 'Seller') {
         return (
             // link to userId fav list
-            <Link className='addItem-link' to='/sOrders/processing'>
+            <Link className='addItem-link' to='/sOrders/paid'>
                 <img className='addItem-logo' src={sellerOrdersLogo} alt='logo'/>
                 {/* getting orders count and pass in */}
                 <Notification count='0' type='fav'/>
