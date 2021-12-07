@@ -452,7 +452,7 @@ class Api {
 		//login required
 		//403 : seller not found
 		//400 : Invalid status
-		let data = await this.get(`/orders/sellers/status/`,{status});
+		let data = await this.post(`/orders/sellers/status/`,{status});
 		return data;
 	}
 
@@ -460,7 +460,7 @@ class Api {
 		//login required
 		//403 : customer not found
 		//400 : Invalid status
-		let data = await this.get(`/orders/customers/status/`,{status});
+		let data = await this.post(`/orders/customers/status/`,{status});
 		return data;
 	}
 
