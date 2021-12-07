@@ -1,0 +1,38 @@
+.status-options-outer-box {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}
+
+.status-options {
+    display: flex;
+    flex-direction: column;
+    min-width: 80px;
+}
+
+.status-options h4 {
+    font-size: 25px;
+}
+
+.status-options span {
+    font-size: 25px;
+    color: grey;
+}
+
+.status-links {
+    text-decoration: none;
+    color: black;
+    margin-bottom: 15px;
+}
+
+.status-orders {
+    border-radius: 20px;
+    background-color: #fff;
+    width: 80%; 
+    min-width: 620px;
+    height: auto;
+    margin-left: 50px;
+    margin-right: 50px;
+}
