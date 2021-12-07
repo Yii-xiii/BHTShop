@@ -29,7 +29,7 @@ const SellerProducts = () => {
     return (
         <div>
             <div className='seller-products-box'>
-                <h1>我的商品管理</h1>
+                <h1>我的商品</h1>
             </div>
 
             <div className='seller-products-show-box'>

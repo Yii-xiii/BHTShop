@@ -30,7 +30,7 @@ function App() {
           <Route path='/favSellers' element={<FavSellerPage />}/>
           <Route path='/cart' element={<CartPage />}/>
           <Route path='/addProduct' element={<AddProductPage />}/>
-          <Route path='/sellerOrders' element={<SellerOrdersPage />}/>
+          <Route path='/sOrders/:status' element={<SellerOrdersPage />}/>
           <Route path='/sellerHome' element={<SellerHomePage />}/>
           <Route path='/product/:productId' element={<ProductPage />}/>
           <Route path='/profile' element={<ProfilePage />}/>
