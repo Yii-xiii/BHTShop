@@ -753,42 +753,42 @@ class Api {
 	//product filter
 	//return 10 products
 	randomProductListByCategory = async (category) => {
-		let data = await this.get(`/products/filter/categories/randoms/`,{category});
+		let data = await this.post(`/products/filter/categories/randoms/`,{category});
 		return data;
 	}
 
 	latestProductListByCategory = async (pageNum, category) => {
-		let data = await this.get(`/products/filter/categories/latest/pages/${pageNum}/`,{category});
+		let data = await this.post(`/products/filter/categories/latest/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	highestRatingProductListByCategory = async (pageNum, category) => {
-		let data = await this.get(`/products/filter/categories/highest_rating/pages/${pageNum}/`,{category});
+		let data = await this.post(`/products/filter/categories/highest_rating/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	lowestRatingProductListByCategory = async (pageNum, category) => {
-		let data = await this.get(`/products/filter/categories/lowest_rating/pages/${pageNum}/`,{category});
+		let data = await this.post(`/products/filter/categories/lowest_rating/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	cheapestProductListByCategory = async (pageNum, category) => {
-		let data = await this.get(`/products/filter/categories/cheapest/pages/${pageNum}/`,{category});
+		let data = await this.post(`/products/filter/categories/cheapest/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	mostExpensiveProductListByCategory = async (pageNum, category) => {
-		let data = await this.get(`/products/filter/categories/most_expensive/pages/${pageNum}/`,{category});
+		let data = await this.post(`/products/filter/categories/most_expensive/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	randomProductListByCategoryAndPriceRange = async (category, maxPrice, minPrice) => {
-		let data = await this.get(`/products/filter/categories/price_range/randoms/`,{category, maxPrice, minPrice});
+		let data = await this.post(`/products/filter/categories/price_range/randoms/`,{category, maxPrice, minPrice});
 		return data;
 	}
 
 	mostPopularProductListByCategory = async (pageNum, category) => {
-		let data = await this.get(`/collections/categories/most_popular/pages/${pageNum}/`,{category});
+		let data = await this.post(`/collections/categories/most_popular/pages/${pageNum}/`,{category});
 		return data;
 	}
 
@@ -818,7 +818,7 @@ class Api {
 	}
 
 	randomProductListByPriceRange = async (maxPrice, minPrice) => {
-		let data = await this.get(`/products/filter/price_range/randoms/`,{maxPrice, minPrice});
+		let data = await this.post(`/products/filter/price_range/randoms/`,{maxPrice, minPrice});
 		return data;
 	}
 
@@ -829,7 +829,7 @@ class Api {
 
 	searchProduct = async (pageNum, keyword) => {
 		//order by highest sold
-		let data = await this.get(`/products/search/pages/${pageNum}/`,{keyword});
+		let data = await this.post(`/products/search/pages/${pageNum}/`,{keyword});
 		return data;
 	}
 
@@ -851,42 +851,42 @@ class Api {
 	getSellerOrdersByDay = async (year, month, day) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.get(`/orders/sellers/by_day/`,{year, month, day});
+		let data = await this.post(`/orders/sellers/by_day/`,{year, month, day});
 		return data;
 	}
 
 	getSellerSalesByDay = async (year, month, day) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.get(`/orders/sellers/sales/by_day/`,{year, month, day});
+		let data = await this.post(`/orders/sellers/sales/by_day/`,{year, month, day});
 		return data;
 	}
 
 	getSellerOrdersByMonth = async (year, month) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.get(`/orders/sellers/by_month/`,{year, month});
+		let data = await this.post(`/orders/sellers/by_month/`,{year, month});
 		return data;
 	}
 
 	getSellerSalesByMonth = async (year, month) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.get(`/orders/sellers/sales/by_month/`,{year, month});
+		let data = await this.post(`/orders/sellers/sales/by_month/`,{year, month});
 		return data;
 	}
 
 	getSellerOrdersByYear = async (year) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.get(`/orders/sellers/by_year/`,{year});
+		let data = await this.post(`/orders/sellers/by_year/`,{year});
 		return data;
 	}
 
 	getSellerSalesByYear = async (year) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.get(`/orders/sellers/sales/by_year/`,{year});
+		let data = await this.post(`/orders/sellers/sales/by_year/`,{year});
 		return data;
 	}
 
