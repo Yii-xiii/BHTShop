@@ -3,14 +3,14 @@ import Header from './Components/Header'
 import Footer from './Components/Footer'
 import SellerOrdersBody from './Components/SellerOrdersBody'
 
-const SellerOrdersPage = () => {
+const SellerOrdersDeliveredPage = () => {
     return (
         <div>
             <Header />
-            <SellerOrdersBody />
+            <SellerOrdersBody status={'delivered'}/>
             <Footer />
         </div>
     )
 }
 
-export default SellerOrdersPage
+export default SellerOrdersDeliveredPage

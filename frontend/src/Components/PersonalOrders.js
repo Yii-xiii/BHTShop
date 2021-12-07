@@ -5,8 +5,8 @@ import PersonalOrdersByPage from './PersonalOrdersByPage'
 
 const PersonalOrders = () => {
     return (
-        <div className='personal-order-box'>
-            <div className="info-title">
+        <div className='personal-orders-box'>
+            <div className="personal-order-info-title">
                 <h1>个人信息</h1>
             </div>
 

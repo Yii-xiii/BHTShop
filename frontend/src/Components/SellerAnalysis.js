@@ -4,7 +4,7 @@ import SellerAnalysisOptions from './SellerAnalysisOptions'
 const SellerAnalysis = () => {
     return (
         <div className='personal-order-box'>
-            <div className="info-title">
+            <div className="personal-info-title">
                 <h1>商家信息</h1>
             </div>
 

@@ -1,28 +1,9 @@
 import './SellerOrdersBody.css'
-import {useState, useEffect} from 'react'
+
 import { Link, useParams } from 'react-router-dom'
-import api from './Api'
+import SellerOrdersList from './SellerOrdersList'
 
-const SellerOrdersBody = () => {
-    const { status } = useParams()
-    const [orders, setOrders] = useState([])
-
-    const fetchOrders = async() => {
-        const data = await api.getSellerOrderListByStatus(status)
-
-        console.log(data)
-        return data
-    }
-
-    useEffect(() => {
-        const getOrders = async() => {
-            const ordersFromServer = await fetchOrders()
-            setOrders(ordersFromServer)
-        }
-
-        getOrders()
-    }, [])
-
+const SellerOrdersBody = ({ status }) => {
     if (status === 'paid') {
         return (
             <div>
@@ -50,7 +31,7 @@ const SellerOrdersBody = () => {
                     </div>
                     
                     <div className='status-orders'>
-                        {status}
+                        <SellerOrdersList status={status}/>
                     </div>
                 </div>
             </div>
@@ -82,7 +63,7 @@ const SellerOrdersBody = () => {
                     </div>
                     
                     <div className='status-orders'>
-                        {status}
+                        <SellerOrdersList status={status}/>
                     </div>
                 </div>
             </div>
@@ -114,7 +95,7 @@ const SellerOrdersBody = () => {
                     </div>
                     
                     <div className='status-orders'>
-                        {status}
+                        <SellerOrdersList status={status}/>
                     </div>
                 </div>
             </div>
@@ -146,7 +127,7 @@ const SellerOrdersBody = () => {
                     </div>
                     
                     <div className='status-orders'>
-                        {status}
+                        <SellerOrdersList status={status}/>
                     </div>
                 </div>
             </div>
@@ -178,7 +159,7 @@ const SellerOrdersBody = () => {
                     </div>
                     
                     <div className='status-orders'>
-                        {status}
+                        <SellerOrdersList status={status}/>
                     </div>
                 </div>
             </div>
@@ -187,33 +168,7 @@ const SellerOrdersBody = () => {
 
     return (
         <div>
-            <div className='status-options-outer-box'>
-                <div className='status-options'>
-                    <Link className='status-links' to='/sOrders/paid'>
-                        <h4>待出货</h4>
-                    </Link>
-                    
-                    <Link className='status-links' to='/sOrders/shipped'>
-                        <span>待派送</span>
-                    </Link>
-    
-                    <Link className='status-links' to='/sOrders/delivered'>
-                        <span>已完成</span>
-                    </Link>
-    
-                    <Link className='status-links' to='/sOrders/returning'>
-                        <span>待退款</span>
-                    </Link>
-    
-                    <Link className='status-links' to='/sOrders/returned'>
-                        <span>已退款</span>
-                    </Link>
-                </div>
-                
-                <div className='status-orders'>
-                    {status}
-                </div>
-            </div>
+            STATUS NOT FOUND
         </div>
     )
 }

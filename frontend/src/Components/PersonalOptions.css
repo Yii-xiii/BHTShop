@@ -1,4 +1,4 @@
-.option-box {
+.personal-option-box {
     margin-top: 30px;
     margin-left: 30px;
     display: inline-flex;
@@ -6,30 +6,31 @@
     height: 40px;
 }
 
-.detail-box {
+.personal-detail-box {
     margin-left: 20px;
     margin-top: 5px;
     margin-right: 30px;
+    min-width: 100px;
 }
 
-.order-box {
+.personal-order-box {
     margin-top: 5px;
 }
 
-.profile-link {
+.personal-profile-link {
     text-decoration: none;
     color: black;
 }
 
-.orders-link {
+.personal-orders-link {
     text-decoration: none;
     color: grey;
 }
 
-.detail-box h2 {
+.personal-detail-box h2 {
     font-size: 25px;
 }
 
-.order-box span {
+.personal-order-box span {
     font-size: 25px;
 }

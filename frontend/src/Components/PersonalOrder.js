@@ -42,31 +42,31 @@ const PersonalOrder = ({ order }) => {
     return (
         <div>
             <Link className='order-link' to={orderPath}>
-            <div className='order-show-box'>
+            <div className='personal-order-show-box'>
                 <div className='order-image-box'>
                     <img src={ image? image.image_url : '0'} alt='img'/>
                 </div>
                 
-                <div className='order-description-box'>                    
-                    <div className='seller-description'>
+                <div className='order-in-description-box'>                    
+                    <div className='seller-in-description-order'>
                         <img className='seller-logo' src={StoreLogo} alt='img'/>
                         <span>{order.productSpec.product.seller.username}</span>
                     </div>
 
-                    <div className='order-description'>
+                    <div className='order-in-description'>
                         <h3>{order.productSpec.product.title}</h3>
                     </div>
 
-                    <div className='order-description'>
-                        <span className='order-description-text'>{order.productSpec.product.description}</span>
+                    <div className='order-in-description'>
+                        <span>{order.productSpec.product.description}</span>
                     </div>
 
-                    <div className='order-description'>
-                        <span className='order-quantity'>x{order.quantity}</span>
+                    <div className='order-in-description'>
+                        <span>x{order.quantity}</span>
                     </div>
 
-                    <div className='order-description'>
-                        <span className='order-price'>¥ {order.totalPrice}</span>
+                    <div className='order-in-price-description'>
+                        <span>¥ {order.totalPrice}</span>
                     </div>
 
                     <div className='delivery-status'>

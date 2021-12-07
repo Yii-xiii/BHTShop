@@ -4,12 +4,12 @@
     min-width: 850px;
 }
 
-.info-title {
+.personal-info-title {
     margin-left: 50px;
     margin-top: 50px;
 }
 
-.display-box {
+.personal-info-display-box {
     display: flex;
     flex-direction: column;
     margin: 50px;
