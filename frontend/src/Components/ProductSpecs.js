@@ -4,7 +4,6 @@ import './ProductSpecs.css'
 import api from './Api'
 import { useNavigate, useParams } from 'react-router'
 import Cookies from 'js-cookie'
-import Cart from './Cart'
 
 const ProductSpecs = () => {
     const navigate = useNavigate()
@@ -63,7 +62,7 @@ const ProductSpecs = () => {
     const addCart = async(cartSpec, cartQuantity) => {
         if (Cookies.get('user') === 'Customer') {
             // check if spec found
-            const data = await api.createCustomerCart(cartSpec, cartQuantity)
+            await api.createCustomerCart(cartSpec, cartQuantity)
             
             window.location.reload(false)
         } else if (Cookies.get('user') === 'Seller') {

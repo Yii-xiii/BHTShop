@@ -35,7 +35,7 @@ const AddProductPage = () => {
     const addProduct = async(e) => {
         e.preventDefault()
 
-        if (specs.length == 0) {
+        if (specs.length === 0) {
             setErrorMessage("至少输入一个规格")
         } else {
             const uploadData = new FormData()

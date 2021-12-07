@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react'
 import './CartProduct.css'
 import api from './Api'
-import Cookies from 'js-cookie'
 
 const CartProduct = ({ cartProduct }) => {
     const [image, setImages] = useState([])

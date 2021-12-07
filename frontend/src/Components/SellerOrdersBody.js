@@ -1,6 +1,6 @@
 import './SellerOrdersBody.css'
 
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import SellerOrdersList from './SellerOrdersList'
 
 const SellerOrdersBody = ({ status }) => {

@@ -3,7 +3,7 @@ import './CartProducts.css'
 import {useState, useEffect} from 'react'
 import api from './Api'
 import CartProduct from './CartProduct'
-import Cookies, { get } from 'js-cookie'
+import Cookies from 'js-cookie'
 
 const CartProducts = () => {
     const [cart, setCart] = useState([])
@@ -36,11 +36,11 @@ const CartProducts = () => {
         getCustomer()
     }, [])
 
-    {cart.map((cartProduct) => (
+    cart.map((cartProduct) => (
         cartProduct.productSpec.stock > cartProduct.quantity ?
             (total += cartProduct.productSpec.price * cartProduct.quantity).toFixed(2)
             : (total += cartProduct.productSpec.price * cartProduct.productSpec.stock).toFixed(2)
-    ))}
+    ))
 
     const settleOrder = async(cartProduct) => {
         // create order
@@ -53,9 +53,9 @@ const CartProducts = () => {
     }
 
     const placeOrder = async() => {
-        {cart.map((cartItem) => (
+        cart.map((cartItem) => (
             settleOrder(cartItem)
-        ))}
+        ))
     }
 
     const deleteItem = async(cartItemSpecId) => {
@@ -64,9 +64,9 @@ const CartProducts = () => {
     }
 
     const clearCart = async() => {
-        {cart.map((cartItem) => (
+        cart.map((cartItem) => (
             deleteItem(cartItem.productSpec.id)
-        ))}
+        ))
     }
 
     return (

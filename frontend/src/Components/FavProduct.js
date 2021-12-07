@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 
 const FavProduct = ({ favProduct }) => {
     const [image, setImages] = useState([])
-    const [stock, setStock] = useState('')
     const [price, setPrice] = useState('0.00')
 
     // Fetch data from database
@@ -30,7 +29,6 @@ const FavProduct = ({ favProduct }) => {
 
         const getSpecs = async() => {
             const specsFromServer = await fetchSpecs()
-            setStock(specsFromServer[0].stock)
             setPrice(specsFromServer[0].price)
         }
 
@@ -41,7 +39,7 @@ const FavProduct = ({ favProduct }) => {
     const path = `/product/${favProduct.id}`
 
     const deleteCollection = async(favProductId) => {
-        const data = await api.deleteCustomerCollection(favProductId)
+        await api.deleteCustomerCollection(favProductId)
         window.location.reload(false)
     }
 
