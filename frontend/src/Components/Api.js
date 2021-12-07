@@ -116,7 +116,7 @@ class Api {
 	deleteProduct = async (id) => {
 		//login required
 		//404 : product not found
-		//403 : user is not a seller
+		//403 : user is neither spec.product.seller nor an admin
 		let data = await this.delete(`/products/${id}/edit/`);
 		return data;
 	}
@@ -162,7 +162,7 @@ class Api {
 	deleteProductSpec = async (productId, specId) => {
 		//login required
 		//404 : product spec not found
-		//403 : user is not a seller
+		//403 : user is neither spec.product.seller nor an admin
 		let data = await this.delete(`/products/${productId}/specs/${specId}/edit/`);
 		return data;
 	}
@@ -267,7 +267,7 @@ class Api {
 	updateProductComment = async (commentId, description, rating) => {
 		//login required
 		//404 : comment not found
-		//403 : user is not a comment.order.customer
+		//403 : user is not comment.order.customer
 		let data = await this.put(`/comments/${commentId}/edit/`,{description, rating});
 		return data;
 	}
@@ -275,7 +275,7 @@ class Api {
 	deleteProductComment = async (commentId) => {
 		//login required
 		//404 : comment not found
-		//403 : user is not a comment.order.customer
+		//403 : user is neither comment.order.customer nor an admin
 		let data = await this.delete(`/comments/${commentId}/edit/`);
 		return data;
 	}
@@ -452,7 +452,7 @@ class Api {
 		//login required
 		//403 : seller not found
 		//400 : Invalid status
-		let data = await this.get(`/orders/sellers/status/`,{status});
+		let data = await this.post(`/orders/sellers/status/`,{status});
 		return data;
 	}
 
@@ -460,7 +460,7 @@ class Api {
 		//login required
 		//403 : customer not found
 		//400 : Invalid status
-		let data = await this.get(`/orders/customers/status/`,{status});
+		let data = await this.post(`/orders/customers/status/`,{status});
 		return data;
 	}
 
@@ -628,7 +628,7 @@ class Api {
 	deleteCustomer = async (id) => {
 		//login required
 		//404 : customer not found
-		//403 : editing other customer info
+		//403 : user is neither customer himself nor an admin
 		let data = await this.delete(`/users/customers/${id}/edit/`);
 		return data;
 	}
