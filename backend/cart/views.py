@@ -119,9 +119,8 @@ def edit_customer_cart(request, pk_spec):
 	except Cart.DoesNotExist:
 		return returnJson([], 404)
 
-	data = json.loads(request.body)
-
 	if request.method == 'PUT':
+		data = json.loads(request.body)
 		if spec.stock < int(data["quantity"]):
 			return returnJson([], 400)
 		cart.quantity = data["quantity"]
