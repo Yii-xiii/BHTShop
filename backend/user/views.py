@@ -54,10 +54,10 @@ def edit_customer(request, pk):
 	except Customer.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user.id != customer.id:
-		return returnJson([], 403)
-
 	if request.method == 'PUT':
+		if request.user.id != customer.id:
+			return returnJson([], 403)
+
 		data = json.loads(request.body)
 
 		customer.username = data["username"]
@@ -69,6 +69,11 @@ def edit_customer(request, pk):
 		return returnJson([dict(customer.body())])
 
 	elif request.method == 'DELETE':
+		if request.user.id != customer.id:
+			try:
+				admin = AdminUser.objects.get(id=request.user.id)
+			except AdminUser.DoesNotExist:
+				return returnJson([], 403)
 		customer.delete()
 		return returnJson()
 
@@ -113,10 +118,11 @@ def edit_seller(request, pk):
 	except Seller.DoesNotExist:
 		return returnJson([], 404)
 	
-	if request.user.id != seller.id:
-		return returnJson([], 403)
 
 	if request.method == 'PUT':
+		if request.user.id != seller.id:
+			return returnJson([], 403)
+
 		data = json.loads(request.body)
 
 		seller.username = data["username"]
@@ -128,6 +134,12 @@ def edit_seller(request, pk):
 		return returnJson([dict(seller.body())])
 
 	elif request.method == 'DELETE':
+		if request.user.id != seller.id:
+			# try:
+			# 	admin = AdminUser.objects.get(id=request.user.id)
+			# except AdminUser.DoesNotExist:
+			return returnJson([], 403)
+
 		seller.delete()
 		return returnJson()
 

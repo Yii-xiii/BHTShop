@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Product, ProductSpec, ProductImage
 from user.models import Seller
+from adminUser.models import AdminUser
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .serializers import ProductImageSerializer
@@ -119,14 +120,19 @@ def edit_product(request, pk):
 	except Product.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user.id != product.seller.id:
-		return returnJson([],403)
-
 	if request.method == 'DELETE':
+		if request.user.id != product.seller.id:
+			try:
+				admin = AdminUser.objects.get(id=request.user.id)
+			except AdminUser.DoesNotExist:
+				return returnJson([],403)
 		product.delete()
 		products = Product.objects.all()
 		return returnJson([dict(product.body()) for product in products])
 	elif request.method == 'PUT':
+		if request.user.id != product.seller.id:
+			return returnJson([],403)
+
 		data = json.loads(request.body)
 		if data["category"] not in dict(Product.CATEGORIES):
 				return returnJson([], 400)
@@ -216,10 +222,10 @@ def edit_product_spec(request, pk, pk_spec):
 	except ProductSpec.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user.id != spec.product.seller.id:
-		return returnJson([],403)
-
 	if request.method == 'PUT':
+		if request.user.id != spec.product.seller.id:
+			return returnJson([],403)
+			
 		data = json.loads(request.body)
 		spec.description = data["description"]
 		spec.price = data["price"]
@@ -229,6 +235,12 @@ def edit_product_spec(request, pk, pk_spec):
 		return returnJson([dict(spec.body())])
 
 	elif request.method == 'DELETE':
+		if request.user.id != spec.product.seller.id:
+			try:
+				admin = AdminUser.objects.get(id=request.user.id)
+			except AdminUser.DoesNotExist:
+				return returnJson([],403)
+
 		spec.delete()
 		productSpecs = ProductSpec.objects.filter(product=pk)
 		return returnJson([dict(spec.body()) for spec in productSpecs])

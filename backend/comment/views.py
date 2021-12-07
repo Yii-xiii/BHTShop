@@ -2,6 +2,7 @@ from django.shortcuts import render
 from product.models import Product, ProductSpec
 from order.models import Order
 from user.models import Customer
+from adminUser.models import AdminUser
 from .models import ProductComment
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -136,10 +137,9 @@ def edit_product_comment(request, pk_comment):
 	except ProductComment.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user.id != comment.order.customer.id:
-		return returnJson([],403)
-
 	if request.method == 'PUT':
+		if request.user.id != comment.order.customer.id:
+			return returnJson([],403)
 		data = json.loads(request.body)
 
 		specs = ProductSpec.objects.filter(product=comment.order.productSpec.product)
@@ -157,6 +157,12 @@ def edit_product_comment(request, pk_comment):
 		return returnJson([dict(comment.body())])
 
 	elif request.method == 'DELETE':
+		if request.user.id != comment.order.customer.id:
+			try:
+				admin = AdminUser.objects.get(id=request.user.id)
+			except AdminUser.DoesNotExist:
+				return returnJson([],403)
+
 		specs = ProductSpec.objects.filter(product=comment.order.productSpec.product)
 		orders = Order.objects.filter(productSpec__in = specs)
 		comments = ProductComment.objects.filter(order__in=orders)
