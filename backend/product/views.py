@@ -73,10 +73,13 @@ def seller_best_selling_product_list(request):
 @login_required
 def create_product(request):
 	if request.method == 'POST':
-		if request.COOKIES["user"] == "Seller":
-			seller = Seller.objects.get(username=request.user.username)
-			product = Product.objects.create(seller=seller)
+		try:
+			seller = Seller.objects.get(id=request.user.id)
 			data = json.loads(request.body)
+			if data["category"] not in dict(Product.CATEGORIES):
+				return returnJson([], 400)
+
+			product = Product.objects.create(seller=seller)
 			# print(data)
 			# print(request.FILES)
 			# print(request.stream)
@@ -91,7 +94,7 @@ def create_product(request):
 			# products = Product.objects.filter(seller = request.user).order_by('-id')
 			# return returnJson([dict(product.body()) for product in products])
 
-		else:
+		except Seller.DoesNotExist:
 			return returnJson([], 403)
 
 
@@ -125,6 +128,9 @@ def edit_product(request, pk):
 		return returnJson([dict(product.body()) for product in products])
 	elif request.method == 'PUT':
 		data = json.loads(request.body)
+		if data["category"] not in dict(Product.CATEGORIES):
+				return returnJson([], 400)
+
 		product.title = data["title"]
 		product.description = data["description"]
 		product.category = data["category"]
