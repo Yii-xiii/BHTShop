@@ -1,0 +1,55 @@
+.report-success-whole-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 850px;
+}
+
+.report-success-page-out-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    width: 700px;
+    margin: 50px 50px;
+    overflow: auto;
+    min-height: 100px;
+    border: 1px solid black;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.report-success-info-box {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 500px;
+}
+
+.report-success-button-submit-box {
+    width: 100%;
+    text-align: center;
+}
+
+.report-success-button-submit {
+    margin-top: 30px;
+    margin-bottom: 5px;
+    background: black;
+    width: 250px;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.report-success-button-submit:active {
+    transform: scale(0.95);
+}

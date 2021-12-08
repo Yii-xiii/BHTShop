@@ -16,9 +16,10 @@ const ReportPage = () => {
 
     const fetchReportingUser = async() => {
         if (Cookies.get('user') === 'Customer') {
+    
             const data = await api.getSeller(reportingId)
+           return data.data[0]
 
-            return data.data[0]
         } else if (Cookies.get('user') === 'Seller') {
             // get user's username
             const data = await api.getCustomer(reportingId)
@@ -40,10 +41,12 @@ const ReportPage = () => {
 
     const createReport = async () => {
         //send to administrator
-        
         await api.createReport(reportingId, reportReason, description)
+
+        navigate('success')
     }
 
+    
     return (
         <div>
             <Header />
