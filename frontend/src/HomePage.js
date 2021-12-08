@@ -7,6 +7,7 @@ import Footer from './Components/Footer'
 const HomePage = () => {
     return (
         <div>
+            
             <Header />
             <RankedProducts />
             <RandomProducts />

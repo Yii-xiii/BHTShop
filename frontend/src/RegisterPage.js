@@ -103,11 +103,11 @@ const RegisterPage = () => {
 
             <div className='register-whole-box'>
                 <form className='register-box' onSubmit={createUser}>
-                    <h1 className='form-head'>注册</h1>
+                    <h1 className='register-form-head'>注册</h1>
 
                     <Error />
 
-                    <div className='form'>
+                    <div className='register-form'>
                         <label className='form-label' >用户名</label>
                         <input
                             onChange={event => setUsername(event.target.value)}
@@ -115,7 +115,7 @@ const RegisterPage = () => {
                             placeholder='输入用户名'/>
                     </div>
 
-                    <div className='form'>
+                    <div className='register-form'>
                         <label className='form-label'>密码</label>
                         <input
                             onChange={event => setPassword(event.target.value)}
@@ -123,7 +123,7 @@ const RegisterPage = () => {
                             placeholder='输入密码'/>
                     </div>
 
-                    <div className='form'>
+                    <div className='register-form'>
                         <label className='form-label'>电话号码</label>
                         <input
                             onChange={event => setPhoneNumber(event.target.value)}
@@ -131,7 +131,7 @@ const RegisterPage = () => {
                             placeholder='输入电话号码'/>
                     </div>
 
-                    <div className='form'>
+                    <div className='register-form'>
                         <label className='form-label'>地址</label>
                         <input
                             onChange={event => setAddress(event.target.value)}
@@ -147,12 +147,12 @@ const RegisterPage = () => {
                         <input className='checkbox-box' name='user-type' type='checkbox' value='seller' checked={seller} onClick={isSeller}/>
                     </div>
 
-                    <div className='button-submit-box'>
-                        <button onSubmit={createUser} type='submit' className='button-submit'>提交</button>
+                    <div className='register-button-submit-box'>
+                        <button onSubmit={createUser} type='submit' className='register-button-submit'>提交</button>
                     </div>
 
-                    <div className='reg-link-box'>
-                        <Link to='/login' className='reg-link'>
+                    <div className='register-reg-link-box'>
+                        <Link to='/login' className='register-reg-link'>
                             <h5>已有账户？点此登录</h5>
                         </Link>
                     </div>

@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 import {useState, useEffect} from 'react'
 import React from 'react'
 import './FavSellers.css'

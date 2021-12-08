@@ -1,40 +1,91 @@
-﻿.head {
-    margin-left: 50px;
-    margin-top: 50px;
+﻿.report-whole-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 850px;
 }
 
-.infobox {
-    line-height: 60px;
-    margin-left: 200px;
-    margin-right: 200px;
-    margin-bottom: 50px;
-    border-bottom: 3px solid lightgray;
-    padding-left: 50px;
-    padding-top: 30px;
-    padding-bottom: 20px;
+.report-page-out-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    width: 700px;
+    margin: 50px 50px;
+    overflow: auto;
+    min-height: 100px;
+    border: 1px solid black;
+    padding: 30px;
+    border-radius: 15px;
 }
 
-.form label {
-    margin-left: 200px;
-    text-align: left;
-    margin-bottom: 50px;
+.report-info-box {
+    width: 500px;
 }
 
-.form input{
-    margin-bottom: 50px;
-    margin-right:200px;
+.report-desc-box {
+    display: flex;
+    margin-top: 30px;
+    flex-direction: row;
+    width: 500px;
+    align-items: center;
 }
 
-.button-submit-box {
+.report-desc-box h3 {
+    font-size: 18px;
+    width: 150px;
+}
+
+.report-desc-box span {
+    width: 300px;
+    display: flex;
+    height: 40px;
+    text-indent: 25px;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 20px;
+}
+
+.report-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.report-form label {
+    text-align: center;
+}
+
+.report-form label h4 {
+    font-size: 20px;
+}
+
+.report-form textarea {
+    padding: 20px 20px;
+    margin-top: 20px;
+    height: 150px;
+    font-size: 16px;
+    border-radius: 20px;
+    width: 500px;
+    border: 0px;
+    min-height: 150px;
+    resize: vertical;
+}
+
+.report-button-submit-box {
     width: 100%;
     text-align: center;
 }
 
-.button-submit {
+.report-button-submit {
     margin-top: 30px;
-    margin-bottom: 50px;
+    margin-bottom: 5px;
     background: black;
-    width: 10%;
+    width: 250px;
     color: white;
     border: none;
     padding: 10px 10px;
@@ -42,4 +93,14 @@
     cursor: pointer;
     text-decoration: none;
     font-size: 15px;
+}
+
+.report-button-submit:active {
+    transform: scale(0.95);
+}
+
+.report-form-type-select {
+    width: 120px;
+    height: 35px;
+    padding: 5px 5px;
 }

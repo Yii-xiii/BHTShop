@@ -55,7 +55,7 @@ const LoginPage = () => {
 
                     <Error />
                     
-                    <div className='form'>
+                    <div className='login-form'>
                         <label>用户名</label>
                         <input 
                             value={username}
@@ -64,7 +64,7 @@ const LoginPage = () => {
                             placeholder='输入用户名' required/>
                     </div>
 
-                    <div className='form'>
+                    <div className='login-form'>
                         <label>密码</label>
                         <input 
                             value={password}
@@ -73,12 +73,12 @@ const LoginPage = () => {
                             placeholder='输入密码' required/>
                     </div>
 
-                    <div className='button-submit-box'>
-                        <button onSubmit={loginAction} type='submit' className='button-submit'>提交</button>
+                    <div className='login-button-submit-box'>
+                        <button onSubmit={loginAction} type='submit' className='login-button-submit'>提交</button>
                     </div>
 
-                    <div className='reg-link-box'>
-                        <Link to='/register' className='reg-link'>
+                    <div className='login-reg-link-box'>
+                        <Link to='/register' className='login-reg-link'>
                             <h5>还没注册？点此注册</h5>
                         </Link> 
                     </div>
