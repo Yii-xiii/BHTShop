@@ -40,6 +40,11 @@ const SellerDescAndFilter = () => {
         }
     }
 
+    const getFollowCount = async() => {
+        const followCountFromServer = await fetchFollowCount()
+        setFollowCount(followCountFromServer)
+    }
+
     // Importing data
     useEffect(() => {
         const getSeller = async() => {
@@ -54,11 +59,6 @@ const SellerDescAndFilter = () => {
             }
         }
 
-        const getFollowCount = async() => {
-            const followCountFromServer = await fetchFollowCount()
-            setFollowCount(followCountFromServer)
-        }
-
         const getAvgRating = async() => {
             const followCountFromServer = await fetchAvgRating()
             setAvgRating(followCountFromServer)
@@ -68,12 +68,12 @@ const SellerDescAndFilter = () => {
         getFollowCount()
         getFollowship()
         getSeller()
-    }, [])
+    }, [followCount])
 
     const followSeller = async() => {
         if (Cookies.get('user') === 'Customer') {
             await api.createCustomerFollowship(sellerId)
-            window.location.reload(false)
+            getFollowCount()
         } else if (Cookies.get('user') === undefined) {
             navigate('/login')
         }
@@ -81,7 +81,7 @@ const SellerDescAndFilter = () => {
 
     const unfollowSeller = async() => {
         await api.deleteCustomerFollowship(sellerId)
-        window.location.reload(false)
+        getFollowCount()
     }
 
     const reportSellerPath = `/report/${sellerId}`
