@@ -192,7 +192,7 @@ const OrderPages = () => {
     }
 
     return (
-        <h1>error</h1>
+        <h1>Order not found!</h1>
     )
 
 }
