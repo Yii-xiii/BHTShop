@@ -1,10 +1,10 @@
-.personal-order-box {
+.personal-orders-box {
     display: flex;
     flex-direction: column;
     min-width: 850px;
 }
 
-.info-title {
+.personal-order-info-title {
     margin-left: 50px;
     margin-top: 50px;
 }

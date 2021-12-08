@@ -1,15 +1,25 @@
 import React from 'react'
-import { useParams } from 'react-router'
 import Footer from './Components/Footer'
 import Header from './Components/Header'
+import SellerDescAndFilter from './Components/SellerDescAndFilter'
+import SellerPageProducts from './Components/SellerPageProducts'
+import './SellerPage.css'
 
 const SellerPage = () => {
-    const { sellerId } = useParams()
-
     return (
         <div>
             <Header />
-            {sellerId}
+            
+            <div className='seller-page-body-outer-box'>
+                <div className='seller-page-left-part-box'>
+                    <SellerDescAndFilter />
+                </div>
+
+                <div className='seller-page-right-part-box'>
+                    <SellerPageProducts />
+                </div>
+            </div>
+
             <Footer />
         </div>
     )

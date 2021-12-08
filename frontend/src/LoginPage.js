@@ -6,7 +6,6 @@ import api from './Components/Api'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
 import Cookies from 'js-cookie'
-import HomePage from './HomePage'
 
 const LoginPage = () => {
     const [username, setUsername] = useState([])

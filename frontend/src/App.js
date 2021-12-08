@@ -9,7 +9,7 @@ import ProductPage from './ProductPage'
 import ProfilePage from './ProfilePage'
 import SellerHomePage from './SellerHomePage'
 import AddProductPage from './AddProductPage'
-import SellerOrdersPage from './SellerOrdersPage';
+import SellerOrdersPage from './SellerOrdersPaidPage';
 import PersonalOrdersPage from './PersonalOrdersPage';
 import AdminPage from './AdminPage';
 import SellerAnalysisPage from './SellerAnalysisPage';
@@ -17,6 +17,11 @@ import SellerPage from './SellerPage'
 import FavSellerPage from './FavSellerPage';
 import OrderPage from './OrderPage';
 import ProductCommentsPage from './ProductCommentsPage'
+import SellerOrdersPaidPage from './SellerOrdersPaidPage';
+import SellerOrdersShippedPage from './SellerOrdersShippedPage';
+import SellerOrdersDeliveredPage from './SellerOrdersDeliveredPage';
+import SellerOrdersReturningPage from './SellerOrdersReturningPage';
+import SellerOrdersReturnedPage from './SellerOrdersReturnedPage';
 
 function App() {
   return (
@@ -30,7 +35,11 @@ function App() {
           <Route path='/favSellers' element={<FavSellerPage />}/>
           <Route path='/cart' element={<CartPage />}/>
           <Route path='/addProduct' element={<AddProductPage />}/>
-          <Route path='/sOrders/:status' element={<SellerOrdersPage />}/>
+          <Route path='/sOrders/paid' element={<SellerOrdersPaidPage />}/>
+          <Route path='/sOrders/shipped' element={<SellerOrdersShippedPage />}/>
+          <Route path='/sOrders/delivered' element={<SellerOrdersDeliveredPage />}/>
+          <Route path='/sOrders/returning' element={<SellerOrdersReturningPage />}/>
+          <Route path='/sOrders/returned' element={<SellerOrdersReturnedPage />}/>
           <Route path='/sellerHome' element={<SellerHomePage />}/>
           <Route path='/product/:productId' element={<ProductPage />}/>
           <Route path='/profile' element={<ProfilePage />}/>

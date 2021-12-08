@@ -1,0 +1,96 @@
+.seller-desc-and-filter-outer-box {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+}
+
+.seller-desc-box {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    border-radius: 20px;
+    background-color: #fff;
+    align-items: center;
+}
+
+.seller-desc-box h2 {
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+.seller-desc-box span {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.seller-desc-texts-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    margin-bottom: 10px;
+    margin-left: 70px;
+}
+
+.seller-desc-texts-box h4 {
+    width: 80px;
+}
+
+.seller-desc-buttons-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    width: auto;
+}
+
+.seller-desc-follow-button {
+    height: 40px;
+    width: 80px;
+    background-color: #C4DFFB;
+    border: 0px;
+    margin-right: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.seller-desc-report-button {
+    height: 40px;
+    width: 80px;
+    background-color: pink;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.seller-filter-box {
+    height: 500px;
+    border-radius: 20px;
+    margin-top: 30px;
+    background-color: #fff;
+}
+
+.seller-filter-by-type-box, .seller-filter-by-rating-box, .seller-filter-by-price-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-left: 35px;
+}
+
+.seller-filter-by-type-box span {
+    font-size: 17px;
+    margin-top: 8px;
+}
+
+.seller-filter-by-rating-box span {
+    font-size: 17px;
+    margin-top: 8px;
+}
+
+.seller-filter-by-price-box span {
+    font-size: 17px;
+    margin-top: 8px;
+}

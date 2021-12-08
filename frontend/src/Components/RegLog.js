@@ -8,7 +8,6 @@ const RegLog = () => {
     const navigate = useNavigate()
     let loggedInType = Cookies.get('user')
     const username = Cookies.get('username')
-    const userId = Cookies.get('user_id')
 
     const logoutAction = async(e) => {
         e.preventDefault()
