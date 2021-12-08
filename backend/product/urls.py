@@ -8,8 +8,8 @@ urlpatterns = [
     path('best_selling/', views.best_selling_product_list),
     path('pages/<int:pageNum>/', views.product_list_by_page),
 
-    path('sellers/latest/', views.seller_latest_product_list),
-    path('sellers/best_selling/', views.seller_best_selling_product_list),
+    path('sellers/<int:pk>/latest/', views.seller_latest_product_list),
+    path('sellers/<int:pk>/best_selling/', views.seller_best_selling_product_list),
 
     path('<int:pk>/', views.product),
     path('<int:pk>/edit/', views.edit_product),

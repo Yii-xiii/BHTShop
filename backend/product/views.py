@@ -50,9 +50,9 @@ def latest_product_list_by_page(request, pageNum):
 	return returnJson([dict(product.body()) for product in products])
 
 @login_required
-def seller_latest_product_list(request):
+def seller_latest_product_list(request, pk):
 	try:
-		seller = Seller.objects.get(id=request.user.id)
+		seller = Seller.objects.get(id=pk)
 	except Seller.DoesNotExist:
 		return returnJson([],404)
 
@@ -61,9 +61,9 @@ def seller_latest_product_list(request):
 
 
 @login_required
-def seller_best_selling_product_list(request):
+def seller_best_selling_product_list(request,pk):
 	try:
-		seller = Seller.objects.get(id=request.user.id)
+		seller = Seller.objects.get(id=pk)
 	except Seller.DoesNotExist:
 		return returnJson([],404)
 
