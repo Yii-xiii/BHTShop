@@ -802,6 +802,12 @@ class Api {
 		return data;
 	}
 
+	searchProductByCategory = async (pageNum, category, keyword) => {
+		//order by highest sold
+		let data = await this.post(`/products/search/pages/${pageNum}/`,{category, keyword});
+		return data;
+	}
+
 	randomProductList = async () => {
 		let data = await this.get(`/products/filter/randoms/`);
 		return data;

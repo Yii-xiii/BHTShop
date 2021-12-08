@@ -50,4 +50,5 @@ urlpatterns = [
 
 
     path('search/pages/<int:pageNum>/',views.search_product),
+    path('search/categories/pages/<int:pageNum>/',views.search_product_by_category),
 ]
