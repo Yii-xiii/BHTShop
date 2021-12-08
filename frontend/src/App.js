@@ -9,7 +9,6 @@ import ProductPage from './ProductPage'
 import ProfilePage from './ProfilePage'
 import SellerHomePage from './SellerHomePage'
 import AddProductPage from './AddProductPage'
-import SellerOrdersPage from './SellerOrdersPaidPage';
 import PersonalOrdersPage from './PersonalOrdersPage';
 import AdminPage from './AdminPage';
 import SellerAnalysisPage from './SellerAnalysisPage';
