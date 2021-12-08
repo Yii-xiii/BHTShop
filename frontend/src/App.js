@@ -30,7 +30,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path='/' element={<HomePage />}/>
-          <Route path='/s/:searchName' element={<SearchPage />}/>
+          <Route path='/search' element={<SearchPage />}/>
           <Route path='/register' element={<RegisterPage />}/>
           <Route path='/login' element={<LoginPage />}/>
           <Route path='/favProducts' element={<FavProductPage />}/>
