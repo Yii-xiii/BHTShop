@@ -736,10 +736,10 @@ class Api {
 		return data;
 	}
 
-	createReport = async (reportedUserId, reason, description) => {
+	createReport = async (userId, reason, description) => {
 		//login required
 		//404 : reported user not found
-		let data = await this.post(`/adminUsers/reports/create/`,{reportedUserId, reason, description});
+		let data = await this.post(`/adminUsers/reports/create/`,{userId, reason, description});
 		return data;
 	}
 
