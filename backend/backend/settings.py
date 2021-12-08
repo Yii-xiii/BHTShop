@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'user.middleware.requestlog.RequestIdMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -136,3 +137,67 @@ CORS_ORIGIN_WHITELIST = [
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+
+config = {
+    'version' : 1,
+
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+
+    'formatters': {
+        'console_format' : {
+            'format' : '{levelname} [{asctime}] {message}',
+            'style' : '{',
+        },
+        'message_format' : {
+            'format' : '[{asctime}] {message}',
+            'style' : '{',
+        },
+    },
+
+    'handlers' : {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter' : 'console_format',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file' : {
+            'level' : 'DEBUG',
+            'class' : 'logging.FileHandler',
+            'filters': ['require_debug_true'],
+            'filename' : './logs/request_debug.log',
+            'formatter' : 'message_format',
+        }
+    },
+
+    'loggers' : {
+        'django': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'INFO',
+        },
+        'django.server' : {
+            'level' : 'DEBUG',
+            'handlers' : ['console', 'mail_admins'],
+        },
+        'test' : {
+            'level' : 'DEBUG',
+            'handlers' : ['file'],
+        }
+
+    }
+}
+
+import logging.config
+logging.config.dictConfig(config)

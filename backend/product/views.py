@@ -225,7 +225,7 @@ def edit_product_spec(request, pk, pk_spec):
 	if request.method == 'PUT':
 		if request.user.id != spec.product.seller.id:
 			return returnJson([],403)
-			
+
 		data = json.loads(request.body)
 		spec.description = data["description"]
 		spec.price = data["price"]
@@ -292,6 +292,8 @@ def first_product_image(request, pk):
 		return JsonResponse([], 404)
 
 	image = ProductImage.objects.filter(product=product).first()
+	if image is None :
+		return returnJson()
 
 	return returnJson([dict(image.body())])
 
