@@ -32,12 +32,14 @@ class OrderStatus(models.Model):
 	DEL = "delivered"
 	RET_ING = "returning"
 	RET_ED = "returned"
+	COMP = "completed" 
 	STATUSES = [
 		(PAID, "paid"),
 		(SHP, "shipped"),
 		(DEL, "delivered"),
 		(RET_ING, "returning"),
 		(RET_ED, "returned"),
+		(COMP, "completed"),
 	]
 
 	order = models.ForeignKey(Order, on_delete=models.CASCADE, null=False)
