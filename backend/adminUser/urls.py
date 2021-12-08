@@ -16,4 +16,9 @@ urlpatterns = [
 	path('reports/<int:pk>/', views.getReport),
 	path('reports/create/', views.createReport),
 	path('reports/<int:pk>/edit/', views.editReport),
+
+	path('logs/illegal_login/', views.anonymous_user_illegal_login),
+	path('logs/users/<int:pk>/', views.user_get_request),
+	path('logs/illegal_operation/', views.illegal_operation),
+	path('logs/users/<int:pk>/illegal_operation/', views.user_illegal_operation),
 ]

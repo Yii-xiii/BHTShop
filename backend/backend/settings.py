@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_db_logger',
 
     'corsheaders',
     'rest_framework',
@@ -179,6 +180,10 @@ config = {
             'filters': ['require_debug_true'],
             'filename' : './logs/request_debug.log',
             'formatter' : 'message_format',
+        },
+        'db-logger' : {
+            'level': 'DEBUG',
+            'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
         }
     },
 
@@ -193,7 +198,7 @@ config = {
         },
         'test' : {
             'level' : 'DEBUG',
-            'handlers' : ['file'],
+            'handlers' : ['db-logger'],
         }
 
     }

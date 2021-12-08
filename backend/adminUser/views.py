@@ -3,6 +3,7 @@ from .models import AdminUser, Report
 from user.models import Customer, Seller, User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django_db_logger.models import StatusLog
 import json
 
 # Create your views here.
@@ -200,3 +201,33 @@ def editReport(request, pk):
 	elif request.method == 'DELETE':
 		report.delete()
 		return returnJson()
+
+
+def user_get_request(request,pk):
+	try:
+		user = User.objects.get(id=pk)
+	except User.DoesNotExist:
+		return returnJson([],404)
+
+	logs = StatusLog.objects.filter(msg__contains='%s : "GET' % user.username)
+	return returnJson([dict(acttime=log.create_datetime, msg=log.msg, level=log.level) for log in logs])
+
+
+def user_illegal_operation(request,pk):
+	try:
+		user = User.objects.get(id=pk)
+	except User.DoesNotExist:
+		return returnJson([],404)
+
+	logs = StatusLog.objects.exclude(msg__contains="response_code:2").filter(msg__contains='%s : "' % user.username)
+	return returnJson([dict(acttime=log.create_datetime, msg=log.msg, level=log.level) for log in logs])
+
+
+def illegal_operation(request):
+	logs = StatusLog.objects.exclude(msg__contains="response_code:2")
+	return returnJson([dict(acttime=log.create_datetime, msg=log.msg, level=log.level) for log in logs])
+
+
+def anonymous_user_illegal_login(request):
+	logs = StatusLog.objects.filter(msg__contains='AnonymousUser : "POST /users/login/')
+	return returnJson([dict(acttime=log.create_datetime, msg=log.msg) for log in logs])
