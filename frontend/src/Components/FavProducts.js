@@ -12,7 +12,6 @@ const FavProducts = () => {
     const fetchFavProducts = async() => {
         const data = await api.getCustomerCollectionList()
 
-        console.log(data.data)
         // get back list of favProducts
         return data.data
     }
