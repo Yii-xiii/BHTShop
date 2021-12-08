@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useNavigationType, useParams } from 'react-router'
 import api from './Api'
 import {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
@@ -8,7 +8,7 @@ import Cookies from 'js-cookie'
 
 const SellerDescAndFilter = () => {
     const { sellerId } = useParams()
-
+    const navigate = useNavigate()
     const [seller, setSeller] = useState([])
     const [followship, setFollowship] = useState([])
 
@@ -21,9 +21,11 @@ const SellerDescAndFilter = () => {
     }
 
     const fetchFollowship = async() => {
-        const data = await api.getCustomerFollowship(sellerId)
+        if (Cookies.get('user') === 'Customer') {
+            const data = await api.getCustomerFollowship(sellerId)
 
-        return data.data
+            return data.data
+        }
     }
 
     // Importing data
@@ -34,8 +36,10 @@ const SellerDescAndFilter = () => {
         }
 
         const getFollowship = async() => {
-            const followshipFromServer = await fetchFollowship()
-            setFollowship(followshipFromServer)
+            if (Cookies.get('user') === 'Customer') {
+                const followshipFromServer = await fetchFollowship()
+                setFollowship(followshipFromServer)
+            }
         }
 
         getFollowship()
@@ -46,6 +50,8 @@ const SellerDescAndFilter = () => {
         if (Cookies.get('user') === 'Customer') {
             await api.createCustomerFollowship(sellerId)
             window.location.reload(false)
+        } else if (Cookies.get('user') === undefined) {
+            navigate('/login')
         }
     }
 
