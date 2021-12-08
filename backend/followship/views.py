@@ -112,3 +112,13 @@ def edit_customer_followship(request, pk_seller):
 	if request.method == 'DELETE':
 		followship.delete()
 		return returnJson()
+
+
+def seller_followship_count(request,pk):
+	try:
+		seller = Seller.objects.get(id = pk)
+	except Seller.DoesNotExist:
+		return returnJson([], 404)
+
+	followship = Followship.objects.filter(seller=seller)
+	return returnJson(dict(count=len(followship)))

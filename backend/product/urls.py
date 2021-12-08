@@ -8,6 +8,7 @@ urlpatterns = [
     path('best_selling/', views.best_selling_product_list),
     path('pages/<int:pageNum>/', views.product_list_by_page),
 
+    path('sellers/<int:pk>/average_rating/', views.seller_average_rating),
     path('sellers/<int:pk>/latest/', views.seller_latest_product_list),
     path('sellers/<int:pk>/best_selling/', views.seller_best_selling_product_list),
 

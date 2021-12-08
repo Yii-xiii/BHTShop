@@ -65,14 +65,12 @@ class Api {
 	}
 
 	getSellerLatestProductList = async (sellerId) => {
-		//login required
 		//404 : seller not found
-		let data = await this.get(`/products/sellers/${sellerId}/best_selling/`);
+		let data = await this.get(`/products/sellers/${sellerId}/lastest/`);
 		return data;
 	}
 
 	getSellerBestSellingProductList = async (sellerId) => {
-		//login required
 		//404 : seller not found
 		let data = await this.get(`/products/sellers/${sellerId}/best_selling/`);
 		return data;
@@ -637,6 +635,18 @@ class Api {
 	getSeller = async (id) => {
 		//404 : seller not found
 		let data = await this.get(`/users/sellers/${id}/`);
+		return data;
+	}
+
+	getSellerAverageRating = async (id) => {
+		//404 : seller not found
+		let data = await this.get(`/products/sellers/${id}/average_rating/`);
+		return data;
+	}
+
+	getSellerFollowshipCount = async (id) => {
+		//404 : seller not found
+		let data = await this.get(`/followships/counts/sellers/${id}/`);
 		return data;
 	}
 

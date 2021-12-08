@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .serializers import ProductImageSerializer
 from rest_framework.viewsets import ModelViewSet
 from django.db.models import Count
+from decimal import Decimal
 import json
 import os
 import random
@@ -49,7 +50,7 @@ def latest_product_list_by_page(request, pageNum):
 	products = Product.objects.all().order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(product.body()) for product in products])
 
-@login_required
+
 def seller_latest_product_list(request, pk):
 	try:
 		seller = Seller.objects.get(id=pk)
@@ -60,7 +61,6 @@ def seller_latest_product_list(request, pk):
 	return returnJson([dict(product.body()) for product in products])
 
 
-@login_required
 def seller_best_selling_product_list(request,pk):
 	try:
 		seller = Seller.objects.get(id=pk)
@@ -69,6 +69,20 @@ def seller_best_selling_product_list(request,pk):
 
 	products = Product.objects.filter(seller = seller).order_by('-soldAmount')
 	return returnJson([dict(product.body()) for product in products])
+
+
+def seller_average_rating(request, pk):
+	try:
+		seller = Seller.objects.get(id=pk)
+	except Seller.DoesNotExist:
+		return returnJson([],404)
+
+	products = Product.objects.filter(seller=seller)
+	rating = Decimal(0)
+	for product in products:
+		rating += product.rating
+	rating /= len(products)
+	return returnJson(dict(rating=rating))
 
 
 @login_required
