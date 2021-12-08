@@ -1,0 +1,46 @@
+﻿.head {
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.progressButton ul li {
+    color: green;
+    font-size: 20px;
+    margin-left: 50px;
+    margin-top: 40px;
+}
+
+.progressButton span{
+    background: green;
+}
+
+.progressButton label{
+    color: black;
+}
+
+.descriptionbox {
+    margin-top: 20px;
+    margin-left: 90px;
+    margin-bottom: 40px;
+    margin-right: 800px; /*to change*/
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 2px solid grey;
+    border-radius: 5px;
+}
+
+.progressButton button {
+    margin-top: 0px;
+    margin-left: 90px;
+    margin-bottom: 50px;
+    background: black;
+    width: 7%;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    font-size: 10px;
+}
