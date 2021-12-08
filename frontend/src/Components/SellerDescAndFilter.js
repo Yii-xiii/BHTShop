@@ -5,7 +5,7 @@ import {useState, useEffect} from 'react'
 import './SellerDescAndFilter.css'
 
 const SellerDescAndFilter = () => {
-    const {sellerId} = useParams()
+    const { sellerId } = useParams()
 
     const [seller, setSeller] = useState([])
 
@@ -13,6 +13,7 @@ const SellerDescAndFilter = () => {
     const fetchSeller = async() => {
         const data = await api.getSeller(sellerId)
         // const data = await response.json()
+        console.log(data)
         return data.data[0]
     }
 

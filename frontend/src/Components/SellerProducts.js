@@ -3,14 +3,17 @@ import './SellerProducts.css'
 import {useState, useEffect} from 'react'
 import api from './Api'
 import SellerProduct from './SellerProduct'
+import Cookies from 'js-cookie'
 
 const SellerProducts = () => {
+    const sellerId = Cookies.get('user_id')
+
     // Initializing
     const [sellerProducts, setSellerProducts] = useState([])
 
     // Fetch data from database
     const fetchSellerProducts = async() => {
-        const data = await api.getSellerLatestProductList()
+        const data = await api.getSellerLatestProductList(sellerId)
         // const data = await response.json()
 
         return data.data
