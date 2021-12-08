@@ -11,6 +11,8 @@ const ReportPage = () => {
     const { reportingId } = useParams()
     const username = Cookies.get('username')
     const [reportingUser, setReportingUser] = useState([])
+    const [reportReason, setReportReason] = useState('')
+    const [description, setDescription] = useState('')
 
     const fetchReportingUser = async() => {
         if (Cookies.get('user') === 'Customer') {
@@ -38,6 +40,8 @@ const ReportPage = () => {
 
     const createReport = async () => {
         //send to administrator
+        
+        await api.createReport(reportingId, reportReason, description)
     }
 
     return (
@@ -63,7 +67,8 @@ const ReportPage = () => {
 
                         <div className='report-desc-box'>
                             <label className='report-form-label'><h3>举报理由: </h3></label>
-                            <select name="report-type" class="report-form-type-select">
+                            <select name="report-type" class="report-form-type-select"
+                             value={reportReason} onChange={event => setReportReason(event.target.value)}>
                                 <option value='none'>-----</option>
                                 <option value='scam'>诈骗</option>
                                 <option value='selling prohibited item'>贩售违禁品</option>
@@ -76,11 +81,15 @@ const ReportPage = () => {
 
                     <div className='report-form'>
                         <label className='report-form-label'><h4>详细描述</h4></label>
-                        <textarea type='reason' placeholder='请输入举报原因' />
+                        <textarea 
+                            value={description}
+                            onChange={event => setDescription(event.target.value)}
+                            type='reason' 
+                            placeholder='请输入举报原因' />
                     </div>
 
                     <div className='report-button-submit-box'>
-                        <button onSubmit={createReport} type='submit' className='report-button-submit'>提交</button>
+                        <button onClick={() => createReport()} type='submit' className='report-button-submit'>提交</button>
                     </div>
                 </div>
             </div>
