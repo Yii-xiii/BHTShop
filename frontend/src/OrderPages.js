@@ -27,7 +27,7 @@ const OrderPages = () => {
 
     //orderStatus.status = 'Paid';
 
-    if (orderStatus.status === 'Paid') {
+    if (orderStatus.status === 'paid') {
         return (
             <div className='progressButton'>
                 <div className='paid'>
@@ -43,7 +43,7 @@ const OrderPages = () => {
             </div>
         )
     }
-    else if (orderStatus.status === 'Delivering') {
+    else if (orderStatus.status === 'shipped') {
         return (
             <div className='progressButton'>
                 <div className='paid'>
@@ -67,7 +67,7 @@ const OrderPages = () => {
             </div>
         )
     }
-    else if (orderStatus.status === 'Delivered') {
+    else if (orderStatus.status === 'delivered') {
         return (
             <div className='progressButton'>
                 <div className='paid'>
@@ -97,14 +97,13 @@ const OrderPages = () => {
                         <h5>get description</h5>
                     </div>
 
-
                     <button id='confirm'>确认收货</button>
                     <button id='return'>申请退货</button>
                 </div>
             </div>
         )
     }
-    else if (orderStatus.status === 'Returned') {
+    else if (orderStatus.status === 'returned') {
         return (
             <div className='progressButton'>
                 <div className='paid'>
@@ -146,7 +145,7 @@ const OrderPages = () => {
             </div>
         )
     }
-    else if (orderStatus.status === 'Done') {
+    else if (orderStatus.status === 'completed') {
         return (
             <div className='progressButton' >
                 <div className='paid'>
