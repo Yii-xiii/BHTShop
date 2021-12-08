@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router'
 import api from './Api'
 import {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
 import './SellerDescAndFilter.css'
 import Cookies from 'js-cookie'
 
@@ -53,6 +54,8 @@ const SellerDescAndFilter = () => {
         window.location.reload(false)
     }
 
+    const reportSellerPath = `/report/${sellerId}`
+
     if (followship.length > 0) {
         return (
             <div className='seller-desc-and-filter-outer-box'>
@@ -80,9 +83,11 @@ const SellerDescAndFilter = () => {
                             取消关注
                         </button>
     
-                        <button className='seller-desc-report-button'>
-                            举报
-                        </button>
+                        <Link to={reportSellerPath}>
+                            <button className='seller-desc-report-button'>
+                                举报
+                            </button>
+                        </Link>
                     </div>
                 </div>
     

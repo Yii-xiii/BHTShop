@@ -15,19 +15,19 @@
     border-radius: 15px;
 }
 
-.form-head {
+.register-form-head {
     text-align: center;
     display: block;
 }
 
-.form {
+.register-form {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.form label {
+.register-form label {
     margin-top: 7px;
     text-align: center;
     width: 60px;
@@ -35,7 +35,7 @@
     display: block;
 }
 
-.form input {
+.register-form input {
     margin-top: 10px;
     height: 30px;
     background-color: white;
@@ -50,12 +50,12 @@ input {
     font-size: 15px;
 }
 
-.button-submit-box {
+.register-button-submit-box {
     width: 100%;
     text-align: center;
 }
 
-.button-submit {
+.register-button-submit {
     margin-top: 30px;
     background: #000;
     width: 80%;
@@ -68,17 +68,17 @@ input {
     font-size: 18px;
 }
 
-.button-submit:active {
+.register-button-submit:active {
     transform: scale(0.98);
 }
 
-.reg-link-box {
+.register-reg-link-box {
     margin-top: 20px;
     width: 100%;
     text-align: center;
 }
 
-.reg-link {
+.register-reg-link {
     font-size: 13px;
     color: grey;
 }

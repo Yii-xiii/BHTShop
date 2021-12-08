@@ -21,6 +21,8 @@ import SellerOrdersShippedPage from './SellerOrdersShippedPage';
 import SellerOrdersDeliveredPage from './SellerOrdersDeliveredPage';
 import SellerOrdersReturningPage from './SellerOrdersReturningPage';
 import SellerOrdersReturnedPage from './SellerOrdersReturnedPage';
+import ReportPage from './ReportPage';
+import SearchPage from './SearchPage';
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path='/' element={<HomePage />}/>
+          <Route path='/s/:searchName' element={<SearchPage />}/>
           <Route path='/register' element={<RegisterPage />}/>
           <Route path='/login' element={<LoginPage />}/>
           <Route path='/favProducts' element={<FavProductPage />}/>
@@ -49,6 +52,7 @@ function App() {
           <Route path='/orders/:pageNum' element={<PersonalOrdersPage />}/>
           <Route path='/order/:orderId' element={<OrderPage />}/>
           <Route path='/product/:productId/comments' element={<ProductCommentsPage />}/>
+          <Route path='/report/:reportingId' element={<ReportPage />}/>
         </Routes>
       </div>
     </Router>

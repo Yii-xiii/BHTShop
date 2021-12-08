@@ -20,7 +20,7 @@
     display: block;
 }
 
-.form {
+.login-form {
     margin-top: 20px;
     width: 100%;
     display: flex;
@@ -28,7 +28,7 @@
     align-items: center;
 }
 
-.form label {
+.login-form label {
     margin-top: 7px;
     text-align: center;
     width: 60px;
@@ -36,7 +36,7 @@
     display: block;
 }
   
-.form input {
+.login-form input {
     margin-top: 10px;
     height: 30px;
     background-color: white;
@@ -51,12 +51,12 @@ input {
     font-size: 15px;
 }
 
-.button-submit-box {
+.login-button-submit-box {
     width: 100%;
     text-align: center;
 }
 
-.button-submit {
+.login-button-submit {
     margin-top: 30px;
     background: #000;
     width: 80%;
@@ -69,17 +69,17 @@ input {
     font-size: 18px;
 }
 
-.button-submit:active {
+.login-button-submit:active {
     transform: scale(0.98);
 }
 
-.reg-link-box {
+.login-reg-link-box {
     margin-top: 20px;
     width: 100%;
     text-align: center;
 }
 
-.reg-link {
+.login-reg-link {
     font-size: 13px;
     color: grey;
 }
