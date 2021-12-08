@@ -183,13 +183,9 @@ def editReport(request, pk):
 	except Report.DoesNotExist:
 		return returnJson([], 404)
 
-	if request.user.id != report.reportingUser.id:
-		try:
-			admin = AdminUser.objects.get(id=request.user.id)
-		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
-
 	if request.method == 'PUT':
+		if request.user.id != report.reportingUser.id:
+			return returnJson([], 403)
 		data = json.loads(request.body)
 		
 		report.reason = data["reason"]
@@ -199,6 +195,11 @@ def editReport(request, pk):
 		return returnJson([dict(report.body())])
 
 	elif request.method == 'DELETE':
+		if request.user.id != report.reportingUser.id:
+			try:
+				admin = AdminUser.objects.get(id=request.user.id)
+			except AdminUser.DoesNotExist:
+				return returnJson([], 403)
 		report.delete()
 		return returnJson()
 
