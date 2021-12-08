@@ -66,7 +66,7 @@ class Api {
 
 	getSellerLatestProductList = async (sellerId) => {
 		//404 : seller not found
-		let data = await this.get(`/products/sellers/${sellerId}/lastest/`);
+		let data = await this.get(`/products/sellers/${sellerId}/latest/`);
 		return data;
 	}
 
@@ -82,7 +82,7 @@ class Api {
 		return data;
 	}
 
-	getLastestProductListByPageNum = async (pageNum) => { 
+	getLatestProductListByPageNum = async (pageNum) => { 
 		//10 per page
 		let data = await this.get(`/products/latest/pages/${pageNum}/`);
 		return data;
@@ -130,7 +130,7 @@ class Api {
 		return data;
 	}
 
-	getLastestProductSpecListByPageNum = async (productId,pageNum) => { //10 per page
+	getLatestProductSpecListByPageNum = async (productId,pageNum) => { //10 per page
 		let data = await this.get(`/products/${productId}/specs/latest/pages/${pageNum}/`);
 		return data;
 	}

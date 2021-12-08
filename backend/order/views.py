@@ -126,8 +126,11 @@ def create_order(request):
 	phoneNumber = data["phoneNumber"]
 
 	order = Order.objects.create(customer=customer, productSpec=spec,quantity=quantity,totalPrice=totalPrice,address=address,phoneNumber=phoneNumber)
-	spec.product.soldAmount += quantity
+	product = spec.product 
+	product.soldAmount += quantity
+	product.save()
 	spec.stock -= quantity
+	spec.save()
 	status = OrderStatus.objects.create(order=order)
 
 	return returnJson([dict(order.body())])
