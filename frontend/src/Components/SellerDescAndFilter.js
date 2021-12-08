@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useNavigationType, useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import api from './Api'
 import {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
@@ -11,6 +11,18 @@ const SellerDescAndFilter = () => {
     const navigate = useNavigate()
     const [seller, setSeller] = useState([])
     const [followship, setFollowship] = useState([])
+    const [followCount, setFollowCount] = useState('')
+    const [avgRating, setAvgRating] = useState('')
+
+    const fetchFollowCount = async () => {
+        const data = await api.getSellerFollowshipCount(sellerId)
+        return data.data.count
+    }
+
+    const fetchAvgRating = async () => {
+        const data = await api.getSellerAverageRating(sellerId)
+        return data.data.rating
+    }
 
     // Fetch data from database
     const fetchSeller = async() => {
@@ -42,6 +54,18 @@ const SellerDescAndFilter = () => {
             }
         }
 
+        const getFollowCount = async() => {
+            const followCountFromServer = await fetchFollowCount()
+            setFollowCount(followCountFromServer)
+        }
+
+        const getAvgRating = async() => {
+            const followCountFromServer = await fetchAvgRating()
+            setAvgRating(followCountFromServer)
+        }
+
+        getAvgRating()
+        getFollowCount()
         getFollowship()
         getSeller()
     }, [])
@@ -75,12 +99,12 @@ const SellerDescAndFilter = () => {
     
                     <div className='seller-desc-texts-box'>
                         <h4>粉丝数: </h4>
-                        <span> 0</span>
+                        <span> {followCount}</span>
                     </div>
     
                     <div className='seller-desc-texts-box'>
                         <h4>评价: </h4>
-                        <span> 0</span>
+                        <span> {avgRating}</span>
                     </div>
     
                     <div className='seller-desc-buttons-box'>
@@ -137,12 +161,12 @@ const SellerDescAndFilter = () => {
 
                 <div className='seller-desc-texts-box'>
                     <h4>粉丝数: </h4>
-                    <span> 0</span>
+                    <span> {followCount}</span>
                 </div>
 
                 <div className='seller-desc-texts-box'>
                     <h4>评价: </h4>
-                    <span> 0</span>
+                    <span> {avgRating}</span>
                 </div>
 
                 <div className='seller-desc-buttons-box'>
