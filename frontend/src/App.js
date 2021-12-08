@@ -23,6 +23,7 @@ import SellerOrdersReturningPage from './SellerOrdersReturningPage';
 import SellerOrdersReturnedPage from './SellerOrdersReturnedPage';
 import ReportPage from './ReportPage';
 import SearchPage from './SearchPage';
+import ReportSuccessPage from './ReportSuccessPage';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path='/order/:orderId' element={<OrderPage />}/>
           <Route path='/product/:productId/comments' element={<ProductCommentsPage />}/>
           <Route path='/report/:reportingId' element={<ReportPage />}/>
+          <Route path='/report/:reportingId/success' element={<ReportSuccessPage />}/>
         </Routes>
       </div>
     </Router>
