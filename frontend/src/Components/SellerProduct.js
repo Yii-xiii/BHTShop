@@ -5,8 +5,10 @@ import api from './Api'
 import SellerProductSpec from './SellerProductSpec'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import { useNavigate } from 'react-router'
 
 const SellerProduct = ({ product }) => {
+    const navigate = useNavigate()
     const [image, setImages] = useState([])
     const [specs, setSpecs] = useState([])
 
@@ -62,7 +64,7 @@ const SellerProduct = ({ product }) => {
             </div>
             
             <div className='buttons-box'>
-                <button className='edit-button'>
+                <button className='edit-button' onClick={() => navigate(`/product/${product.id}/edit`)}>
                     <EditOutlinedIcon />
                 </button>
 
