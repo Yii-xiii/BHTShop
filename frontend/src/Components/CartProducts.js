@@ -93,7 +93,7 @@ const CartProducts = () => {
                     
                     <div className='cart-pay-box'>
                         <button onClick={() => {placeOrder(); clearCart()}}>
-                            付款
+                            <h3>付款</h3>
                         </button>
                     </div>
                 </div>

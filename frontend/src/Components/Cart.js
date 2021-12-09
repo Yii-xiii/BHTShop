@@ -33,10 +33,10 @@ const Cart = () => {
         return (
             <Link className='cart-link' to='/cart'>
                 <Badge badgeContent={cart.length} color='primary' max='99'
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                  }}>
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}>
                     <ShoppingCartOutlinedIcon color='action'/>
                 </Badge>
                 {/* getting cart count and pass in */}
