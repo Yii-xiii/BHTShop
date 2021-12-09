@@ -973,7 +973,7 @@ class Api {
 
 	searchProductByCategory = async (pageNum, category, keyword) => {
 		//order by highest sold
-		let data = await this.post(`/products/search/pages/${pageNum}/`,{category, keyword});
+		let data = await this.post(`/products/search/categories/pages/${pageNum}/`,{category, keyword});
 		return data;
 	}
 
