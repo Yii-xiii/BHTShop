@@ -34,6 +34,11 @@ const FavSeller = ({favSeller}) => {
 
     const sellerPath = `/seller/${favSeller.id}`
 
+    const unfollowSeller = async() => {
+        await api.deleteCustomerFollowship(favSeller.id)
+        window.location.reload(false)
+    }
+
     return (
         <div>
             <div className='user-fav-seller-out-box'>
@@ -54,6 +59,12 @@ const FavSeller = ({favSeller}) => {
                         <span>{avgRating}</span>
                     </div>
                 </div>
+
+                <button 
+                    className='fav-seller-user-unfollow-button'
+                    onClick={() => {unfollowSeller()}}>
+                    取消关注
+                </button>
             </div>
         </div>
     )

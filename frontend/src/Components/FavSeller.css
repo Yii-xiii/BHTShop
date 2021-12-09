@@ -16,6 +16,7 @@
 
 .user-fav-seller-desc-box {
     margin-top: 20px;
+    width: 550px;
 }
 
 .user-fav-seller-desc {
@@ -46,4 +47,16 @@
     text-decoration: none;
     color: black;
     margin-top: 10px;
+}
+
+.fav-seller-user-unfollow-button {
+   height: 40px;
+   width: 90px;
+   margin-top: 15px;
+   margin-right: 15px;
+   background-color: pink;
+   color: darkred;
+   border: 0px;
+   border-radius: 15px;
+   cursor: pointer;
 }
