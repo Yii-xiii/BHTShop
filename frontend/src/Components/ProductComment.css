@@ -1,10 +1,16 @@
-.comment-box {
+.comment-out-box {
+    display: flex;
+    flex-direction: row;
     margin-bottom: 40px;
     border-radius: 20px;
     height: auto;
     width: 500px;
     background-color: #F5F5F5;
     min-width: 640px;
+}
+
+.comment-box {
+    width: 560px;
     display: flex;
     flex-direction: column;
 }
@@ -55,4 +61,18 @@
     font-size: 14px;
     margin-left: 25px;
     color: grey;
+}
+
+.comment-report-button {
+    background-color: darkred;
+    color: white;
+    width: auto;
+    font-size: 15px;
+    height: 35px;
+    margin-left: 5px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 0px;
+    padding: 5px 20px;
+    cursor: pointer;
 }

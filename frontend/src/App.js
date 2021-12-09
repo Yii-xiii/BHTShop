@@ -55,8 +55,8 @@ function App() {
           <Route path='/order/:orderId' element={<OrderPage />}/>
           <Route path='/product/:productId/comments' element={<ProductCommentsPage />}/>
           <Route path='/product/:productId/edit' element={<EditProduct />}/>
-          <Route path='/report/:reportingId' element={<ReportPage />}/>
-          <Route path='/report/:reportingId/success' element={<ReportSuccessPage />}/>
+          <Route path='/report/:reportType/:reportingId' element={<ReportPage />}/>
+          <Route path='/report/:reportType/:reportingId/success' element={<ReportSuccessPage />}/>
         </Routes>
       </div>
     </Router>

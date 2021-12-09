@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router'
 import Cookies from 'js-cookie'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 
 const ProductSpecs = () => {
     const navigate = useNavigate()
@@ -74,6 +75,8 @@ const ProductSpecs = () => {
         }
     }
 
+    const productReportPath = `/report/product/${productId}`
+
     return (
         <div>
             <div className='price-box'>
@@ -103,12 +106,16 @@ const ProductSpecs = () => {
             </div>
 
             <div className='add-to-cart-box'>
+                <button className='add-cart-button' onClick={() => addCart(selectedSpec, quantity)}>
+                    <AddShoppingCartOutlinedIcon />
+                </button>
+
                 <button className='fav-button' onClick={() => addCollection(productId)}>
                     <FavoriteBorderOutlinedIcon />
                 </button>
 
-                <button className='add-cart-button' onClick={() => addCart(selectedSpec, quantity)}>
-                    <AddShoppingCartOutlinedIcon />
+                <button className='report-product-button' onClick={() => navigate(productReportPath)}>
+                    <ReportOutlinedIcon />
                 </button>
                 
                 <span>库存: {stock}</span>
