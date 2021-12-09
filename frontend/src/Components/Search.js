@@ -3,7 +3,6 @@ import SearchIcon from '@material-ui/icons/Search'
 import { useNavigate } from 'react-router'
 import Cookies from 'js-cookie'
 import api from './Api'
-
 import './Search.css'
 
 const Search = () => {
@@ -12,30 +11,19 @@ const Search = () => {
     const [keyword, setKeyword] = useState('')
     const [category, setCategory] = useState('none')
 
-    const submitSearch = async (e) => {
-        e.preventDefault()
-        if (category == 'none' && keyword.length == 0) {
-            return
-        }
-
-        if (category != 'none') {
-            Cookies.set("category", category)
+    function submitSearch() {     
+        if (keyword === '' && category === 'none') {
+            navigate('/')
+        } else if (keyword === '' && category !== 'none') {
+            navigate(`/search/none/${category}`)
         } else {
-            Cookies.remove("category")
+            navigate(`/search/${keyword}/${category}`)
         }
-        if (keyword.length != 0) {
-            Cookies.set("keyword", keyword)
-        } else {
-            Cookies.remove("keyword")
-        }
-        
-        window.location.reload()
-        navigate(`/search`)
     }
 
     return (
         <div className='navbar-search'>
-            <form className='navbar-search' onSubmit={submitSearch}>
+            <form className='navbar-search' onSubmit={() => submitSearch()}>
                 
                 <select className="navbar-category-input"  name="category" value={category} onChange={event => setCategory(event.target.value)}>
                     <option value='none' default>类型</option>
@@ -58,7 +46,7 @@ const Search = () => {
                     onChange={event => setKeyword(event.target.value)}
                     />
                 
-                <button type='submit' className='navbar-search-button' onSubmit={submitSearch}><SearchIcon className='navbar-search-icon' /></button>
+                <button type='submit' className='navbar-search-button' onSubmit={() => submitSearch()}><SearchIcon className='navbar-search-icon' /></button>
             </form>
         </div>
     )

@@ -10,10 +10,8 @@
     background-color: white;
     border-radius: 8px;
     /* border: 0px solid black; */
-    border-top: none; 
-    border-right: none; 
-    border-left-style: groove; 
-    border-bottom-style: groove; 
+    border: 0px;
+    box-shadow: 0px 1px 0px 1px grey;
     width: 100%;
 }
 
@@ -41,12 +39,11 @@
 .navbar-category-input {
     height: 32px;
     padding-left: 10px;
-    margin-right: 8px;
+    margin-right: 10px;
     background-color:white;
     border-radius: 8px;
-    border-top: none; 
-    border-right: none; 
-    border-left-style: groove; 
-    border-bottom-style: groove; 
+    border: 0px;
+    box-shadow: 0px 1px 0px 1px grey;
     width: 8%;
+    min-width: 70px;
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router'
 import api from './Api'
 import {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
 import './SellerDescAndFilter.css'
 import Cookies from 'js-cookie'
 
@@ -86,6 +85,14 @@ const SellerDescAndFilter = () => {
 
     const reportSellerPath = `/report/${sellerId}`
 
+    function reportUser() {
+        if (Cookies.get('user') === 'Customer') {
+            navigate(reportSellerPath)
+        } else if (Cookies.get('user') === undefined) {
+            navigate('/login')
+        }
+    }
+
     if (followship.length > 0) {
         return (
             <div className='seller-desc-and-filter-outer-box'>
@@ -113,11 +120,9 @@ const SellerDescAndFilter = () => {
                             取消关注
                         </button>
     
-                        <Link to={reportSellerPath}>
-                            <button className='seller-desc-report-button'>
-                                举报
-                            </button>
-                        </Link>
+                        <button className='seller-desc-report-button' onClick={() => reportUser()}>
+                            举报
+                        </button>
                     </div>
                 </div>
     
@@ -175,7 +180,7 @@ const SellerDescAndFilter = () => {
                         关注
                     </button>
 
-                    <button className='seller-desc-report-button'>
+                    <button className='seller-desc-report-button' onClick={() => reportUser()}>
                         举报
                     </button>
                 </div>
