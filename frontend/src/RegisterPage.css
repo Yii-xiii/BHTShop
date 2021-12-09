@@ -92,12 +92,13 @@ input {
     width: 100%;
 }
 
-.checkbox-box {
-    margin-left: 20px;
+.user-type-box label {
+    margin-right: 10px;
 }
 
 .in-user-type-box {
     margin-left: 30px;
+    margin-right: 10px;
 }
 
 .alert {
