@@ -5,6 +5,8 @@ import Notification from './Notification'
 import './Cart.css'
 import api from './Api'
 import Cookies from 'js-cookie'
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { Badge } from '@mui/material'
 
 const Cart = () => {
     const loggedInType = Cookies.get('user')
@@ -30,16 +32,21 @@ const Cart = () => {
     if (loggedInType === 'Customer') {
         return (
             <Link className='cart-link' to='/cart'>
-                <img className='cart-logo' src={cartLogo} alt='logo'/>
+                <Badge badgeContent={cart.length} color='primary' max='99'
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}>
+                    <ShoppingCartOutlinedIcon color='action'/>
+                </Badge>
                 {/* getting cart count and pass in */}
-                <Notification count={cart.length} type='cart'/>
             </Link>
         )
     }
     
     return (
         <Link className='cart-link' to='/login'>
-            <img className='cart-logo' src={cartLogo} alt='logo'/>
+            <ShoppingCartOutlinedIcon color='action'/>
             {/* getting cart count and pass in */}
             <Notification count='0' type='cart'/>
         </Link>

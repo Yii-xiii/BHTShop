@@ -6,6 +6,10 @@ import Header from './Components/Header'
 import Footer from './Components/Footer'
 import Cookies from 'js-cookie'
 import HomePage from './HomePage'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import LockIcon from '@mui/icons-material/Lock'
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone'
+import HomeIcon from '@mui/icons-material/Home'
 
 const RegisterPage = () => {
     const navigate = useNavigate()
@@ -108,7 +112,7 @@ const RegisterPage = () => {
                     <Error />
 
                     <div className='register-form'>
-                        <label className='form-label' >用户名</label>
+                        <label className='form-label' ><AccountCircleIcon /></label>
                         <input
                             onChange={event => setUsername(event.target.value)}
                             type='username'
@@ -116,7 +120,7 @@ const RegisterPage = () => {
                     </div>
 
                     <div className='register-form'>
-                        <label className='form-label'>密码</label>
+                        <label className='form-label'><LockIcon /></label>
                         <input
                             onChange={event => setPassword(event.target.value)}
                             type='password'
@@ -124,7 +128,7 @@ const RegisterPage = () => {
                     </div>
 
                     <div className='register-form'>
-                        <label className='form-label'>电话号码</label>
+                        <label className='form-label'><ContactPhoneIcon /></label>
                         <input
                             onChange={event => setPhoneNumber(event.target.value)}
                             type='phoneNumber'
@@ -132,7 +136,7 @@ const RegisterPage = () => {
                     </div>
 
                     <div className='register-form'>
-                        <label className='form-label'>地址</label>
+                        <label className='form-label'><HomeIcon /></label>
                         <input
                             onChange={event => setAddress(event.target.value)}
                             type='address'

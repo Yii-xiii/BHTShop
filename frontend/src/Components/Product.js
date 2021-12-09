@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import './Product.css'
 import api from './Api'
+import { Box } from '@mui/system'
+import { Fade } from '@mui/material'
 
 const Product = ({ product, type }) => {
     // Initializing
@@ -63,14 +65,14 @@ const Product = ({ product, type }) => {
         <div className='product-out-box'>
             {product.title.length > 0 ? (
                 <Link to={path}>
-                    <div className='product-box'>
-                        <div className='image-box'>
-                            <img src={ image? image.image_url : '0'} alt='img'/>
-                        </div>
+                    <Box className='product-box'>
+                            <div className='image-box'>
+                                <img src={ image? image.image_url : '0'} alt='img'/>
+                            </div>
 
-                        <h3 className='title-text'>{product.title}</h3>
-                        <h5 className='desc-text'>¥ {spec.price}</h5>
-                    </div>
+                            <h3 className='title-text'>{product.title}</h3>
+                            <h5 className='desc-text'>¥ {spec.price}</h5>
+                    </Box>
                 </Link>
             ) : console.log('Empty title product found.')}
         </div>

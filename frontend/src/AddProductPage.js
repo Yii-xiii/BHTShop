@@ -4,6 +4,7 @@ import Header from './Components/Header'
 import './AddProductPage.css'
 import api from './Components/Api'
 import { useNavigate } from 'react-router'
+import { InputLabel, MenuItem, Select } from '@mui/material'
 
 const AddProductPage = () => {
     const navigate = useNavigate()
@@ -83,18 +84,17 @@ const AddProductPage = () => {
 
                         <div class="form-type-group">
                             <h5>类型</h5>
-                            <select name="category" class="form-type-select" value={category} onChange={event => setCategory(event.target.value)}>
-                                <option value='none'>-----</option>
 
-                                <option value='women clothes'>女装</option>
-                                <option value='men clothes'>男装</option>
-                                <option value='sports'>运动</option>
-                                <option value='cosmetics'>美妆</option>
-                                <option value='drinks'>饮料</option>
-                                <option value='snacks'>零食</option>
-                                <option value='others'>其他</option>
-                                
-                            </select>
+                            <Select name='category' defaultValue='类型' class="form-type-select" value={category} onChange={event => setCategory(event.target.value)}>
+                                <MenuItem value='women clothes'>女装</MenuItem>
+                                <MenuItem value='men clothes'>男装</MenuItem>
+                                <MenuItem value='sports'>运动</MenuItem>
+                                <MenuItem value='cosmetics'>美妆</MenuItem>
+                                <MenuItem value='drinks'>饮料</MenuItem>
+                                <MenuItem value='snacks'>零食</MenuItem>
+                                <MenuItem value='others'>其他</MenuItem>
+                            
+                            </Select>
                         </div>
 
                         <div className='form-title-group'>
@@ -200,8 +200,8 @@ const AddProductPage = () => {
                             <button onClick={addSpec}>+</button>
                         </div>
 
-                        <div className='button-submit-box'>
-                            <button onSubmit={addProduct} type='submit' className='button-submit'>提交</button>
+                        <div className='add-product-button-submit-box'>
+                            <button onSubmit={addProduct} type='submit' className='add-product-button-submit'>提交</button>
                         </div>
                     </form>
                 </div>

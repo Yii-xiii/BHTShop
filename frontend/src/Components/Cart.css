@@ -14,3 +14,7 @@
     background-color: palevioletred;
     color: white;
 }
+
+.cart-link {
+    text-decoration: none;
+}

@@ -32,6 +32,9 @@
 .add-to-cart-box {
     margin: 10px;
     margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .add-cart-button {

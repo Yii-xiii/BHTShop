@@ -4,6 +4,8 @@ import './ProductSpecs.css'
 import api from './Api'
 import { useNavigate, useParams } from 'react-router'
 import Cookies from 'js-cookie'
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 
 const ProductSpecs = () => {
     const navigate = useNavigate()
@@ -102,11 +104,11 @@ const ProductSpecs = () => {
 
             <div className='add-to-cart-box'>
                 <button className='fav-button' onClick={() => addCollection(productId)}>
-                    收藏
+                    <FavoriteBorderOutlinedIcon />
                 </button>
 
                 <button className='add-cart-button' onClick={() => addCart(selectedSpec, quantity)}>
-                    加入购物车
+                    <AddShoppingCartOutlinedIcon />
                 </button>
                 
                 <span>库存: {stock}</span>

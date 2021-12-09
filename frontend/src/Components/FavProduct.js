@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import './FavProduct.css'
 import api from './Api'
 import {Link} from 'react-router-dom'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const FavProduct = ({ favProduct }) => {
     const [image, setImages] = useState([])
@@ -70,7 +71,7 @@ const FavProduct = ({ favProduct }) => {
 
                     <div className='fav-buttons-box'>
                         <button className='delete-item-button' onClick={() => deleteCollection(favProduct.id)}>
-                            删除
+                            <DeleteOutlineOutlinedIcon />
                         </button>
                     </div>
                 </div>

@@ -5,22 +5,9 @@ import fourStarLogo from './4Star.png'
 import threeStarLogo from './3Star.png'
 import twoStarLogo from './2Star.png'
 import oneStarLogo from './1Star.png'
+import { Rating } from '@mui/material'
 
 const ProductComment = ({ comment }) => {
-    let photo
-    
-    if (comment.rating === 5) {
-        photo = fiveStarLogo
-    } else if (comment.rating === 4) {
-        photo = fourStarLogo
-    } else if (comment.rating === 3) {
-        photo = threeStarLogo
-    } else if (comment.rating === 2) {
-        photo = twoStarLogo
-    } else if (comment.rating === 1) {
-        photo = oneStarLogo
-    }
-
     return (
         <div>
             <div className='comment-box'>
@@ -31,7 +18,7 @@ const ProductComment = ({ comment }) => {
                 </div>
                 
                 <div className='comment-rating'>
-                    <img src={photo} alt='img'/>
+                    <Rating size='small' value={comment.rating} readOnly/>
                 </div>
                 
                 <div className='comment-description'>

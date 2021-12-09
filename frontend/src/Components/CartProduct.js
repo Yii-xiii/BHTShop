@@ -1,6 +1,8 @@
 import {useState, useEffect} from 'react'
 import './CartProduct.css'
 import api from './Api'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 const CartProduct = ({ cartProduct }) => {
     const [image, setImages] = useState([])
@@ -62,11 +64,11 @@ const CartProduct = ({ cartProduct }) => {
 
                 <div className='cart-buttons-box'>
                     <button className='edit-item-button'>
-                        修改
+                        <EditOutlinedIcon />
                     </button>
 
                     <button className='delete-item-button' onClick={() => deleteItem(cartProduct.productSpec.id)}>
-                        删除
+                        <DeleteOutlineOutlinedIcon />
                     </button>
                 </div>
             </div>
