@@ -12,7 +12,7 @@ const PersonalOptions = () => {
             </div>
 
             <div className='personal-order-box'>
-                <Link className='personal-orders-link' to='/orders/1'>
+                <Link className='personal-orders-link' to='/orders'>
                     <span>所有订单</span>
                 </Link>
             </div>

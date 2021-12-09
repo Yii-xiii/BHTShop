@@ -4,15 +4,29 @@ import {useState, useEffect} from 'react'
 import api from './Api'
 import CartProduct from './CartProduct'
 import Cookies from 'js-cookie'
+import { Pagination } from '@mui/material'
 
 const CartProducts = () => {
     const [cart, setCart] = useState([])
+    const [pageCart, setPageCart] = useState([])
     const [customer, setCustomer] = useState([])
+    const [page, setPage] = useState(1)
+
+    const handlePageChange = (event, value) => {
+        setPage(value)
+    }
+
     let total = 0.00
 
     const fetchCart = async() => {
         const data = await api.getCustomerCartList()
         return data.data
+    }
+
+    const fetchCartByPage = async() => {
+        const data = await api.getLatestCustomerCartListByPage(page)
+        console.log(data)
+        return data
     }
 
     const fetchCustomer = async() => {
@@ -32,9 +46,15 @@ const CartProducts = () => {
             setCustomer(customerFromServer)
         }
 
+        const getCartByPage = async() => {
+            const cartByPageFromServer = await fetchCartByPage()
+            setPageCart(cartByPageFromServer)
+        }
+
         getCart()
         getCustomer()
-    }, [])
+        getCartByPage()
+    }, [page])
 
     cart.map((cartProduct) => (
         cartProduct.productSpec.stock > cartProduct.quantity ?
@@ -75,6 +95,11 @@ const CartProducts = () => {
 
             <div className='cart-outer-box'>
                 <div className='cart-list-show-box'>
+                    <div className='cart-list-page-box'>
+                        <Pagination count={cart.length % 10 === 0 ? Math.floor(cart.length / 10) : Math.ceil(cart.length / 10)} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
+                    </div>
+                    
+
                     <div className='cart-list-box'>
                         {cart.map((cartProduct, index) => (
                             <CartProduct key={index} cartProduct={cartProduct}/>

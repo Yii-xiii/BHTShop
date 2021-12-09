@@ -7,9 +7,29 @@
 }
 
 .random-show-box {
-    margin-top: 10px;
+    margin-top: 20px;
     width: 100%;
     height: auto;
+    background-color: #fff;
+    border-radius: 20px;
+    border: 1px solid grey;
+    box-shadow: grey 2px 2px;
+}
+
+.random-box-title-page-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.random-box-title-page-box h1 {
+    margin-right: 50px;
+}
+
+.random-show-box-inner-part {
+    margin-left: 70px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

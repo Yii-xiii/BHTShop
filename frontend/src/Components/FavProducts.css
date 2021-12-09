@@ -19,4 +19,9 @@
 .fav-list-box {
     display: flex;
     flex-direction: column;
+    margin-top: 40px;
+}
+
+.fav-list-page-box {
+    margin-left: 40px;
 }

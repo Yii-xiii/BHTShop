@@ -6,14 +6,18 @@ import { useParams } from 'react-router'
 import './SearchPage.css'
 import NotFound from './Components/Notfound.png'
 import Product from './Components/Product'
+import { Pagination } from '@mui/material'
 
 const SearchPage = () => {
     const inParams = useParams()
     const [status, setStatus] = useState(0)
-    
     const [products,setProducts] = useState([])
-    const [page, setPage] = useState('1')
+    const [page, setPage] = useState(1)
     const [title, setTitle] = useState('')
+
+    const handleChange = (event, value) => {
+        setPage(value)
+    }
 
     useEffect(() => {
         const getProducts = async() => {
@@ -53,7 +57,7 @@ const SearchPage = () => {
         }
 
         getProducts()
-    }, [])
+    }, [page])
 
     return (
         <div>
@@ -82,6 +86,10 @@ const SearchPage = () => {
 
                     {status === 1 && products.length > 0 ? 
                     <div className='search-result-found-box'>
+                        <div className='search-result-found-page-box'>
+                            <Pagination showFirstButton showLastButton count={products.length % 10 === 0 ? Math.floor(products.length / 10) : Math.ceil(products.length / 10)} page={page} onChange={handleChange} />
+                        </div>
+
                         <div className='search-result-found-items-box'>
                             {products.map((product, index) => (
                                 <Product key={index} product={product}/>

@@ -5,29 +5,39 @@ import Cookies from 'js-cookie'
 import PersonalOrder from './PersonalOrder'
 import { useParams } from 'react-router'
 import './PersonalOrdersByPage.css'
+import { Pagination } from '@mui/material'
 
 const PersonalOrdersByPage = () => {
-    const { pageNum } = useParams()
     const [orderList, setOrderList] = useState([])
+    const [orderListByPage, setOrderListByPage] = useState([])
+    const [page, setPage] = useState(1)
 
-    const fetchOrderList = async() => {
-        const data = await api.getLatestCustomerOrderListByPage(Cookies.get('user_id'), pageNum)
+    const handlePageChange = (event, value) => {
+        setPage(value)
+    }
+
+    const fetchOrderListByPage = async() => {
+        const data = await api.getLatestCustomerOrderListByPage(Cookies.get('user_id'), page)
         console.log(data.data);
         return data.data
     }
 
     useEffect(() => {
-        const getOrderList = async() => {
-            const specsFromServer = await fetchOrderList()
-            setOrderList(specsFromServer)
+        const getOrderListByPage = async() => {
+            const specsFromServer = await fetchOrderListByPage()
+            setOrderListByPage(specsFromServer)
         }
 
-        getOrderList()
-    }, [])
+        getOrderListByPage()
+    }, [page])
 
     return (
         <div className='orders-out-box'>
-            {orderList.map((order, index) => (
+            <div className='orders-page-box'>
+                <Pagination count={10} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
+            </div>
+            
+            {orderListByPage.map((order, index) => (
                 <PersonalOrder key={index} order={order}/>
             ))}
         </div>

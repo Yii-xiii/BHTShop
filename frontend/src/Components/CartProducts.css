@@ -71,10 +71,15 @@
 }
 
 .cart-list-box {
-    margin-top: 50px;
+    margin-top: 40px;
     margin-left: 50px;
 }
 
 .cart-pay-box h3 {
     color: white;
+}
+
+.cart-list-page-box {
+    margin-top: 30px;
+    margin-left: 50px;
 }

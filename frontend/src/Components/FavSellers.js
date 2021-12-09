@@ -4,12 +4,26 @@ import './FavSellers.css'
 import api from './Api'
 import FavSellerOptions from './FavSellerOptions'
 import FavSeller from './FavSeller'
+import { Pagination } from '@mui/material'
 
 const FavSellers = () => {
     const [favSellers, setFavSellers] = useState([])
+    const [favSellersByPage, setFavSellersByPage] = useState([])
+    const [page, setPage] = useState(1)
+
+    const handlePageChange = (event, value) => {
+        setPage(value)
+    }
 
     const fetchFavSellers = async() => {
-        const data = await api.getLatestCustomerFollowshipListByPage(1)
+        const data = await api.getLatestCustomerFollowshipList()
+
+        // get back list of favProducts
+        return data.data
+    }
+
+    const fetchFavSellersByPage = async() => {
+        const data = await api.getLatestCustomerFollowshipListByPage(page)
 
         // get back list of favProducts
         return data.data
@@ -21,8 +35,14 @@ const FavSellers = () => {
             setFavSellers(productsFromServer)
         }
 
+        const getFavSellersByPage = async() => {
+            const productsFromServer = await fetchFavSellersByPage(page)
+            setFavSellersByPage(productsFromServer)
+        }
+
         getFavSellers()
-    }, [])
+        getFavSellersByPage()
+    }, [page])
 
     if (favSellers.length > 0) {
         return (
@@ -32,8 +52,12 @@ const FavSellers = () => {
                 <div className='user-fav-seller-show-box'>
                     <FavSellerOptions />
     
+                    <div className='user-fav-seller-page-box'>
+                        <Pagination count={favSellers.length % 10 === 0 ? Math.floor(favSellers.length / 10) : Math.ceil(favSellers.length / 10)} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
+                    </div>
+
                     <div className='user-followed-seller-show-box'>
-                        {favSellers.map((favSeller, index) => (
+                        {favSellersByPage.map((favSeller, index) => (
                             <FavSeller key={index} favSeller={favSeller.seller}/>
                         ))} 
                     </div>
