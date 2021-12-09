@@ -32,23 +32,30 @@ const Cart = () => {
     if (loggedInType === 'Customer') {
         return (
             <Link className='cart-link' to='/cart'>
-                <Badge badgeContent={cart.length} color='primary' max='99'
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                    }}>
-                    <ShoppingCartOutlinedIcon color='action'/>
-                </Badge>
-                {/* getting cart count and pass in */}
+                <div className='cart-link-button'>
+                    <Badge badgeContent={cart.length} color='primary' max='99'
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}>
+                        <ShoppingCartOutlinedIcon />
+                    </Badge>
+                </div>
             </Link>
         )
     }
     
     return (
         <Link className='cart-link' to='/login'>
-            <ShoppingCartOutlinedIcon color='action'/>
-            {/* getting cart count and pass in */}
-            <Notification count='0' type='cart'/>
+            <div className='cart-link-button'>
+                <Badge badgeContent={0} color='primary' max='99'
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}>
+                    <ShoppingCartOutlinedIcon />
+                </Badge>
+            </div>
         </Link>
     )
 }
