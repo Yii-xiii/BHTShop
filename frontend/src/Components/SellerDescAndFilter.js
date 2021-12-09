@@ -83,7 +83,7 @@ const SellerDescAndFilter = () => {
         getFollowCount()
     }
 
-    const reportSellerPath = `/report/${sellerId}`
+    const reportSellerPath = `/report/user/${sellerId}`
 
     function reportUser() {
         if (Cookies.get('user') === 'Customer') {

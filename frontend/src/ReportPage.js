@@ -8,9 +8,13 @@ import api from './Components/Api'
 
 const ReportPage = () => {
     const navigate = useNavigate()
-    const { reportingId } = useParams()
+    const { reportingId, reportType } = useParams()
     const username = Cookies.get('username')
+    const [reportingName, setReportingName] = useState('')
+    const [reportingTitle, setReportingTitle] = useState('')
     const [reportingUser, setReportingUser] = useState([])
+    const [reportingProduct, setReportingProduct] = useState([])
+    const [reportingComment, setReportingComment] = useState([])
     const [reportReason, setReportReason] = useState('')
     const [description, setDescription] = useState('')
 
@@ -18,13 +22,36 @@ const ReportPage = () => {
         if (Cookies.get('user') === 'Customer') {
     
             const data = await api.getSeller(reportingId)
-           return data.data[0]
+            setReportingTitle('欲举报用户名: ')
+            setReportingName(data.data[0].username)
 
         } else if (Cookies.get('user') === 'Seller') {
             // get user's username
             const data = await api.getCustomer(reportingId)
+            setReportingTitle('欲举报用户名: ')
+            setReportingName(data.data[0].username)
+        } else {
+            navigate('/login')
+        }
+    }
 
-            return data.data[0]
+    const fetchReportingProduct = async() => {
+        if (Cookies.get('user') === 'Customer') {
+            const data = await api.getProduct(reportingId)
+            setReportingTitle('欲举报商品: ')
+            setReportingName(data.data[0].title)
+        } else if (Cookies.get('user') === 'Seller') {
+            // seller can't report own product
+        } else {
+            navigate('/login')
+        }
+    }
+
+    const fetchReportingComment = async() => {
+        if (Cookies.get('user') === 'Customer' || Cookies.get('user') === 'Seller') {
+            const data = await api.getProductComment(reportingId)
+            setReportingTitle('欲举报留言: ')
+            setReportingName(data.data[0].description)
         } else {
             navigate('/login')
         }
@@ -36,16 +63,38 @@ const ReportPage = () => {
             setReportingUser(userFromServer)
         }
 
-        getReportingUser()
+        const getReportingProduct = async() => {
+            const productFromServer = await fetchReportingProduct()
+            setReportingProduct(productFromServer)
+        }
+
+        const getReportingComment = async() => {
+            const commentFromServer = await fetchReportingComment()
+            setReportingComment(commentFromServer)
+        }
+
+        if (reportType === 'user') {
+            getReportingUser()
+        } else if (reportType === 'product') {
+            getReportingProduct()
+        } else if (reportType === 'comment') {
+            getReportingComment()
+        }
     }, [])
 
     const createReport = async () => {
         //send to administrator
-        await api.createReport(reportingId, reportReason, description)
-
-        navigate('success')
+        if (reportType === 'user') {
+            await api.createUserReport(reportingId, reportReason, description)
+            navigate('success')
+        } else if (reportType === 'product') {
+            await api.createProductReport(reportingId, reportReason, description)
+            navigate('success')
+        } else if (reportType === 'comment') {
+            await api.createCommentReport(reportingId, reportReason, description)
+            navigate('success')
+        }
     }
-
     
     return (
         <div>
@@ -59,8 +108,8 @@ const ReportPage = () => {
 
                     <div className='report-info-box'>
                         <div className='report-desc-box'>
-                            <h3>欲举报用户名: </h3>
-                            <span>{reportingUser.username}</span>
+                            <h3>{reportingTitle}</h3>
+                            <span>{reportingName}</span>
                         </div>
                         
                         <div className='report-desc-box'>

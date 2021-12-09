@@ -6,10 +6,15 @@ import threeStarLogo from './3Star.png'
 import twoStarLogo from './2Star.png'
 import oneStarLogo from './1Star.png'
 import { Rating } from '@mui/material'
+import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
+import { useNavigate } from 'react-router'
 
 const ProductComment = ({ comment }) => {
+    const navigate = useNavigate()
+    const commentReportPath = `/report/comment/${comment.id}`
+
     return (
-        <div>
+        <div className='comment-out-box'>
             <div className='comment-box'>
                 <div className='comment-title'>
                     <h4>{comment.order.customer.username}</h4>
@@ -28,9 +33,13 @@ const ProductComment = ({ comment }) => {
                 <div className='comment-time'>
                     {comment.time}
                 </div>
-                
             </div>
-            
+
+            <div>
+                <button className='comment-report-button' onClick={() => navigate(commentReportPath)}> 
+                    <ReportOutlinedIcon />
+                </button>
+            </div>
         </div>
     )
 }

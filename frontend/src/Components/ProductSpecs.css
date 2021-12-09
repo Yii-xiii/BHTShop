@@ -89,3 +89,16 @@
     padding: 5px 20px;
     cursor: pointer;
 }
+
+.report-product-button {
+    background-color: darkred;
+    color: white;
+    width: auto;
+    font-size: 15px;
+    height: 35px;
+    margin-right: 20px;
+    border-radius: 10px;
+    border: 0px;
+    padding: 5px 20px;
+    cursor: pointer;
+}
