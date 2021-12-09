@@ -672,59 +672,201 @@ class Api {
 	}
 
 	//Report CRUD
-	getAllCustomerReportingList = async (pageNum) => {
+	getAllReportList = async (pageNum) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/customers/pages/${pageNum}/`);
+		let data = await this.get(`/adminUsers/reports/`);
 		return data;
 	}
 
-	getAllReportedCustomerList = async (pageNum) => {
+	// reporting filter
+	getAllCustomerReportingList = async (pageNum) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reported/customers/pages/${pageNum}/`);
+		let data = await this.get(`/adminUsers/reports/customers/reporting/pages/${pageNum}/`);
 		return data;
 	}
 
 	getAllSellerReportingList = async (pageNum) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/sellers/pages/${pageNum}/`);
+		let data = await this.get(`/adminUsers/reports/sellers/reporting/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllCustomerReportingUserList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/customers/reporting/users/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllSellerReportingUserList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/sellers/reporting/users/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllCustomerReportingProductList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/customers/reporting/products/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllSellerReportingProductList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/sellers/reporting/products/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllCustomerReportingCommentList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/customers/reporting/comments/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllSellerReportingCommentList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/sellers/reporting/comments/pages/${pageNum}/`);
+		return data;
+	}
+
+	// reported filter
+	getAllReportedUserList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/users/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllReportedCustomerList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/customers/pages/${pageNum}/`);
 		return data;
 	}
 
 	getAllReportedSellerList = async (pageNum) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reported/sellers/pages/${pageNum}/`);
+		let data = await this.get(`/adminUsers/reports/reporting/sellers/pages/${pageNum}/`);
 		return data;
 	}
 
+	getAllReportedProductList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/products/pages/${pageNum}/`);
+		return data;
+	}
+
+	getAllReportedCommentList = async (pageNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/comments/pages/${pageNum}/`);
+		return data;
+	}
+
+	//reporting filter with userId 
 	getCustomerReportingList = async (pageNum, customerId) => {
 		//login required
 		//403 : user is neither admin nor reporting customer
-		let data = await this.get(`/adminUsers/reports/reporting/customers/${customerId}/pages/${pageNum}/`);
+		//404 : customer not found
+		let data = await this.get(`/adminUsers/reports/customers/${customerId}/reporting/pages/${pageNum}/`);
 		return data;
 	}
 
-	getReportedCustomerList = async (pageNum, customerId) => {
+	getCustomerReportingUserList = async (pageNum, customerId) => {
 		//login required
-		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reported/customers/${customerId}/pages/${pageNum}/`);
+		//403 : user is neither admin nor reporting customer
+		//404 : customer not found
+		let data = await this.get(`/adminUsers/reports/customers/${customerId}/reporting/users/pages/${pageNum}/`);
+		return data;
+	}
+
+	getCustomerReportingProductList = async (pageNum, customerId) => {
+		//login required
+		//403 : user is neither admin nor reporting customer
+		//404 : customer not found
+		let data = await this.get(`/adminUsers/reports/customers/${customerId}/reporting/products/pages/${pageNum}/`);
+		return data;
+	}
+
+	getCustomerReportingCommentList = async (pageNum, customerId) => {
+		//login required
+		//403 : user is neither admin nor reporting customer
+		//404 : customer not found
+		let data = await this.get(`/adminUsers/reports/customers/${customerId}/reporting/comments/pages/${pageNum}/`);
 		return data;
 	}
 
 	getSellerReportingList = async (pageNum, sellerId) => {
 		//login required
 		//403 : user is neither admin nor reporting seller
-		let data = await this.get(`/adminUsers/reports/reporting/sellers/${sellerId}/pages/${pageNum}/`);
+		//404 : seller not found
+		let data = await this.get(`/adminUsers/reports/sellers/${sellerId}/reporting/pages/${pageNum}/`);
+		return data;
+	}
+
+	getSellerReportingUserList = async (pageNum, sellerId) => {
+		//login required
+		//403 : user is neither admin nor reporting seller
+		//404 : seller not found
+		let data = await this.get(`/adminUsers/reports/sellers/${sellerId}/reporting/users/pages/${pageNum}/`);
+		return data;
+	}
+
+	getSellerReportingProductList = async (pageNum, sellerId) => {
+		//login required
+		//403 : user is neither admin nor reporting seller
+		//404 : seller not found
+		let data = await this.get(`/adminUsers/reports/sellers/${sellerId}/reporting/products/pages/${pageNum}/`);
+		return data;
+	}
+
+	getSellerReportingCommentList = async (pageNum, sellerId) => {
+		//login required
+		//403 : user is neither admin nor reporting seller
+		//404 : seller not found
+		let data = await this.get(`/adminUsers/reports/sellers/${sellerId}/reporting/comments/pages/${pageNum}/`);
+		return data;
+	}
+
+	// reported filter with id
+	getReportedCustomerList = async (pageNum, customerId) => {
+		//login required
+		//403 : user is not admin
+		//404 : customer not found
+		let data = await this.get(`/adminUsers/reports/reporting/customers/${customerId}/pages/${pageNum}/`);
 		return data;
 	}
 
 	getReportedSellerList = async (pageNum, sellerId) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reported/sellers/${sellerId}/pages/${pageNum}/`);
+		//404 : seller not found
+		let data = await this.get(`/adminUsers/reports/reporting/sellers/${sellerId}/pages/${pageNum}/`);
+		return data;
+	}
+
+	getReportedProductList = async (pageNum, productId) => {
+		//login required
+		//403 : user is not admin
+		//404 : product not found
+		let data = await this.get(`/adminUsers/reports/reporting/products/${productId}/pages/${pageNum}/`);
+		return data;
+	}
+
+	getReportedCommentList = async (pageNum, commentId) => {
+		//login required
+		//403 : user is not admin
+		//404 : comment not found
+		let data = await this.get(`/adminUsers/reports/reporting/comments/${commentId}/pages/${pageNum}/`);
 		return data;
 	}
 
@@ -736,16 +878,43 @@ class Api {
 		return data;
 	}
 
-	createReport = async (userId, reason, description) => {
+	createUserReport = async (userId, reason, description) => {
 		//login required
+		//400 : illegal reason
 		//404 : reported user not found
-		let data = await this.post(`/adminUsers/reports/create/`,{userId, reason, description});
+		let data = await this.post(`/adminUsers/reports/users/create/`,{userId, reason, description});
 		return data;
 	}
 
-	updateReport = async (reportId, reason, description) => {
+	createProductReport = async (productId, reason, description) => {
+		//login required
+		//400 : illegal reason
+		//404 : reported product not found
+		let data = await this.post(`/adminUsers/reports/products/create/`,{productId, reason, description});
+		return data;
+	}
+
+	createCommentReport = async (commentId, reason, description) => {
+		//login required
+		//400 : illegal reason
+		//404 : reported comment not found
+		let data = await this.post(`/adminUsers/reports/comments/create/`,{commentId, reason, description});
+		return data;
+	}
+
+	adminUpdateReport = async (reportId, status) => {
 		//login required
 		//404 : report not found
+		//400 : illegal status
+		//403 : user is neither admin nor reporting user
+		let data = await this.put(`/adminUsers/reports/${reportId}/edit/`,{status});
+		return data;
+	}
+
+	userUpdateReport = async (reportId, reason, description) => {
+		//login required
+		//404 : report not found
+		//400 : illegal reason
 		//403 : user is neither admin nor reporting user
 		let data = await this.put(`/adminUsers/reports/${reportId}/edit/`,{reason, description});
 		return data;
