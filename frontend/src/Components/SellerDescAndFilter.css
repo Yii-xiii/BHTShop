@@ -60,7 +60,7 @@
 .seller-desc-unfollow-button {
     height: 40px;
     width: 90px;
-    background-color: #F3B2CB;
+    background-color: #F08080;
     color: white;
     border: 0px;
     margin-right: 15px;
@@ -72,7 +72,7 @@
     height: 40px;
     width: 80px;
     color: white;
-    background-color: #F08080;
+    background-color: darkred;
     border: 0px;
     border-radius: 5px;
     cursor: pointer;
