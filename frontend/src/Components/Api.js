@@ -223,6 +223,27 @@ class Api {
 		return data;
 	}
 
+	getProductCommentListByRating = async (productId, rating) => {
+		//404 : product not found
+		let data = await this.get(`/comments/products/${productId}/rating/${rating}/`);
+		
+		return data;
+	}
+
+	getHighestRatingProductCommentList = async (productId) => {
+		//404 : product not found
+		let data = await this.get(`/comments/products/${productId}/highest_rating/`);
+		
+		return data;
+	}
+
+	getLowestRatingProductCommentList = async (productId) => {
+		//404 : product not found
+		let data = await this.get(`/comments/products/${productId}/lowest_rating/`);
+		
+		return data;
+	}
+
 	getProductCommentListByPage = async (productId,pageNum) => {
 		//404 : product not found
 		let data = await this.get(`/comments/products/${productId}/pages/${pageNum}/`);
