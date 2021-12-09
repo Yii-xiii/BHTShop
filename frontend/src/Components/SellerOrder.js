@@ -22,9 +22,9 @@ const SellerOrder = ({ order }) => {
     }, [])
 
     const changeFromPaidtoShipped = async() => {
-        await api.updateOrderStatus(order.order.id, order.id, 'shipped', 'Shipped.')
+        await api.createOrderStatus(order.order.id, 'shipped', 'Shipped.')
         window.location.reload(false)
-    } 
+    }
 
     if (order.status === 'paid') {
         return (
