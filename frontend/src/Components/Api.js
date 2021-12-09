@@ -223,6 +223,27 @@ class Api {
 		return data;
 	}
 
+	getProductCommentListByRating = async (productId, rating) => {
+		//404 : product not found
+		let data = await this.get(`/comments/products/${productId}/rating/${rating}/`);
+		
+		return data;
+	}
+
+	getHighestRatingProductCommentList = async (productId) => {
+		//404 : product not found
+		let data = await this.get(`/comments/products/${productId}/highest_rating/`);
+		
+		return data;
+	}
+
+	getLowestRatingProductCommentList = async (productId) => {
+		//404 : product not found
+		let data = await this.get(`/comments/products/${productId}/lowest_rating/`);
+		
+		return data;
+	}
+
 	getProductCommentListByPage = async (productId,pageNum) => {
 		//404 : product not found
 		let data = await this.get(`/comments/products/${productId}/pages/${pageNum}/`);
@@ -870,6 +891,120 @@ class Api {
 		return data;
 	}
 
+	// reported filter with date
+	getReportListInDays = async (dayNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/in_days/${dayNum}/`);
+		return data;
+	}
+
+	getReportedUserListInDays = async (dayNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/users/in_days/${dayNum}/`);
+		return data;
+	}
+
+	getReportedProductListInDays = async (dayNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/products/in_days/${dayNum}/`);
+		return data;
+	}
+
+	getReportedCommentListInDays = async (dayNum) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/comments/in_days/${dayNum}/`);
+		return data;
+	}
+
+	getReportListByDay = async (year, month, day) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/by_day/`,{year,month,day});
+		return data;
+	}
+
+	getReportedUserListByDay = async (year, month, day) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/users/by_day/`,{year,month,day});
+		return data;
+	}
+
+	getReportedProductListByDay = async (year, month, day) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/products/by_day/`,{year,month,day});
+		return data;
+	}
+
+	getReportedCommentListByDay = async (year, month, day) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/comments/by_day/`,{year,month,day});
+		return data;
+	}
+
+	getReportListByMonth = async (year, month) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/by_month/`,{year, month});
+		return data;
+	}
+
+	getReportedUserListByMonth = async (year, month) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/users/by_month/`,{year, month});
+		return data;
+	}
+
+	getReportedProductListByMonth = async (year, month) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/products/by_month/`,{year, month});
+		return data;
+	}
+
+	getReportedCommentListByMonth = async (year, month) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/comments/by_month/`,{year, month});
+		return data;
+	}
+
+	getReportListByYear = async (year) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/by_year/`,{year});
+		return data;
+	}
+
+	getReportedUserListByYear = async (year) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/users/by_year/`,{year});
+		return data;
+	}
+
+	getReportedProductListByYear = async (year) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/products/by_year/`,{year});
+		return data;
+	}
+
+	getReportedCommentListByYear = async (year) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/comments/by_year/`,{year});
+		return data;
+	}
+
+	//
 	getReport = async (reportId) => {
 		//login required
 		//404 : report not found

@@ -32,6 +32,48 @@ def product_comment_list(request, pk):
 	return returnJson([dict(comment.body()) for comment in comments])
 
 
+def highest_rating_product_comment_list(request, pk):
+	try:
+		product = Product.objects.get(id=pk)
+	except Product.DoesNotExist:
+		return returnJson([], 404)
+
+	specs = ProductSpec.objects.filter(product=product)
+
+	orders = Order.objects.filter(productSpec__in=specs)
+
+	comments = ProductComment.objects.filter(order__in=orders).order_by('-rating')
+	return returnJson([dict(comment.body()) for comment in comments])
+
+
+def lowest_rating_product_comment_list(request, pk):
+	try:
+		product = Product.objects.get(id=pk)
+	except Product.DoesNotExist:
+		return returnJson([], 404)
+
+	specs = ProductSpec.objects.filter(product=product)
+
+	orders = Order.objects.filter(productSpec__in=specs)
+
+	comments = ProductComment.objects.filter(order__in=orders).order_by('rating')
+	return returnJson([dict(comment.body()) for comment in comments])
+
+
+def product_comment_list_by_rating(request, pk, rating):
+	try:
+		product = Product.objects.get(id=pk)
+	except Product.DoesNotExist:
+		return returnJson([], 404)
+
+	specs = ProductSpec.objects.filter(product=product)
+
+	orders = Order.objects.filter(productSpec__in=specs)
+
+	comments = ProductComment.objects.filter(order__in=orders, rating=rating).order_by('-id')
+	return returnJson([dict(comment.body()) for comment in comments])
+
+
 def product_comment_list_by_page(request, pk, pageNum):
 	try:
 		product = Product.objects.get(id=pk)

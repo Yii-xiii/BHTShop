@@ -24,6 +24,7 @@ import SellerOrdersReturnedPage from './SellerOrdersReturnedPage';
 import ReportPage from './ReportPage';
 import SearchPage from './SearchPage';
 import ReportSuccessPage from './ReportSuccessPage';
+import EditProduct from './EditProduct';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path='/orders/:pageNum' element={<PersonalOrdersPage />}/>
           <Route path='/order/:orderId' element={<OrderPage />}/>
           <Route path='/product/:productId/comments' element={<ProductCommentsPage />}/>
+          <Route path='/product/:productId/edit' element={<EditProduct />}/>
           <Route path='/report/:reportType/:reportingId' element={<ReportPage />}/>
           <Route path='/report/:reportType/:reportingId/success' element={<ReportSuccessPage />}/>
         </Routes>

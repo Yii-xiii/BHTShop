@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from user.models import Customer, Seller
 from product.models import Product
 from comment.models import ProductComment
+from django.utils import timezone
 # Create your models here.
 
 class AdminUser(User):
@@ -44,6 +45,7 @@ class Report(models.Model):
 	reason = models.CharField(max_length=50, choices=REASONS)
 	description = models.TextField(blank=True)
 	status = models.CharField(max_length=50, choices=STATUSES, default=PEN)
+	time = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
 		return self.reportingUser.username + " reporting"
@@ -66,7 +68,8 @@ class Report(models.Model):
 							'reportingUser': user1.body(),
 							'reason': self.reason,
 							'status' : self.status,
-							'description': self.description,}
+							'description': self.description,
+							'time' : self.time}
 
 		return report.body()
 
@@ -92,7 +95,8 @@ class UserReport(Report):
 				'reportedUser' : user2.body(),
 				'reason': self.reason,
 				'status' : self.status,
-				'description': self.description,}
+				'description': self.description,
+				'time' : self.time}
 
 class ProductReport(Report):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -111,7 +115,8 @@ class ProductReport(Report):
 				'reportedProduct' : self.product.body(),
 				'reason': self.reason,
 				'status' : self.status,
-				'description': self.description,}
+				'description': self.description,
+				'time' : self.time}
 
 
 class ProductCommentReport(Report):
@@ -131,4 +136,5 @@ class ProductCommentReport(Report):
 				'reportedComment' : self.comment.body(),
 				'reason': self.reason,
 				'status' : self.status,
-				'description': self.description,}
+				'description': self.description,
+				'time' : self.time}

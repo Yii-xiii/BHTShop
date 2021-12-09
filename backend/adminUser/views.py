@@ -6,6 +6,8 @@ from user.models import Customer, Seller, User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django_db_logger.models import StatusLog
+from datetime import timedelta
+from django.utils import timezone
 import json
 
 # Create your views here.
@@ -509,6 +511,239 @@ def edit_report(request, pk):
 		return returnJson()
 
 
+# filter report by date 
+@login_required
+def get_report_in_days(request, dayNum):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	end = timezone.now().date()
+	start = end - timedelta(days=dayNum-1)
+	reports = Report.objects.filter(time__range=[start,end])
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_user_in_days(request, dayNum):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	end = timezone.now().date()
+	start = end - timedelta(days=dayNum-1)
+	reports = UserReport.objects.filter(time__range=[start,end])
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_product_in_days(request, dayNum):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	end = timezone.now().date()
+	start = end - timedelta(days=dayNum-1)
+	reports = ProductReport.objects.filter(time__range=[start,end])
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_comment_in_days(request, dayNum):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	end = timezone.now().date()
+	start = end - timedelta(days=dayNum-1)
+	reports = ProductCommentReport.objects.filter(time__range=[start,end])
+	return returnJson([dict(report.body()) for report in reports])
+
+@login_required
+def get_report_by_day(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+	day = data["day"]
+
+	reports = Report.objects.filter(time__year=year, time__month=month, time__day=day)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_user_by_day(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+	day = data["day"]
+
+	reports = UserReport.objects.filter(time__year=year, time__month=month, time__day=day)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_product_by_day(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+	day = data["day"]
+
+	reports = ProductReport.objects.filter(time__year=year, time__month=month, time__day=day)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_comment_by_day(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+	day = data["day"]
+
+	reports = ProductCommentReport.objects.filter(time__year=year, time__month=month, time__day=day)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_report_by_month(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+
+	reports = Report.objects.filter(time__year=year, time__month=month)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_user_by_month(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+
+	reports = UserReport.objects.filter(time__year=year, time__month=month)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_product_by_month(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+
+	reports = ProductReport.objects.filter(time__year=year, time__month=month)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_comment_by_month(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+
+	reports = ProductCommentReport.objects.filter(time__year=year, time__month=month)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_report_by_year(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+
+	reports = Report.objects.filter(time__year=year)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_user_by_year(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+
+	reports = UserReport.objects.filter(time__year=year)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_product_by_year(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+
+	reports = ProductReport.objects.filter(time__year=year)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+@login_required
+def get_reported_comment_by_year(request):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([], 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+
+	reports = ProductCommentReport.objects.filter(time__year=year)
+	return returnJson([dict(report.body()) for report in reports])
+
+
+#logging
 def user_get_request(request,pk):
 	try:
 		user = User.objects.get(id=pk)
