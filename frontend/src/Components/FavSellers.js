@@ -3,7 +3,7 @@ import React from 'react'
 import './FavSellers.css'
 import api from './Api'
 import FavSellerOptions from './FavSellerOptions'
-import { FavSeller } from './FavSeller'
+import FavSeller from './FavSeller'
 
 const FavSellers = () => {
     const [favSellers, setFavSellers] = useState([])
