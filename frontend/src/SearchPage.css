@@ -42,3 +42,9 @@
     margin-right: 20px;
     flex-wrap: wrap;
 }
+
+.searching-image {
+    width: 250px;
+    height: 250px;
+    opacity: 0.5;
+}
