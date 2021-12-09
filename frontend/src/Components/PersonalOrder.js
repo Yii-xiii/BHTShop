@@ -5,6 +5,8 @@ import {useState, useEffect} from 'react'
 import DeliveryLogo from './Delivery.png'
 import StoreLogo from './Store.png'
 import { Link } from 'react-router-dom'
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined'
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 
 const PersonalOrder = ({ order }) => {
     const [orderStatus, setOrderStatus] = useState([])
@@ -49,7 +51,7 @@ const PersonalOrder = ({ order }) => {
                 
                 <div className='order-in-description-box'>                    
                     <div className='seller-in-description-order'>
-                        <img className='seller-logo' src={StoreLogo} alt='img'/>
+                        <StorefrontOutlinedIcon className='seller-logo'/>
                         <span>{order.productSpec.product.seller.username}</span>
                     </div>
 
@@ -70,7 +72,7 @@ const PersonalOrder = ({ order }) => {
                     </div>
 
                     <div className='delivery-status'>
-                        <img className='delivery-status-logo' src={DeliveryLogo} alt='img'/>
+                        <LocalShippingOutlinedIcon className='delivery-status-logo' />
                         <span>{orderStatus.status}</span>
                     </div>
                 </div>

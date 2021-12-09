@@ -6,6 +6,8 @@ import api from './Components/Api'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
 import Cookies from 'js-cookie'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import LockIcon from '@mui/icons-material/Lock';
 
 const LoginPage = () => {
     const [username, setUsername] = useState([])
@@ -56,7 +58,8 @@ const LoginPage = () => {
                     <Error />
                     
                     <div className='login-form'>
-                        <label>用户名</label>
+                        <label><AccountCircleIcon /></label>
+
                         <input 
                             value={username}
                             onChange={event => setUsername(event.target.value)}
@@ -65,7 +68,7 @@ const LoginPage = () => {
                     </div>
 
                     <div className='login-form'>
-                        <label>密码</label>
+                        <label><LockIcon /></label>
                         <input 
                             value={password}
                             onChange={event => setPassword(event.target.value)}

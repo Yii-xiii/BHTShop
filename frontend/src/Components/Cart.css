@@ -14,3 +14,11 @@
     background-color: palevioletred;
     color: white;
 }
+
+.cart-link {
+    text-decoration: none;
+}
+
+.cart-link-button {
+    color: black;
+}

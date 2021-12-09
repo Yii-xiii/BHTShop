@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import './AddItem.css'
 import addItemLogo from './AddItem.png'
 import Cookies from 'js-cookie'
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined'
 
 const AddItem = () => {
     const loggedInType = Cookies.get('user')
@@ -11,14 +12,14 @@ const AddItem = () => {
         return (
             // link to userId fav list
             <Link className='addItem-link' to='/addProduct'>
-                <img className='addItem-logo' src={addItemLogo} alt='logo'/>
+                <AddCircleOutlineOutlinedIcon className='addItem-logo' color='action'/>
             </Link>
         )
     }
 
     return (
         <Link className='addItem-link' to='/'>
-            <img className='addItem-logo' src={addItemLogo} alt='logo'/>
+            <AddCircleOutlineOutlinedIcon className='addItem-logo' color='action'/>
             {/* getting favourite count and pass in */}
         </Link>
     )

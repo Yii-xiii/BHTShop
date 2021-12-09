@@ -6,6 +6,8 @@ import api from './Api'
 import sellerOrdersLogo from './SellerOrders.png'
 import Cookies from 'js-cookie'
 import Notification from './Notification'
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import { Badge } from '@mui/material'
 
 const SellerOrders = () => {
     const [orders, setOrders] = useState([])
@@ -30,18 +32,27 @@ const SellerOrders = () => {
         return (
             // link to userId fav list
             <Link className='addItem-link' to='/sOrders/paid'>
-                <img className='addItem-logo' src={sellerOrdersLogo} alt='logo'/>
-                {/* getting orders count and pass in */}
-                <Notification count={orders.length} type='cart'/>
+                <Badge badgeContent={orders.length} color='primary' max='99'
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}>
+                    <AssignmentOutlinedIcon className='sellerOrders-logo' color='action'/>
+                </Badge>
             </Link>
         )
     }
 
     return (
         <Link className='addItem-link' to='/'>
-            <img className='sellerOrders-logo' src={sellerOrdersLogo} alt='logo'/>
+            <Badge badgeContent={orders.length} color='primary' max='99'
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}>
+                <AssignmentOutlinedIcon className='sellerOrders-logo' color='action'/>
+            </Badge>
             {/* getting orders count and pass in */}
-            <Notification count='0' type='cart'/>
         </Link>
     )
 }

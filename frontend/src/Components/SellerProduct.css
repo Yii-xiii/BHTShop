@@ -34,7 +34,7 @@
 .seller-product-specs {
     display: flex;
     flex-direction: column;
-    width: 500px;
+    width: 510px;
 }
 
 .buttons-box {
@@ -46,7 +46,7 @@
 
 .edit-button {
     height: 30px;
-    width: 55px;
+    width: 45px;
     background-color: lightgreen;
     border: 0px;
     margin-bottom: 10px;
@@ -57,9 +57,10 @@
 
 .delete-button {
     height: 30px;
-    width: 55px;
+    width: 45px;
     background-color: pink;
     border: 0px;
+    color: darkred;
     border-radius: 5px;
     cursor: pointer;
     float: right;

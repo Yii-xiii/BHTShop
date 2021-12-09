@@ -31,14 +31,17 @@
     margin-left: 20px;
     margin-right: 0px;
     display: flex;
+    height: 30px;
 }
 
 .form-type-group h5 {
     font-size: 16px;
+    margin-top: 5px;
+    width: 75px;
 }
 
 .form-type-select {
-    margin-left: 50px;
+    margin-left: 60px;
 }
 
 .form-title-group {
@@ -164,4 +167,22 @@
     margin-bottom: 30px;
     display: flex;
     justify-content: center;
+}
+
+.add-product-button-submit-box {
+    display: flex;
+    justify-content: center;
+}
+
+.add-product-button-submit {
+    margin-top: 30px;
+    background: #000;
+    width: 80%;
+    color: #fff;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 18px;
 }
