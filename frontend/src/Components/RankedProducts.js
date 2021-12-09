@@ -31,6 +31,7 @@ const RankedProducts = () => {
             <h1>销量排名</h1>
             
             <HorizontalScroll 
+                className='horizontal-scroll'
                 pageLock={true} 
                 reverseScroll={true}
                 style={{width: `100%`, height: `320px`}}>

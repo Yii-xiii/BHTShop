@@ -2,10 +2,10 @@ import {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import './Product.css'
 import api from './Api'
-import { Box } from '@mui/system'
-import { Fade } from '@mui/material'
+import { Box, sizeHeight } from '@mui/system'
+import { Badge } from '@mui/material'
 
-const Product = ({ product, type }) => {
+const Product = ({ product, type, count }) => {
     // Initializing
     const [image, setImages] = useState([])
     const [spec, setSpec] = useState([])
@@ -47,14 +47,26 @@ const Product = ({ product, type }) => {
             <div className='product-out-box'>
                 {product.title.length > 0 ? (
                     <Link to={path}>
-                        <div className='product-box'>
-                            <div className='image-box'>
-                                <img src={ image? image.image_url : '0'} alt='img'/>
-                            </div>
-    
-                            <h3 className='title-text'>{product.title}</h3>
-                            <h5 className='desc-text'>已售出 {product.soldAmount} 件</h5>
-                        </div>
+                            <Box className='product-box'>
+                                <Badge badgeContent={count} color='success'
+                                    sx={{
+                                        "& .MuiBadge-badge": {
+                                            color: "black",
+                                            backgroundColor: "silver"
+                                        }
+                                    }}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                    }}>
+                                    <div className='image-box'>
+                                        <img src={ image? image.image_url : '0'} alt='img'/>
+                                    </div>
+                                </Badge>
+        
+                                <h3 className='title-text'>{product.title}</h3>
+                                <h5 className='desc-text'>已售出 {product.soldAmount} 件</h5>
+                            </Box>
                     </Link>
                 ) : console.log('Empty title product found.')}
             </div>
