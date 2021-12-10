@@ -458,7 +458,7 @@ class Api {
 		//login required
 		//403 : seller not found
 		//400 : Invalid status
-		let data = await this.post(`/orders/sellers/status/pages/${pageNum}/`,{status});
+		let data = await this.put(`/orders/sellers/status/pages/${pageNum}/`,{status});
 		return data;
 	}
 
@@ -466,7 +466,7 @@ class Api {
 		//login required
 		//403 : customer not found
 		//400 : Invalid status
-		let data = await this.post(`/orders/customers/status/pages/${pageNum}/`,{status});
+		let data = await this.put(`/orders/customers/status/pages/${pageNum}/`,{status});
 		return data;
 	}
 
@@ -995,27 +995,27 @@ class Api {
 	getReportListByStatusAndPage = async (pageNum, status) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/statuses/pages/${pageNum}/`,{status});
+		let data = await this.put(`/adminUsers/reports/statuses/pages/${pageNum}/`,{status});
 		return data;
 	}
 
 	getReportedUserListByStatusAndPage = async (pageNum, status) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/users/statuses/pages/${pageNum}/`,{status});
+		let data = await this.put(`/adminUsers/reports/reporting/users/statuses/pages/${pageNum}/`,{status});
 		return data;
 	}
 
 	getReportedProductListByStatusAndPage = async (pageNum, status) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/products/statuses/pages/${pageNum}/`,{status});
+		let data = await this.put(`/adminUsers/reports/reporting/products/statuses/pages/${pageNum}/`,{status});
 		return data;
 	}
 	getReportedCommentListByStatusAndPage = async (pageNum, status) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/comments/statuses/pages/${pageNum}/`,{status});
+		let data = await this.put(`/adminUsers/reports/reporting/comments/statuses/pages/${pageNum}/`,{status});
 		return data;
 	}
 
@@ -1082,48 +1082,48 @@ class Api {
 	//product filter
 	//return 10 products
 	randomProductListByCategory = async (category) => {
-		let data = await this.post(`/products/filter/categories/randoms/`,{category});
+		let data = await this.put(`/products/filter/categories/randoms/`,{category});
 		return data;
 	}
 
 	latestProductListByCategory = async (pageNum, category) => {
-		let data = await this.post(`/products/filter/categories/latest/pages/${pageNum}/`,{category});
+		let data = await this.put(`/products/filter/categories/latest/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	highestRatingProductListByCategory = async (pageNum, category) => {
-		let data = await this.post(`/products/filter/categories/highest_rating/pages/${pageNum}/`,{category});
+		let data = await this.put(`/products/filter/categories/highest_rating/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	lowestRatingProductListByCategory = async (pageNum, category) => {
-		let data = await this.post(`/products/filter/categories/lowest_rating/pages/${pageNum}/`,{category});
+		let data = await this.put(`/products/filter/categories/lowest_rating/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	cheapestProductListByCategory = async (pageNum, category) => {
-		let data = await this.post(`/products/filter/categories/cheapest/pages/${pageNum}/`,{category});
+		let data = await this.put(`/products/filter/categories/cheapest/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	mostExpensiveProductListByCategory = async (pageNum, category) => {
-		let data = await this.post(`/products/filter/categories/most_expensive/pages/${pageNum}/`,{category});
+		let data = await this.put(`/products/filter/categories/most_expensive/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	randomProductListByCategoryAndPriceRange = async (category, maxPrice, minPrice) => {
-		let data = await this.post(`/products/filter/categories/price_range/randoms/`,{category, maxPrice, minPrice});
+		let data = await this.put(`/products/filter/categories/price_range/randoms/`,{category, maxPrice, minPrice});
 		return data;
 	}
 
 	mostPopularProductListByCategory = async (pageNum, category) => {
-		let data = await this.post(`/collections/categories/most_popular/pages/${pageNum}/`,{category});
+		let data = await this.put(`/collections/categories/most_popular/pages/${pageNum}/`,{category});
 		return data;
 	}
 
 	searchProductByCategory = async (pageNum, category, keyword) => {
 		//order by highest sold
-		let data = await this.post(`/products/search/categories/pages/${pageNum}/`,{category, keyword});
+		let data = await this.put(`/products/search/categories/pages/${pageNum}/`,{category, keyword});
 		return data;
 	}
 
@@ -1153,7 +1153,7 @@ class Api {
 	}
 
 	randomProductListByPriceRange = async (maxPrice, minPrice) => {
-		let data = await this.post(`/products/filter/price_range/randoms/`,{maxPrice, minPrice});
+		let data = await this.put(`/products/filter/price_range/randoms/`,{maxPrice, minPrice});
 		return data;
 	}
 
@@ -1164,7 +1164,7 @@ class Api {
 
 	searchProduct = async (pageNum, keyword) => {
 		//order by highest sold
-		let data = await this.post(`/products/search/pages/${pageNum}/`,{keyword});
+		let data = await this.put(`/products/search/pages/${pageNum}/`,{keyword});
 		return data;
 	}
 
@@ -1186,42 +1186,42 @@ class Api {
 	getSellerOrdersByDay = async (year, month, day) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.post(`/orders/sellers/by_day/`,{year, month, day});
+		let data = await this.put(`/orders/sellers/by_day/`,{year, month, day});
 		return data;
 	}
 
 	getSellerSalesByDay = async (year, month, day) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.post(`/orders/sellers/sales/by_day/`,{year, month, day});
+		let data = await this.put(`/orders/sellers/sales/by_day/`,{year, month, day});
 		return data;
 	}
 
 	getSellerOrdersByMonth = async (year, month) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.post(`/orders/sellers/by_month/`,{year, month});
+		let data = await this.put(`/orders/sellers/by_month/`,{year, month});
 		return data;
 	}
 
 	getSellerSalesByMonth = async (year, month) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.post(`/orders/sellers/sales/by_month/`,{year, month});
+		let data = await this.put(`/orders/sellers/sales/by_month/`,{year, month});
 		return data;
 	}
 
 	getSellerOrdersByYear = async (year) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.post(`/orders/sellers/by_year/`,{year});
+		let data = await this.put(`/orders/sellers/by_year/`,{year});
 		return data;
 	}
 
 	getSellerSalesByYear = async (year) => {
 		//login required
 		//403 : user is not a seller
-		let data = await this.post(`/orders/sellers/sales/by_year/`,{year});
+		let data = await this.put(`/orders/sellers/sales/by_year/`,{year});
 		return data;
 	}
 
@@ -1298,7 +1298,7 @@ class Api {
 	//login logout
 	login = async (username, password) => {
 		//403 : wrong username or password
-		let data = await this.post(`/users/login/`, {username, password});
+		let data = await this.put(`/users/login/`, {username, password});
 
 		if (data["errorCode"] === 0) {
 			const cookies = data["cookies"]
@@ -1312,7 +1312,7 @@ class Api {
 
 	logout = async () => {
 		//403 : user is not logged in
-		let data = await this.post(`/users/logout/`);
+		let data = await this.get(`/users/logout/`);
 		if (data["errorCode"] === 0) {
 			Cookies.remove("user")
 			Cookies.remove("username")

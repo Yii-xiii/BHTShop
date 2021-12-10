@@ -183,7 +183,10 @@ def edit_product_comment(request, pk_comment):
 		comments = ProductComment.objects.filter(order__in=orders)
 		size = len(comments)
 		product = Product.objects.get(id=comment.order.productSpec.product.id)
-		product.rating += (product.rating - comment.rating)/Decimal(size-1)
+		if size == 1:
+			product.rating = 0
+		else:
+			product.rating += (product.rating - comment.rating)/Decimal(size-1)
 		product.save()
 		comment.delete()
 		return returnJson()
