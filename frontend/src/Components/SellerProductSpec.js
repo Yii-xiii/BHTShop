@@ -4,10 +4,12 @@ import './SellerProductSpec.css'
 const SellerProductSpec = ({ spec }) => {
     return (
         <div className='spec-box'>
-            <span className='spec-product-desc'>{spec.description}</span>
+            <div className='spec-inner-left-box'>
+                <span className='spec-product-desc'>{spec.description}</span>
+                <span className='spec-product-stock'>库存: {spec.stock}</span>
+            </div>
+            
             <span className='spec-product-price'>¥ {spec.price}</span>
-            <span className='spec-product-stock'>{spec.stock}</span>
-            <span className='spec-product-sold'>{spec.product.soldAmount}</span>
         </div>
     )
 }

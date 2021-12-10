@@ -46,14 +46,6 @@ const SellerProducts = () => {
                     <div className='seller-products-page-box'>
                         <Pagination count={sellerProducts.length % 10 === 0 ? Math.floor(sellerProducts.length / 10) : Math.ceil(sellerProducts.length / 10)} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
                     </div>
-
-                    <div className='seller-product-header'>
-                        <h2 className='seller-product-photo-title'>图片</h2>
-                        <h2 className='seller-product-spec-title'>规格</h2>
-                        <h2 className='seller-product-price-title'>价格</h2>
-                        <h2 className='seller-product-stock-title'>库存</h2>
-                        <h2 className='seller-product-sold-title'>销量</h2>
-                    </div>
     
                     <div className='seller-products'>
                         {sellerProducts.length > 0 ? sellerProducts.map((product, index) => (

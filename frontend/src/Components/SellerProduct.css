@@ -28,7 +28,6 @@
 .product-title-box {
     margin-left: 15px;
     margin-top: 15px;
-    margin-bottom: 10px;
 }
 
 .seller-product-specs {
@@ -64,4 +63,10 @@
     border-radius: 5px;
     cursor: pointer;
     float: right;
+}
+
+.product-sold-amount-span-box {
+    margin-left: 15px;
+    height: auto;
+    margin-top: 20px;
 }
