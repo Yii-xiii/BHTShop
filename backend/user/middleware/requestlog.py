@@ -15,7 +15,9 @@ class RequestIdMiddleware(MiddlewareMixin):
 		# print(response.headers)
 		# print(request.path)
 		# print(re.search("^(/admin/)",request.path))
-		if re.search("^(/admin/)",request.path):
+		if request.method == "POST":
+			logger.info('{} : "{} {}" response_code:{}'.format(request.user, request.method, request.path, response.status_code))
+		elif re.search("^(/admin/)",request.path):
 			logger.info('{} : "{} {}" response_code:{}'.format(request.user, request.method, request.path, response.status_code))
 		elif request.path == "/users/login/":			
 			if response.headers["Content-Type"] == "application/json": 
