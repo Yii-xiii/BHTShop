@@ -1,0 +1,30 @@
+.all-comments-header-title {
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.row-radio-buttons-group {
+    margin-left: 50px;
+    margin-top: 30px;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #fff;
+}
+
+.row-radio-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin-left: 20px;
+}
+
+.all-comments-show-box {
+    margin-left: 50px;
+    margin-top: 30px;
+    min-height: 30px;
+}
