@@ -1,0 +1,7 @@
+.admin-graph-outer-box {
+    height: 400px;
+    width: 100%;
+    border: 1px solid black;
+    background-color: #fff;
+    border-radius: 20px;
+}

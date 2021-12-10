@@ -26,6 +26,8 @@
 
 .search-result-found-box {
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .search-product-out-box {
@@ -47,4 +49,11 @@
     width: 250px;
     height: 250px;
     opacity: 0.5;
+}
+
+.search-result-found-page-box {
+    height: 30px;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }

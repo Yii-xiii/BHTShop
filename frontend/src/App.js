@@ -51,7 +51,7 @@ function App() {
           <Route path='/sellerProfile' element={<ProfilePage />}/>
           <Route path='/seller/:sellerId' element={<SellerPage />}/>
           <Route path='/sellerAnalysis' element={<SellerAnalysisPage />}/>
-          <Route path='/orders/:pageNum' element={<PersonalOrdersPage />}/>
+          <Route path='/orders' element={<PersonalOrdersPage />}/>
           <Route path='/order/:orderId' element={<OrderPage />}/>
           <Route path='/product/:productId/comments' element={<ProductCommentsPage />}/>
           <Route path='/product/:productId/edit' element={<EditProduct />}/>

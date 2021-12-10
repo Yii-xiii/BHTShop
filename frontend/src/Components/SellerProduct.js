@@ -60,6 +60,10 @@ const SellerProduct = ({ product }) => {
                     {specs.map((spec, index) => (
                         <SellerProductSpec key={index} spec={spec}/>
                     ))}
+
+                    <div className='product-sold-amount-span-box'>
+                        <span>已售出: {product.soldAmount}</span>
+                    </div>
                 </div>
             </div>
             

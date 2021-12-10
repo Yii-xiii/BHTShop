@@ -4,12 +4,14 @@ import {useState, useEffect} from 'react'
 import api from './Api'
 import SellerProduct from './SellerProduct'
 import Cookies from 'js-cookie'
+import { Pagination } from '@mui/material'
 
 const SellerProducts = () => {
     const sellerId = Cookies.get('user_id')
 
     // Initializing
     const [sellerProducts, setSellerProducts] = useState([])
+    const [page, setPage] = useState(1)
 
     // Fetch data from database
     const fetchSellerProducts = async() => {
@@ -17,6 +19,10 @@ const SellerProducts = () => {
         // const data = await response.json()
 
         return data.data
+    }
+
+    const handlePageChange = (event, value) => {
+        setPage(value)
     }
 
     // Importing data
@@ -37,12 +43,8 @@ const SellerProducts = () => {
                 </div>
     
                 <div className='seller-products-show-box'>
-                    <div className='seller-product-header'>
-                        <h2 className='seller-product-photo-title'>图片</h2>
-                        <h2 className='seller-product-spec-title'>规格</h2>
-                        <h2 className='seller-product-price-title'>价格</h2>
-                        <h2 className='seller-product-stock-title'>库存</h2>
-                        <h2 className='seller-product-sold-title'>销量</h2>
+                    <div className='seller-products-page-box'>
+                        <Pagination count={sellerProducts.length % 10 === 0 ? Math.floor(sellerProducts.length / 10) : Math.ceil(sellerProducts.length / 10)} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
                     </div>
     
                     <div className='seller-products'>

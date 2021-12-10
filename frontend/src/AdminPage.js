@@ -1,4 +1,6 @@
 import React from 'react'
+import AdminGraph from './Components/AdminGraph'
+import AdminLinks from './Components/AdminLinks'
 import Footer from './Components/Footer'
 import Header from './Components/Header'
 
@@ -6,7 +8,8 @@ const AdminPage = () => {
     return (
         <div>
             <Header />
-                TODO ADMIN举报管理系统
+            <AdminGraph />
+            <AdminLinks />
             <Footer />
         </div>
     )
