@@ -14,6 +14,11 @@ urlpatterns = [
 	path('sellers/<int:pk>/',views.seller),
 	path('sellers/<int:pk>/edit/', views.edit_seller),
 
+	path('postmen/',views.postman_list),
+	path('postmen/create/',views.create_postman),
+	path('postmen/<int:pk>/',views.postman),
+	path('postmen/<int:pk>/edit/', views.edit_postman),
+
 	path('login/',views.user_login),
 	path('logout/',views.user_logout),
 ]

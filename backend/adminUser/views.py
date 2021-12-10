@@ -597,7 +597,7 @@ def get_report_in_days_by_page(request, dayNum, pageNum):
 	except AdminUser.DoesNotExist:
 		return returnJson([],0,0, 403)
 
-	end = timezone.now().date()
+	end = timezone.now().date() + timedelta(days=1)
 	start = end - timedelta(days=dayNum-1)
 	reports = Report.objects.filter(time__range=[start,end])
 	count = reports.count()
@@ -613,7 +613,7 @@ def get_reported_user_in_days_by_page(request, dayNum, pageNum):
 	except AdminUser.DoesNotExist:
 		return returnJson([],0,0, 403)
 
-	end = timezone.now().date()
+	end = timezone.now().date() + timedelta(days=1)
 	start = end - timedelta(days=dayNum-1)
 	reports = UserReport.objects.filter(time__range=[start,end])
 	count = reports.count()
@@ -629,7 +629,7 @@ def get_reported_product_in_days_by_page(request, dayNum, pageNum):
 	except AdminUser.DoesNotExist:
 		return returnJson([],0,0, 403)
 
-	end = timezone.now().date()
+	end = timezone.now().date() + timedelta(days=1)
 	start = end - timedelta(days=dayNum-1)
 	reports = ProductReport.objects.filter(time__range=[start,end])
 	count = reports.count()
@@ -645,7 +645,7 @@ def get_reported_comment_in_days_by_page(request, dayNum, pageNum):
 	except AdminUser.DoesNotExist:
 		return returnJson([],0,0, 403)
 
-	end = timezone.now().date()
+	end = timezone.now().date() + timedelta(days=1)
 	start = end - timedelta(days=dayNum-1)
 	reports = ProductCommentReport.objects.filter(time__range=[start,end])
 	count = reports.count()

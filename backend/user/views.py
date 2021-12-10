@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Customer, Seller, User
+from .models import Customer, Seller, User, Postman
 from adminUser.models import AdminUser
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
@@ -135,12 +135,78 @@ def edit_seller(request, pk):
 
 	elif request.method == 'DELETE':
 		if request.user.id != seller.id:
-			# try:
-			# 	admin = AdminUser.objects.get(id=request.user.id)
-			# except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			try:
+				admin = AdminUser.objects.get(id=request.user.id)
+			except AdminUser.DoesNotExist:
+				return returnJson([], 403)
 
 		seller.delete()
+		return returnJson()
+
+
+def postman_list(request):
+	if request.method == 'GET':
+		postmans = Postman.objects.all()
+		return returnJson([dict(postman.body()) for postman in postmans])
+
+
+def create_postman(request):
+	if request.method == 'POST':
+		data = json.loads(request.body)
+
+		try:
+			user = User.objects.get(username=data["username"])
+		except User.DoesNotExist:
+			postman = Postman.objects.create()
+			postman.username = data["username"]
+			postman.set_password(data["password"])
+			postman.address = data["address"]
+			postman.phoneNumber = data["phoneNumber"]
+
+			postman.save()
+			return returnJson([dict(postman.body())])
+
+		return returnJson([],400)
+
+
+def postman(request, pk):
+	try:
+		postman = Postman.objects.get(id=pk)
+	except Postman.DoesNotExist:
+		return returnJson([], 404)
+	return returnJson([dict(postman.body())])
+
+
+@login_required
+def edit_postman(request, pk):
+	try:
+		postman = Postman.objects.get(id=pk)
+	except Postman.DoesNotExist:
+		return returnJson([], 404)
+	
+
+	if request.method == 'PUT':
+		if request.user.id != postman.id:
+			return returnJson([], 403)
+
+		data = json.loads(request.body)
+
+		postman.username = data["username"]
+		postman.set_password(data["password"])
+		postman.address = data["address"]
+		postman.phoneNumber = data["phoneNumber"]
+
+		postman.save()
+		return returnJson([dict(postman.body())])
+
+	elif request.method == 'DELETE':
+		if request.user.id != postman.id:
+			try:
+				admin = AdminUser.objects.get(id=request.user.id)
+			except AdminUser.DoesNotExist:
+				return returnJson([], 403)
+
+		postman.delete()
 		return returnJson()
 
 
@@ -162,11 +228,15 @@ def user_login(request):
 				return returnJson([dict(customer.body())], 0, {'user' : 'Customer', 'username' : username, 'user_id' : user.id})
 			except Customer.DoesNotExist:
 				try:
-					admin = AdminUser.objects.get(username=username)
-					return returnJson([dict(admin.body())], 0, {'user' : 'Admin', 'username' : username, 'user_id' : user.id})
-				except AdminUser.DoesNotExist:
-					logout(request)
-					return returnJson([],403)
+					postman = Postman.objects.get(username=username)
+					return returnJson([dict(postman.body())], 0, {'user' : 'Postman', 'username' : username, 'user_id' : user.id})
+				except Postman.DoesNotExist:
+					try:
+						admin = AdminUser.objects.get(username=username)
+						return returnJson([dict(admin.body())], 0, {'user' : 'Admin', 'username' : username, 'user_id' : user.id})
+					except AdminUser.DoesNotExist:
+						logout(request)
+						return returnJson([],403)
 	else:
 		return returnJson([], 403)
 
@@ -191,10 +261,14 @@ def current_user(request):
 			customer = Customer.objects.get(username = username)
 			return returnJson([dict(customer.body())])
 		except Customer.DoesNotExist:
-			try : 
-				admin = AdminUser.objects.get(username = username)
-				return returnJson([dict(admin.body())])
-			except AdminUser.DoesNotExist:
-				return returnJson([{'username' : username}])
+			try:
+				postman = Postman.objects.get(username=username)
+				return returnJson([dict(postman.body())])
+			except Postman.DoesNotExist:
+				try : 
+					admin = AdminUser.objects.get(username = username)
+					return returnJson([dict(admin.body())])
+				except AdminUser.DoesNotExist:
+					return returnJson([{'username' : username}])
 
 

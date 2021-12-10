@@ -36,3 +36,18 @@ class Seller(User):
                 'address': self.address,
                 'phoneNumber': self.phoneNumber,
                 'joinDate': self.joinDate}
+
+
+class Postman(User):
+    address = models.TextField(null=False)
+    phoneNumber = models.TextField(null=False)
+    
+    def __str__(self):
+        return self.username
+
+    def body(self):
+        return {'id': self.id,
+                'user' : 'Postman',
+                'username': self.username,
+                'address': self.address,
+                'phoneNumber': self.phoneNumber}

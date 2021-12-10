@@ -1226,6 +1226,76 @@ class Api {
 		return data;
 	}
 
+	//postman
+	getPostmanlist = async() => {
+		let data = await this.get(`/users/postmen/`);
+		return data;
+	}
+
+	getPostman = async(id) => {
+		//404 : postman not found
+		let data = await this.get(`/users/postmen/${id}/`);
+		return data;
+	}
+
+	createPostman = async(username, password, phoneNumber, address) => {
+		//400 : username alrdy exists
+		let data = await this.post(`/users/postmen/create/`,{username, password, phoneNumber, address});
+		return data;
+	}
+
+	editPostman = async(id,username, password, phoneNumber, address) => {
+		//login required
+		//404 : postman not found
+		//403 : user not postman himself
+		let data = await this.put(`/users/postmen/${id}/edit/`,{username, password, phoneNumber, address});
+		return data;
+	}
+
+	deletePostman = async(id) => {
+		//login required
+		//404 : postman not found
+		//403 : user is neither postman himself nor an admin
+		let data = await this.delete(`/users/postmen/${id}/edit/`);
+		return data;
+	}
+
+	getShippedOrderList = async(pageNum) => {
+		let data = await this.get(`/orders/shipped/pages/${pageNum}/`);
+		return data;
+	}
+
+	getPostmanOrderList = async(pageNum) => {
+		let data = await this.get(`/orders/postmen/pages/${pageNum}/`);
+		return data;
+	}
+
+	getPostmanDeliveredOrderList = async(pageNum) => {
+		let data = await this.get(`/orders/postmen/delivered/pages/${pageNum}/`);
+		return data;
+	}
+
+	getPostmanDeliveredOrderListInDays = async(pageNum, dayNum) => {
+		let data = await this.get(`/orders/postmen/delivered/in_days/${dayNum}/pages/${pageNum}/`);
+		return data;
+	}
+
+	getPostmanDeliveredOrderListByDay = async(pageNum, year, month, day) => {
+		let data = await this.put(`/orders/postmen/delivered/by_day/pages/${pageNum}/`,{year, month, day});
+		return data;
+	}
+
+
+	getPostmanDeliveredOrderListByMonth = async(pageNum, year, month) => {
+		let data = await this.put(`/orders/postmen/delivered/by_month/pages/${pageNum}/`,{year, month});
+		return data;
+	}
+
+	getPostmanDeliveredOrderListByYear = async(pageNum, year) => {
+		let data = await this.put(`/orders/postmen/delivered/by_year/pages/${pageNum}/`,{year});
+		return data;
+	}
+
 	//login logout
 	login = async (username, password) => {
 		//403 : wrong username or password

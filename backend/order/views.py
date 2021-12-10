@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Order, OrderStatus, ReturnRequest
 from product.models import ProductSpec, Product
-from user.models import Customer, Seller
+from user.models import Customer, Seller, Postman
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from datetime import timedelta
@@ -11,10 +11,10 @@ import json
 # Create your views here.
 
 
-def returnJson(data=None, pageCount=0, errorCode=0):
+def returnJson(data=None, pageCount=0, orderCount=0, errorCode=0):
 	if data is None:
 		data = []
-	return JsonResponse({'errorCode': errorCode, 'data': data, 'pageCount': int(pageCount)})
+	return JsonResponse({'errorCode': errorCode, 'data': data, 'pageCount': int(pageCount), 'orderCount': int(orderCount)})
 
 
 def get_order_list(request):
@@ -33,7 +33,7 @@ def get_latest_customer_order_list_by_page(request, customerId, pageNum):
 	try:
 		customer = Customer.objects.get(id=customerId)
 	except Customer.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	orders = Order.objects.filter(customer=customer)
 	pages = (orders.count()+9)/10
@@ -45,7 +45,7 @@ def get_latest_product_order_list_by_page(request, productId, pageNum):
 	try:
 		product = Product.objects.get(id=productId)
 	except Product.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	specs = ProductSpec.objects.filter(product=product)
 
@@ -58,7 +58,7 @@ def get_latest_product_spec_order_list_by_page(request, specId, pageNum):
 	try:
 		spec = ProductSpec.objects.get(id=specId)
 	except ProductSpec.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	orders = Order.objects.filter(productSpec=spec)
 	pages = (orders.count()+9)/10
@@ -71,12 +71,12 @@ def get_seller_order_list_by_order_status_and_page(request, pageNum):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	data = json.loads(request.body)
 
 	if data["status"] not in dict(OrderStatus.STATUSES):
-		return returnJson([],0, 400)
+		return returnJson([],0,0, 400)
 
 	products = Product.objects.filter(seller=seller)
 	specs = ProductSpec.objects.filter(product__in=products)
@@ -97,12 +97,12 @@ def get_customer_order_list_by_order_status_and_page(request, pageNum):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	data = json.loads(request.body)
 
 	if data["status"] not in dict(OrderStatus.STATUSES):
-		return returnJson([],0, 400)
+		return returnJson([],0,0, 400)
 
 	orders = Order.objects.filter(customer=customer)
 	results = []
@@ -120,17 +120,17 @@ def create_order(request):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	data = json.loads(request.body)
 
 	try:
 		spec = ProductSpec.objects.get(id=data["specId"])
 	except ProductSpec.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	if (spec.stock < int(data["quantity"])):
-		return returnJson([],0,400)
+		return returnJson([],0,0,400)
 
 	quantity = int(data["quantity"])
 	totalPrice = data["totalPrice"]
@@ -152,10 +152,10 @@ def get_order(request,orderId):
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	if request.user.id != order.customer.id and request.user.id != order.productSpec.product.seller.id:
-		return returnJson([],0,403)
+		return returnJson([],0,0,403)
 
 	return returnJson([dict(order.body())])
 
@@ -164,10 +164,10 @@ def edit_order(request,orderId):
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	if request.user.id != order.customer.id:
-		return returnJson([],0,403)
+		return returnJson([],0,0,403)
 	
 	if request.method == 'PUT':
 		data = json.loads(request.body)
@@ -187,7 +187,7 @@ def get_order_status_list(request, orderId):
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	statuses = OrderStatus.objects.filter(order=order)
 	return returnJson([dict(status.body()) for status in statuses])
@@ -197,7 +197,7 @@ def get_latest_order_status_list(request, orderId):
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	statuses = OrderStatus.objects.filter(order=order).order_by('-id')
 	return returnJson([dict(status.body()) for status in statuses])
@@ -207,7 +207,7 @@ def get_latest_order_status(request, orderId):
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	status = OrderStatus.objects.filter(order=order).order_by('-id').first()
 	return returnJson([dict(status.body())])
@@ -216,39 +216,43 @@ def get_latest_order_status(request, orderId):
 @login_required
 def create_order_status(request,orderId):
 	try:
-		seller = Seller.objects.get(id=request.user.id)
-	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
-
-	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
-		return returnJson([],0,404)
-
-	if seller.id != order.productSpec.product.seller.id:
-		return returnJson([],0, 403)
+		return returnJson([],0,0,404)
 
 	data = json.loads(request.body)
-
 	if data["status"] not in dict(OrderStatus.STATUSES):
-		return returnJson([],0, 400)
+		return returnJson([],0,0, 400)
+
+	try:
+		seller = Seller.objects.get(id=request.user.id)
+		if seller.id != order.productSpec.product.seller.id:
+			return returnJson([],0,0, 403)
+	except Seller.DoesNotExist:
+		try:
+			postman = Postman.objects.get(id=request.user.id)
+			order.postman = postman
+			order.save()
+		except Postman.DoesNotExist:
+			return returnJson([],0,0, 403)
 
 	status = OrderStatus.objects.create(order=order)
 	status.status = data["status"]
 	status.description = data["description"]
 	status.save()
-
 	return returnJson([dict(status.body())])
+
+	
 
 @login_required
 def get_order_status(request,orderId,statusId):
 	try:
 		status = OrderStatus.objects.get(id=statusId)
 	except OrderStatus.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	# if request.user is not status.order.customer and request.user is not status.order.product.seller:
-	# 	return returnJson([],0,403)
+	# 	return returnJson([],0,0,403)
 
 	return returnJson([dict(status.body())])
 
@@ -257,15 +261,15 @@ def edit_order_status(request,orderId,statusId):
 	try:
 		status = OrderStatus.objects.get(id=statusId)
 	except OrderStatus.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	if request.user.id != status.order.productSpec.product.seller.id:
-		return returnJson([],0,403)
+		return returnJson([],0,0,403)
 	
 	if request.method == 'PUT':
 		data = json.loads(request.body)
 		if data["status"] not in dict(OrderStatus.STATUSES):
-			return returnJson([],0, 400)
+			return returnJson([],0,0, 400)
 		status.status = data["status"]
 		status.description = data["description"]
 		status.save()
@@ -286,7 +290,7 @@ def get_customer_latest_return_request_list(request, customerId):
 	try:
 		customer = Customer.objects.get(id=customerId)
 	except Customer.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	orders = Order.objects.filter(customer=customer)
 
@@ -298,7 +302,7 @@ def get_product_latest_return_request(request, productId):
 	try:
 		product = Product.objects.get(id=productId)
 	except Product.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	specs = ProductSpec.objects.filter(product=product)
 
@@ -312,7 +316,7 @@ def get_product_spec_latest_return_request(request, specId):
 	try:
 		spec = ProductSpec.objects.get(id=specId)
 	except ProductSpec.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	orders = Order.objects.filter(productSpec=spec)
 
@@ -325,20 +329,20 @@ def create_return_request(request,orderId):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	if request.user.id != order.customer.id:
-		return returnJson([],0,403)
+		return returnJson([],0,0,403)
 
 	data = json.loads(request.body)
 
 	if data["reason"] not in dict(ReturnRequest.REASONS):
-		return returnJson([],0, 400)
+		return returnJson([],0,0, 400)
 
 	reason = data["reason"]
 	description = data["description"]
@@ -352,12 +356,12 @@ def get_return_request(request, orderId):
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	try:
 		req = ReturnRequest.objects.get(order=order)
 	except ReturnRequest.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	return returnJson([dict(req.body())])
 
@@ -367,22 +371,22 @@ def edit_return_request(request, orderId):
 	try:
 		order = Order.objects.get(id=orderId)
 	except Order.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	try:
 		req = ReturnRequest.objects.get(order=order)
 	except ReturnRequest.DoesNotExist:
-		return returnJson([],0,404)
+		return returnJson([],0,0,404)
 
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 		if request.user.id != order.customer.id:
-			return returnJson([],0,403)
+			return returnJson([],0,0,403)
 
 		if request.method == 'PUT':
 			data = json.loads(request.body)
 			if data["reason"] not in dict(ReturnRequest.REASONS):
-				return returnJson([],0, 400)
+				return returnJson([],0,0, 400)
 			req.reason = data["reason"]
 			req.description = data["description"]
 			req.save()
@@ -396,29 +400,29 @@ def edit_return_request(request, orderId):
 		try:
 			seller = Seller.objects.get(id=request.user.id)
 			if request.user.id != order.productSpec.product.seller.id:
-				return returnJson([],0,403)
+				return returnJson([],0,0,403)
 
 			if request.method == 'PUT':
 				data = json.loads(request.body)
 				if data["status"] not in dict(ReturnRequest.STATUSES):
-					return returnJson([],0, 400)
+					return returnJson([],0,0, 400)
 				req.status = data["status"]
 				req.save()
 				return returnJson([dict(req.body())])
 		except Seller.DoesNotExist:
-			return returnJson([],0,403)
+			return returnJson([],0,0,403)
 
 @login_required
 def get_seller_sales_in_days(request,dayNum):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	products = Product.objects.filter(seller=seller)
 	specs = ProductSpec.objects.filter(product__in=products)
 
-	end = timezone.now().date()
+	end = timezone.now().date() + timedelta(days=1)
 	start = end - timedelta(days=dayNum-1)
 	orders = Order.objects.filter(productSpec__in=specs, time__range=[start,end])
 	sales = Decimal(0)
@@ -432,12 +436,12 @@ def get_seller_orders_in_days(request,dayNum):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	products = Product.objects.filter(seller=seller)
 	specs = ProductSpec.objects.filter(product__in=products)
 
-	end = timezone.now().date()
+	end = timezone.now().date() + timedelta(days=1)
 	start = end - timedelta(days=dayNum-1)
 	orders = Order.objects.filter(productSpec__in=specs, time__range=[start,end])
 	return returnJson([dict(order.body()) for order in orders])
@@ -448,7 +452,7 @@ def get_seller_sales_by_day(request):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -470,7 +474,7 @@ def get_seller_orders_by_day(request):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -489,7 +493,7 @@ def get_seller_sales_by_month(request):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -510,7 +514,7 @@ def get_seller_orders_by_month(request):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -528,7 +532,7 @@ def get_seller_sales_by_year(request):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -548,7 +552,7 @@ def get_seller_orders_by_year(request):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],0, 403)
+		return returnJson([],0,0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -558,3 +562,139 @@ def get_seller_orders_by_year(request):
 
 	orders = Order.objects.filter(time__year=year)
 	return returnJson([dict(order.body()) for order in orders])
+
+
+@login_required
+def postman_order_list_by_page(request, pageNum):
+	try:
+		postman = Postman.objects.get(id=request.user.id)
+	except Postman.DoesNotExist:
+		return returnJson([],0,0, 403)
+
+	orders = Order.objects.filter(postman=postman)
+	count = len(orders)
+	pages = (count+9)/10
+	orders = orders[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(order.body()) for order in orders],pages,count)
+
+
+@login_required
+def postman_delivered_order_list_by_page(request, pageNum):
+	try:
+		postman = Postman.objects.get(id=request.user.id)
+	except Postman.DoesNotExist:
+		return returnJson([],0,0, 403)
+
+	orders = Order.objects.filter(postman=postman)
+	delivered = []
+	for order in orders:
+		status = OrderStatus.objects.filter(order=order, status=OrderStatus.DEL)
+		if len(status) != 0:
+			delivered += [order]
+	count = len(delivered)
+	pages = (count+9)/10
+	delivered = delivered[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(order.body()) for order in delivered],pages,count)
+
+
+def order_shipped_list_by_page(request, pageNum):
+	orders = Order.objects.all()
+	shipped = []
+	for order in orders:
+		status = OrderStatus.objects.filter(order=order).order_by('-id').first()
+		if status.status == OrderStatus.SHP:
+			shipped += [order]
+	count = len(shipped)
+	pages = (count+9)/10
+	shipped = shipped[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(order.body()) for order in shipped],pages,count)
+
+
+@login_required
+def postman_delivered_order_list_in_days_by_page(request, pageNum, dayNum):
+	try:
+		postman = Postman.objects.get(id=request.user.id)
+	except Postman.DoesNotExist:
+		return returnJson([],0,0, 403)
+
+	end = timezone.now().date() + timedelta(days=1)
+	start = end - timedelta(days=dayNum-1)
+	orders = Order.objects.filter(postman=postman)
+	delivered = []
+	for order in orders:
+		status = OrderStatus.objects.filter(order=order, status=OrderStatus.DEL, time__range=[start,end])
+		if len(status) != 0:
+			delivered += [order]
+	count = len(delivered)
+	pages = (count+9)/10
+	delivered = delivered[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(order.body()) for order in delivered],pages,count)
+
+
+@login_required
+def postman_delivered_order_list_by_day_and_page(request, pageNum):
+	try:
+		postman = Postman.objects.get(id=request.user.id)
+	except Postman.DoesNotExist:
+		return returnJson([],0,0, 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+	day = data["day"]
+
+	orders = Order.objects.filter(postman=postman)
+	delivered = []
+	for order in orders:
+		status = OrderStatus.objects.filter(order=order, status=OrderStatus.DEL, time__year=year, time__month=month, time__day=day)
+		if len(status) != 0:
+			delivered += [order]
+	count = len(delivered)
+	pages = (count+9)/10
+	delivered = delivered[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(order.body()) for order in delivered],pages,count)
+
+
+@login_required
+def postman_delivered_order_list_by_month_and_page(request, pageNum):
+	try:
+		postman = Postman.objects.get(id=request.user.id)
+	except Postman.DoesNotExist:
+		return returnJson([],0,0, 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+	month = data["month"]
+
+	orders = Order.objects.filter(postman=postman)
+	delivered = []
+	for order in orders:
+		status = OrderStatus.objects.filter(order=order, status=OrderStatus.DEL, time__year=year, time__month=month)
+		if len(status) != 0:
+			delivered += [order]
+	count = len(delivered)
+	pages = (count+9)/10
+	delivered = delivered[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(order.body()) for order in delivered],pages,count)
+
+
+@login_required
+def postman_delivered_order_list_by_year_and_page(request, pageNum):
+	try:
+		postman = Postman.objects.get(id=request.user.id)
+	except Postman.DoesNotExist:
+		return returnJson([],0,0, 403)
+
+	data = json.loads(request.body)
+	year = data["year"]
+
+	orders = Order.objects.filter(postman=postman)
+	delivered = []
+	for order in orders:
+		status = OrderStatus.objects.filter(order=order, status=OrderStatus.DEL, time__year=year)
+		if len(status) != 0:
+			delivered += [order]
+	count = len(delivered)
+	pages = (count+9)/10
+	delivered = delivered[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(order.body()) for order in delivered],pages,count)

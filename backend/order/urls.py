@@ -41,4 +41,13 @@ urlpatterns = [
 	path('sellers/sales/by_month/',views.get_seller_sales_by_month),
 	path('sellers/by_year/',views.get_seller_orders_by_year),
 	path('sellers/sales/by_year/',views.get_seller_sales_by_year),
+
+
+	path('shipped/pages/<int:pageNum>/', views.order_shipped_list_by_page),
+	path('postmen/pages/<int:pageNum>/', views.postman_order_list_by_page),
+	path('postmen/delivered/pages/<int:pageNum>/', views.postman_delivered_order_list_by_page),
+	path('postmen/delivered/in_days/<int:dayNum>/pages/<int:pageNum>/', views.postman_delivered_order_list_in_days_by_page),
+	path('postmen/delivered/by_day/pages/<int:pageNum>/', views.postman_delivered_order_list_by_day_and_page),
+	path('postmen/delivered/by_month/pages/<int:pageNum>/', views.postman_delivered_order_list_by_month_and_page),
+	path('postmen/delivered/by_year/pages/<int:pageNum>/', views.postman_delivered_order_list_by_year_and_page),
 ]

@@ -1,6 +1,6 @@
 from django.db import models
 from product.models import ProductSpec
-from user.models import Customer
+from user.models import Customer, Postman
 from django.utils import timezone
 # Create your models here.
 
@@ -12,6 +12,7 @@ class Order(models.Model):
 	address = models.TextField(null=False,blank=True)
 	phoneNumber = models.TextField(null=False,blank=True)
 	time = models.DateTimeField(default=timezone.now)
+	postman = models.ForeignKey(Postman, on_delete=models.SET_NULL, null=True)
 
 	def __str__(self):
 		return self.customer.username + " bought " + self.productSpec.product.title
@@ -25,6 +26,7 @@ class Order(models.Model):
 				'address': self.address,
 				'phoneNumber': self.phoneNumber,
 				'time': self.time}
+
 
 class OrderStatus(models.Model):
 	PAID = "paid"
@@ -56,6 +58,7 @@ class OrderStatus(models.Model):
 				'status': self.status,
 				'description': self.description,
 				'time': self.time}
+
 
 class ReturnRequest(models.Model):
 	R1 = "incorrect product"
