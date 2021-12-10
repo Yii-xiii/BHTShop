@@ -1,0 +1,54 @@
+.admin-workspace-out-box {
+    margin: 30px;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    min-width: 790px;
+}
+
+.admin-workspace-filter-box {
+    height: auto;
+    border-radius: 20px;
+    background-color: #fff;
+    width: 160px;
+    min-width: 160px;
+}
+
+.admin-workspace-filter-box h3 {
+    margin-left: 30px;
+    font-size: 22px;
+    margin-top: 20px;
+}
+
+.admin-workspace-type-filter-box {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.admin-workspace-type-filter-box h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.admin-workspace-status-filter-box {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.admin-workspace-status-filter-box h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.admin-workspace-show-box {
+    margin-left: 30px;
+    border-radius: 20px;
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+}
