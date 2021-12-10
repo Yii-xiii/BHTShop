@@ -106,9 +106,15 @@ const ProductSpecs = () => {
             </div>
 
             <div className='add-to-cart-box'>
-                <button className='add-cart-button' onClick={() => addCart(selectedSpec, quantity)}>
-                    <AddShoppingCartOutlinedIcon />
-                </button>
+                {
+                    stock === 0 ? 
+                    <button className='empty-cart-button'>
+                        <AddShoppingCartOutlinedIcon />
+                    </button> :
+                    <button className='add-cart-button' onClick={() => addCart(selectedSpec, quantity)}>
+                        <AddShoppingCartOutlinedIcon />
+                    </button>
+                }
 
                 <button className='fav-button' onClick={() => addCollection(productId)}>
                     <FavoriteBorderOutlinedIcon />
@@ -118,7 +124,10 @@ const ProductSpecs = () => {
                     <ReportOutlinedIcon />
                 </button>
                 
-                <span>库存: {stock}</span>
+                {
+                    stock === 0 ? <h4 className='no-stock-span'>库存: {stock}</h4> : <span className='normal-stock-span'>库存: {stock}</span>
+                }
+                
             </div>
         </div>
     )

@@ -1,0 +1,117 @@
+.postman-order-out-box {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.postman-order-in-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.postman-order-title-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3px;
+    width: 100%;
+}
+
+.postman-order-title-box h5 {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.postman-order-title-box span {
+    color: grey;
+    font-size: 12px;
+}
+
+.postman-order-title-text-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    align-items: center;
+}
+
+.postman-order-product-text-box {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-left: 3px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.postman-order-product-text-box h4 {
+    font-size: 17px;
+}
+
+.postman-order-product-text-box span {
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.postman-order-address-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.postman-order-address-box h4 {
+    font-size: 18px;
+    margin-left: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.postman-order-personal-info-box {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.postman-order-personal-info-box span {
+    margin-left: 15px;
+    margin-right: 40px;
+    font-size: 16px;
+}
+
+.postman-deliver-button-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.postman-deliver-action-button {
+    background-color: olivedrab;
+    color: white;
+    font-size: 15px;
+    border: 0px;
+    padding: 8px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.postman-deliver-action-button:active {
+    transform: scale(0.95);
+}
+
+.postman-order-link {
+    text-decoration: none;
+    color: black;
+}

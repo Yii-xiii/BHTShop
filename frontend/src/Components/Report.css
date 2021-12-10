@@ -63,6 +63,11 @@
     border: 0px;
     padding: 8px 10px;
     border-radius: 10px;
+    cursor: pointer;
+}
+
+.admin-report-action-button:active {
+    transform: scale(0.95);
 }
 
 .admin-report-reject-button {
@@ -72,4 +77,9 @@
     border: 0px;
     padding: 8px 10px;
     border-radius: 10px;
+    cursor: pointer;
+}
+
+.admin-report-reject-button:active {
+    transform: scale(0.95);
 }

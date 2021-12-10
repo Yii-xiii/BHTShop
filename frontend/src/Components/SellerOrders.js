@@ -14,7 +14,7 @@ const SellerOrders = () => {
 
     const fetchOrders = async() => {
         const data = await api.getSellerOrderListByStatusAndPage('paid', 1)
-        return data
+        return data.data
     }
 
     useEffect(() => {

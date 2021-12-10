@@ -6,6 +6,18 @@
     max-height: 200px;
 }
 
+.empty-cart-button {
+    background-color: #c4cad0;
+    color: black;
+    width: auto;
+    font-size: 15px;
+    height: 35px;
+    margin-right: 20px;
+    border-radius: 10px;
+    border: 0px;
+    padding: 5px 20px;
+}
+
 .spec-choose-box button {
     font-size: 15px;
     width: auto;
@@ -50,13 +62,18 @@
     cursor: pointer;
 }
 
-.add-to-cart-box button:active {
+.add-cart-button:active {
     transform: scale(0.95);
 }
 
-.add-to-cart-box span {
+.normal-stock-span {
     margin-left: 10px;
     color: grey;
+}
+
+.no-stock-span {
+    margin-left: 10px;
+    color: darkred;
 }
 
 .quantity-box {
