@@ -41,7 +41,7 @@ class Report(models.Model):
 		(REJ, "rejected"),
 	]
 
-	reportingUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ReportingUser")
+	reportingUser = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="ReportingUser", null=True)
 	reason = models.CharField(max_length=50, choices=REASONS)
 	description = models.TextField(blank=True)
 	status = models.CharField(max_length=50, choices=STATUSES, default=PEN)
@@ -65,6 +65,7 @@ class Report(models.Model):
 					except Customer.DoesNotExist:
 						user1 = Seller.objects.get(username=self.reportingUser.username)
 					return {'id': self.id,
+							'type' : "Unknown",
 							'reportingUser': user1.body(),
 							'reason': self.reason,
 							'status' : self.status,
@@ -74,43 +75,106 @@ class Report(models.Model):
 		return report.body()
 
 class UserReport(Report):
-	reportedUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ReportedUser")
+	reportedUser = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="ReportedUser", null=True)
 
 	def __str__(self):
 		return self.reportingUser.username + " report " + self.reportedUser.username
 
 	def body(self):
-		try:
-			user1 = Customer.objects.get(username=self.reportingUser.username)
-		except Customer.DoesNotExist:
-			user1 = Seller.objects.get(username=self.reportingUser.username)
+		if self.reportingUser is None and self.reportedUser is None:
+			return {'id': self.id,
+					'type' : "UserReport",
+					'reason': self.reason,
+					'status' : self.status,
+					'description': self.description,
+					'time' : self.time}
 
-		try:
-			user2 = Customer.objects.get(username=self.reportedUser.username)
-		except Customer.DoesNotExist:
-			user2 = Seller.objects.get(username=self.reportedUser.username)
+		if self.reportingUser is not None:
+			try:
+				user1 = Customer.objects.get(username=self.reportingUser.username)
+			except Customer.DoesNotExist:
+				user1 = Seller.objects.get(username=self.reportingUser.username)
 
-		return {'id': self.id,
-				'reportingUser': user1.body(),
-				'reportedUser' : user2.body(),
-				'reason': self.reason,
-				'status' : self.status,
-				'description': self.description,
-				'time' : self.time}
+			if self.reportedUser is None:
+				return {'id': self.id,
+						'type' : "UserReport",
+						'reportingUser' : user1.body(),
+						'reason': self.reason,
+						'status' : self.status,
+						'description': self.description,
+						'time' : self.time}
+
+			else:
+				try:
+					user2 = Customer.objects.get(username=self.reportedUser.username)
+				except Customer.DoesNotExist:
+					user2 = Seller.objects.get(username=self.reportedUser.username)
+
+				return {'id': self.id,
+						'type' : "UserReport",
+						'reportingUser': user1.body(),
+						'reportedUser' : user2.body(),
+						'reason': self.reason,
+						'status' : self.status,
+						'description': self.description,
+						'time' : self.time}
+
+
+		else:
+			try:
+				user2 = Customer.objects.get(username=self.reportedUser.username)
+			except Customer.DoesNotExist:
+				user2 = Seller.objects.get(username=self.reportedUser.username)
+
+			return {'id': self.id,
+					'type' : "UserReport",
+					'reportedUser' : user2.body(),
+					'reason': self.reason,
+					'status' : self.status,
+					'description': self.description,
+					'time' : self.time}
+		
 
 class ProductReport(Report):
-	product = models.ForeignKey(Product, on_delete=models.CASCADE)
+	product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
 
 	def __str__(self):
 		return self.reportingUser.username + " report " + self.product.title
 
 	def body(self):
+		if self.reportingUser is None and self.product is None:
+			return {'id': self.id,
+					'type' : "ProductReport",
+					'reason': self.reason,
+					'status' : self.status,
+					'description': self.description,
+					'time' : self.time}
+
+		if self.reportingUser is None:
+			return {'id': self.id,
+					'type' : "ProductReport",
+					'reportedProduct' : self.product.body(),
+					'reason': self.reason,
+					'status' : self.status,
+					'description': self.description,
+					'time' : self.time}
+
 		try:
 			user1 = Customer.objects.get(username=self.reportingUser.username)
 		except Customer.DoesNotExist:
 			user1 = Seller.objects.get(username=self.reportingUser.username)
 
+		if self.product is None:
+			return {'id': self.id,
+					'type' : "ProductReport",
+					'reportingUser': user1.body(),
+					'reason': self.reason,
+					'status' : self.status,
+					'description': self.description,
+					'time' : self.time}
+
 		return {'id': self.id,
+				'type' : "ProductReport",
 				'reportingUser': user1.body(),
 				'reportedProduct' : self.product.body(),
 				'reason': self.reason,
@@ -120,18 +184,45 @@ class ProductReport(Report):
 
 
 class ProductCommentReport(Report):
-	comment = models.ForeignKey(ProductComment, on_delete=models.CASCADE)
+	comment = models.ForeignKey(ProductComment, on_delete=models.SET_NULL, null=True)
 
 	def __str__(self):
 		return self.reportingUser.username + " report " + self.comment.order.customer.username + "'s comment"
 
 	def body(self):
+		if self.reportingUser is None and self.comment is None:
+			return {'id': self.id,
+					'type' : "CommentReport",
+					'reason': self.reason,
+					'status' : self.status,
+					'description': self.description,
+					'time' : self.time}
+
+		if self.reportingUser is None:
+			return {'id': self.id,
+					'type' : "CommentReport",
+					'reportedComment' : self.comment.body(),
+					'reason': self.reason,
+					'status' : self.status,
+					'description': self.description,
+					'time' : self.time}
+
 		try:
 			user1 = Customer.objects.get(username=self.reportingUser.username)
 		except Customer.DoesNotExist:
 			user1 = Seller.objects.get(username=self.reportingUser.username)
 
+		if self.comment is None:
+			return {'id': self.id,
+					'type' : "CommentReport",
+					'reportingUser': user1.body(),
+					'reason': self.reason,
+					'status' : self.status,
+					'description': self.description,
+					'time' : self.time}
+
 		return {'id': self.id,
+				'type' : "CommentReport",
 				'reportingUser': user1.body(),
 				'reportedComment' : self.comment.body(),
 				'reason': self.reason,
