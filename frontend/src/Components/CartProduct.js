@@ -78,10 +78,6 @@ const CartProduct = ({ cartProduct }) => {
                 </div>
 
                 <div className='cart-buttons-box'>
-                    <button className='edit-item-button'>
-                        <EditOutlinedIcon />
-                    </button>
-
                     <button className='delete-item-button' onClick={() => deleteItem(cartProduct.productSpec.id)}>
                         <DeleteOutlineOutlinedIcon />
                     </button>
