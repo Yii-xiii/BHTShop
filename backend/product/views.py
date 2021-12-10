@@ -183,8 +183,10 @@ def product_spec_list_by_page(request, pk, pageNum):
 	except Product.DoesNotExist:
 		return returnJson([],0, 404)
 
-	productSpecs = ProductSpec.objects.filter(product=product)[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(spec.body()) for spec in productSpecs])
+	productSpecs = ProductSpec.objects.filter(product=product)
+	pages = productSpecs.count()
+	productSpecs = productSpecs[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(spec.body()) for spec in productSpecs], pages)
 
 
 def latest_product_spec_list(request, pk):
@@ -203,8 +205,10 @@ def latest_product_spec_list_by_page(request, pk, pageNum):
 	except Product.DoesNotExist:
 		return returnJson([],0, 404)
 
-	productSpecs = ProductSpec.objects.filter(product=product).order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(spec.body()) for spec in productSpecs])
+	productSpecs = ProductSpec.objects.filter(product=product)
+	pages = productSpecs.count()
+	productSpecs = productSpecs.order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(spec.body()) for spec in productSpecs],pages)
 
 
 @login_required
@@ -355,8 +359,10 @@ def random_product_list_by_category(request):
 
 def latest_product_list_by_category(request, pageNum):
 	data =json.loads(request.body)
-	products = Product.objects.filter(category=data["category"]).order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.filter(category=data["category"])
+	pages = products.count()
+	products = products.order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
 def highest_rating_product_list_by_category(request, pageNum):
@@ -367,8 +373,10 @@ def highest_rating_product_list_by_category(request, pageNum):
 
 def lowest_rating_product_list_by_category(request, pageNum):
 	data =json.loads(request.body)
-	products = Product.objects.filter(category=data["category"]).order_by('rating')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.filter(category=data["category"])
+	pages = products.count()
+	products = products.order_by('rating')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
 def cheapest_product_list_by_category(request, pageNum):
@@ -380,11 +388,10 @@ def cheapest_product_list_by_category(request, pageNum):
 		if spec.product.category == data["category"] and spec.product not in products:
 			products += [spec.product]
 			size += 1
-			if size == pageNum*10:
-				break
 
+	pages = products.count()
 	products = products[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in products])
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
 def most_expensive_product_list_by_category(request, pageNum):
@@ -396,11 +403,10 @@ def most_expensive_product_list_by_category(request, pageNum):
 		if spec.product.category == data["category"] and spec.product not in products:
 			products += [spec.product]
 			size += 1
-			if size == pageNum*10:
-				break
 
+	pages = products.count()
 	products = products[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in products])
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
 def random_product_by_price_range_and_category(request):
@@ -428,18 +434,24 @@ def search_product_by_category(request, pageNum):
 	products += Product.objects.filter(title__contains=data["keyword"], category=data["category"])
 	products += Product.objects.filter(description__contains=data["keyword"], category=data["category"])
 	products = set([product.id for product in products])
-	results = Product.objects.filter(id__in=products).order_by('-soldAmount')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in results])
+	results = Product.objects.filter(id__in=products)
+	pages = results.count()
+	results = results.order_by('-soldAmount')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in results], pages)
 
 
 def highest_rating_product_list(request, pageNum):
-	products = Product.objects.all().order_by('-rating')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.all()
+	pages = products.count()
+	products = products.order_by('-rating')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
 def lowest_rating_product_list(request, pageNum):
-	products = Product.objects.all().order_by('rating')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.all()
+	pages = products.count()
+	products = products.order_by('rating')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
 def cheapest_product_list(request, pageNum):
@@ -450,11 +462,10 @@ def cheapest_product_list(request, pageNum):
 		if spec.product not in products:
 			products += [spec.product]
 			size += 1
-			if size == pageNum*10:
-				break
 
-	products = products[-10:]
-	return returnJson([dict(product.body()) for product in products])
+	pages = products.count()
+	products = products[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products], pages)
 
 
 def most_expensive_product_list(request, pageNum):
@@ -465,11 +476,10 @@ def most_expensive_product_list(request, pageNum):
 		if spec.product not in products:
 			products += [spec.product]
 			size += 1
-			if size == pageNum*10:
-				break
 
-	products = products[-10:]
-	return returnJson([dict(product.body()) for product in products])
+	pages = products.count()
+	products = products[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
 def random_product_by_price_range(request):
@@ -495,5 +505,7 @@ def search_product(request, pageNum):
 	products += Product.objects.filter(title__contains=data["keyword"])
 	products += Product.objects.filter(description__contains=data["keyword"])
 	products = set([product.id for product in products])
-	results = Product.objects.filter(id__in=products).order_by('-soldAmount')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in results])
+	results = Product.objects.filter(id__in=products)
+	pages = results.count()
+	results = results.order_by('-soldAmount')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in results], pages)
