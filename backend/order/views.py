@@ -87,7 +87,7 @@ def get_seller_order_list_by_order_status_and_page(request, pageNum):
 		if status is not None and status.status == data["status"]:
 			results += [status]
 
-	pages = results.count()
+	pages = (results.count()+9)/10
 	results = results.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(status.body()) for status in results],pages)
 
@@ -111,7 +111,7 @@ def get_customer_order_list_by_order_status_and_page(request, pageNum):
 		if status is not None and status.status == data["status"]:
 			results += [status]
 
-	pages = results.count()
+	pages = (orders.count()+9)/10
 	results = results.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(status.body()) for status in results], pages)
 
