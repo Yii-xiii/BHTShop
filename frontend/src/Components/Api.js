@@ -64,15 +64,15 @@ class Api {
 		return data;
 	}
 
-	getSellerLatestProductList = async (sellerId) => {
+	getSellerLatestProductListByPage = async (sellerId, pageNum) => {
 		//404 : seller not found
-		let data = await this.get(`/products/sellers/${sellerId}/latest/`);
+		let data = await this.get(`/products/sellers/${sellerId}/latest/pages/${pageNum}/`);
 		return data;
 	}
 
-	getSellerBestSellingProductList = async (sellerId) => {
+	getSellerBestSellingProductListByPage = async (sellerId, pageNum) => {
 		//404 : seller not found
-		let data = await this.get(`/products/sellers/${sellerId}/best_selling/`);
+		let data = await this.get(`/products/sellers/${sellerId}/best_selling/pages/${pageNum}/`);
 		return data;
 	}
 

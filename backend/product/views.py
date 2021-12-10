@@ -13,10 +13,10 @@ import os
 import random
 
 
-def returnJson(data=None, errorCode=0):
+def returnJson(data=None, pageCount=0, errorCode=0):
 	if data is None:
 		data = []
-	return JsonResponse({'errorCode': errorCode, 'data': data})
+	return JsonResponse({'errorCode': errorCode, 'data': data, 'pageCount' : int(pageCount)})
 
 
 # Create your views here.
@@ -32,8 +32,10 @@ def product_list(request):
 
 
 def product_list_by_page(request, pageNum):
-	products = Product.objects.all()[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.all()
+	pages = (products.count()+9)/10
+	products = products[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products], pages)
 
 
 def latest_product_list(request):
@@ -47,35 +49,41 @@ def best_selling_product_list(request):
 
 
 def latest_product_list_by_page(request, pageNum):
-	products = Product.objects.all().order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.all()
+	pages = (products.count()+9)/10
+	products = products.order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
-def seller_latest_product_list(request, pk):
+def seller_latest_product_list_by_page(request, pk, pageNum):
 	try:
 		seller = Seller.objects.get(id=pk)
 	except Seller.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	products = Product.objects.filter(seller = seller).order_by('-id')
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.filter(seller = seller)
+	pages = (products.count()+9)/10
+	products = products.order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
-def seller_best_selling_product_list(request,pk):
+def seller_best_selling_product_list_by_page(request,pk, pageNum):
 	try:
 		seller = Seller.objects.get(id=pk)
 	except Seller.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	products = Product.objects.filter(seller = seller).order_by('-soldAmount')
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.filter(seller = seller)
+	pages = (products.count()+9)/10
+	products = products.order_by('-soldAmount')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
 def seller_average_rating(request, pk):
 	try:
 		seller = Seller.objects.get(id=pk)
 	except Seller.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
 	products = Product.objects.filter(seller=seller)
 	rating = Decimal(0)
@@ -92,7 +100,7 @@ def create_product(request):
 			seller = Seller.objects.get(id=request.user.id)
 			data = json.loads(request.body)
 			if data["category"] not in dict(Product.CATEGORIES):
-				return returnJson([], 400)
+				return returnJson([],0, 400)
 
 			product = Product.objects.create(seller=seller)
 			# print(data)
@@ -110,14 +118,14 @@ def create_product(request):
 			# return returnJson([dict(product.body()) for product in products])
 
 		except Seller.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 
 def product(request, pk):
 	try:
 		product = Product.objects.get(id=pk)
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	specs = ProductSpec.objects.filter(product=product)
 	stock = 0
@@ -132,24 +140,24 @@ def edit_product(request, pk):
 	try:
 		product = Product.objects.get(id=pk)
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	if request.method == 'DELETE':
 		if request.user.id != product.seller.id:
 			try:
 				admin = AdminUser.objects.get(id=request.user.id)
 			except AdminUser.DoesNotExist:
-				return returnJson([],403)
+				return returnJson([],0,403)
 		product.delete()
 		products = Product.objects.all()
 		return returnJson([dict(product.body()) for product in products])
 	elif request.method == 'PUT':
 		if request.user.id != product.seller.id:
-			return returnJson([],403)
+			return returnJson([],0,403)
 
 		data = json.loads(request.body)
 		if data["category"] not in dict(Product.CATEGORIES):
-				return returnJson([], 400)
+				return returnJson([],0, 400)
 
 		product.title = data["title"]
 		product.description = data["description"]
@@ -163,7 +171,7 @@ def product_spec_list(request, pk):
 	try:
 		product = Product.objects.get(id=pk)
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	productSpecs = ProductSpec.objects.filter(product=product)
 	return returnJson([dict(spec.body()) for spec in productSpecs])
@@ -173,7 +181,7 @@ def product_spec_list_by_page(request, pk, pageNum):
 	try:
 		product = Product.objects.get(id=pk)
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	productSpecs = ProductSpec.objects.filter(product=product)[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(spec.body()) for spec in productSpecs])
@@ -183,7 +191,7 @@ def latest_product_spec_list(request, pk):
 	try:
 		product = Product.objects.get(id=pk)
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	productSpecs = ProductSpec.objects.filter(product=product).order_by('-id')
 	return returnJson([dict(spec.body()) for spec in productSpecs])
@@ -193,7 +201,7 @@ def latest_product_spec_list_by_page(request, pk, pageNum):
 	try:
 		product = Product.objects.get(id=pk)
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	productSpecs = ProductSpec.objects.filter(product=product).order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(spec.body()) for spec in productSpecs])
@@ -202,12 +210,12 @@ def latest_product_spec_list_by_page(request, pk, pageNum):
 @login_required
 def create_product_spec(request, pk):
 	if request.COOKIES["user"] != "Seller":
-		return returnJson([],403)
+		return returnJson([],0,403)
 
 	try:
 		product = Product.objects.get(id = pk)
 	except Product.DoesNotExist:
-		return JsonResponse([], 404)
+		return returnJson([],0, 404)
 
 	data = json.loads(request.body)
 	description = data["description"]
@@ -224,7 +232,7 @@ def product_spec(request, pk, pk_spec):
 	try:
 		spec = ProductSpec.objects.get(id=pk_spec)
 	except ProductSpec.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	return returnJson([dict(spec.body())])
 
@@ -234,11 +242,11 @@ def edit_product_spec(request, pk, pk_spec):
 	try:
 		spec = ProductSpec.objects.get(id=pk_spec)
 	except ProductSpec.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	if request.method == 'PUT':
 		if request.user.id != spec.product.seller.id:
-			return returnJson([],403)
+			return returnJson([],0,403)
 
 		data = json.loads(request.body)
 		spec.description = data["description"]
@@ -253,7 +261,7 @@ def edit_product_spec(request, pk, pk_spec):
 			try:
 				admin = AdminUser.objects.get(id=request.user.id)
 			except AdminUser.DoesNotExist:
-				return returnJson([],403)
+				return returnJson([],0,403)
 
 		spec.delete()
 		productSpecs = ProductSpec.objects.filter(product=pk)
@@ -265,7 +273,7 @@ def product_image_list(request, pk):
 	try:
 		product = Product.objects.get(id=pk)
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	productImages = ProductImage.objects.filter(product=product)
 	return returnJson([dict(image.body()) for image in productImages])
@@ -276,15 +284,15 @@ def create_product_image(request, pk):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
-		return returnJson([],403)
+		return returnJson([],0,403)
 
 	try:
 		product = Product.objects.get(id = pk)
 	except Product.DoesNotExist:
-		return JsonResponse([], 404)
+		return returnJson([],0, 404)
 
 	if seller.id != product.seller.id:
-		return returnJson([],403)
+		return returnJson([],0,403)
 
 	image = ProductImage.objects.create(product=product,image=request.FILES.get("images"))
 
@@ -295,7 +303,7 @@ def product_image(request, pk, pk_image):
 	try:
 		image = ProductImage.objects.get(id=pk_image)
 	except ProductImage.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	return returnJson([dict(image.body())])
 
@@ -303,7 +311,7 @@ def first_product_image(request, pk):
 	try:
 		product = Product.objects.get(id = pk)
 	except Product.DoesNotExist:
-		return JsonResponse([], 404)
+		return returnJson([],0, 404)
 
 	image = ProductImage.objects.filter(product=product).first()
 	if image is None :
@@ -317,10 +325,10 @@ def edit_product_image(request, pk, pk_image):
 	try:
 		image = ProductImage.objects.get(id=pk_image)
 	except ProductImage.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	if request.user.id != image.product.seller.id:
-		return returnJson([],403)
+		return returnJson([],0,403)
 
 	# if request.method == 'PUT':
 	# 	serializer = ProductImageSerializer(data=request.data, context={'request':request})

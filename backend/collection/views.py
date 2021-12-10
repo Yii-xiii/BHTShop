@@ -10,10 +10,11 @@ import json
 # Create your views here.
 
 
-def returnJson(data=None, errorCode=0):
+def returnJson(data=None, pageCount=0, errorCode=0):
 	if data is None:
 		data = []
-	return JsonResponse({'errorCode': errorCode, 'data': data})
+	return JsonResponse({'errorCode': errorCode, 'data': data, 'pageCount' : int(pageCount)})
+
 
 # collection
 @login_required
@@ -21,7 +22,7 @@ def customer_collection_list(request):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	collections = Collection.objects.filter(customer=customer)
 
@@ -33,7 +34,7 @@ def latest_customer_collection_list(request):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	collections = Collection.objects.filter(customer=customer).order_by('-id')
 
@@ -44,11 +45,13 @@ def latest_customer_collection_list_by_page(request, pageNum):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
-	collections = Collection.objects.filter(customer=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	collections = Collection.objects.filter(customer=customer)
+	pages = (collections.count()+9)/10
+	collections = collections.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 
-	return returnJson([dict(collection.body()) for collection in collections])
+	return returnJson([dict(collection.body()) for collection in collections],pages)
 
 
 @login_required
@@ -56,14 +59,14 @@ def create_customer_collection(request):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 
 	try:
 		product = Product.objects.get(id = data["productId"])
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	try:
 		collection = Collection.objects.get(customer=customer, product=product)
@@ -71,7 +74,7 @@ def create_customer_collection(request):
 		collection = Collection.objects.create(product=product, customer=customer)
 		return returnJson([dict(collection.body())])
 
-	return returnJson([], 400)
+	return returnJson([],0, 400)
 
 
 @login_required
@@ -79,17 +82,17 @@ def get_customer_collection(request, pk_product):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	try:
 		product = Product.objects.get(id = pk_product)
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	try:
 		collection = Collection.objects.get(customer=customer, product=product)
 	except Collection.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	
 	return returnJson([dict(collection.body())])
@@ -100,17 +103,17 @@ def edit_customer_collection(request, pk_product):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	try:
 		product = Product.objects.get(id = pk_product)
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	try:
 		collection = Collection.objects.get(customer=customer, product=product)
 	except Collection.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	if request.method == 'DELETE':
 		collection.delete()
@@ -118,11 +121,15 @@ def edit_customer_collection(request, pk_product):
 
 
 def most_popular_product_list_by_page(request,pageNum):
-	products = Product.objects.annotate(count = Count('collection')).order_by('-count')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.annotate(count = Count('collection'))
+	pages = (products.count()+9)/10
+	products = products.order_by('-count')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(product.body()) for product in products], pages)
 
 def most_popular_product_list_by_category_and_page(request,pageNum):
 	data = json.loads(request.body)
-	products = Product.objects.filter(category=data["category"]).annotate(count = Count('collection')).order_by('-count')[((pageNum-1)*10):(pageNum*10)]
+	products = Product.objects.filter(category=data["category"]).annotate(count = Count('collection'))
+	pages = (products.count()+9)/10
+	products = products.order_by('-count')[((pageNum-1)*10):(pageNum*10)]
 
-	return returnJson([dict(product.body()) for product in products])
+	return returnJson([dict(product.body()) for product in products], pages)
