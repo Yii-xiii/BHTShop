@@ -25,6 +25,7 @@ const FavSellers = () => {
     const fetchFavSellersByPage = async() => {
         const data = await api.getLatestCustomerFollowshipListByPage(page)
 
+        console.log(data);
         // get back list of favProducts
         return data.data
     }

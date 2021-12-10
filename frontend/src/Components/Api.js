@@ -427,7 +427,7 @@ class Api {
 		//403 : user is not cart.customer
 		//404 : cart not found
 		//400 : quantity > stock
-		let data = await this.delete(`/carts/productSpecs/${specId}/edit/`,{quantity});
+		let data = await this.put(`/carts/productSpecs/${specId}/edit/`,{quantity});
 		return data;
 	}
 

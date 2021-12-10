@@ -2,7 +2,8 @@ import {useState, useEffect} from 'react'
 import './CartProduct.css'
 import api from './Api'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const CartProduct = ({ cartProduct }) => {
     const [image, setImages] = useState([])
@@ -21,10 +22,25 @@ const CartProduct = ({ cartProduct }) => {
         }
 
         getImages()
-    }, [])
+    }, [cartProduct])
 
     const deleteItem = async(cartItemSpecId) => {
         await api.deleteCustomerCart(cartItemSpecId)
+        window.location.reload(false)
+    }
+
+    const handleAddItem = async() => {
+        await api.updateCustomerCart(cartProduct.productSpec.id, cartProduct.quantity + 1)
+        window.location.reload(false)
+    }
+
+    const handleDecreaseItem = async() => {
+        const data = await api.updateCustomerCart(cartProduct.productSpec.id, cartProduct.quantity - 1)
+
+        if (data.data[0].quantity === 0) {
+            await api.deleteCustomerCart(cartProduct.productSpec.id)
+        }
+
         window.location.reload(false)
     }
 
@@ -63,8 +79,12 @@ const CartProduct = ({ cartProduct }) => {
                 </div>
 
                 <div className='cart-buttons-box'>
-                    <button className='edit-item-button'>
-                        <EditOutlinedIcon />
+                    <button className='handle-add-item-button' onClick={() => handleAddItem()}>
+                        <AddIcon />
+                    </button>
+
+                    <button className='handle-decrease-item-button' onClick={() => handleDecreaseItem()}>
+                        <RemoveIcon />
                     </button>
 
                     <button className='delete-item-button' onClick={() => deleteItem(cartProduct.productSpec.id)}>

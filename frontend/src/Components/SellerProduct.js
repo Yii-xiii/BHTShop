@@ -2,7 +2,6 @@ import React from 'react'
 import {useState, useEffect} from 'react'
 import './SellerProduct.css'
 import api from './Api'
-import SellerProductSpec from './SellerProductSpec'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import { useNavigate } from 'react-router'
@@ -37,7 +36,7 @@ const SellerProduct = ({ product }) => {
 
         getImages()
         getSpecs()
-    }, [])
+    }, [product])
 
     const deleteProduct = async() => {
         await api.deleteProduct(product.id)
@@ -58,7 +57,14 @@ const SellerProduct = ({ product }) => {
                 
                 <div className='product-spec-box'>
                     {specs.map((spec, index) => (
-                        <SellerProductSpec key={index} spec={spec}/>
+                        <div className='spec-box'>
+                            <div className='spec-inner-left-box'>
+                                <span className='spec-product-desc'>{spec.description}</span>
+                                <span className='spec-product-stock'>库存: {spec.stock}</span>
+                            </div>
+                            
+                            <span className='spec-product-price'>¥ {spec.price}</span>
+                        </div>
                     ))}
 
                     <div className='product-sold-amount-span-box'>

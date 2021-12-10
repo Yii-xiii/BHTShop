@@ -10,6 +10,7 @@ const CartProducts = () => {
     const [cart, setCart] = useState([])
     const [pageCart, setPageCart] = useState([])
     const [customer, setCustomer] = useState([])
+    const [pageCount, setPageCount] = useState(0)
     const [page, setPage] = useState(1)
 
     const handlePageChange = (event, value) => {
@@ -25,7 +26,6 @@ const CartProducts = () => {
 
     const fetchCartByPage = async() => {
         const data = await api.getLatestCustomerCartListByPage(page)
-        console.log(data)
         return data
     }
 
@@ -48,7 +48,8 @@ const CartProducts = () => {
 
         const getCartByPage = async() => {
             const cartByPageFromServer = await fetchCartByPage()
-            setPageCart(cartByPageFromServer)
+            setPageCart(cartByPageFromServer.data)
+            setPageCount(cartByPageFromServer.pageCount)
         }
 
         getCart()
@@ -96,9 +97,8 @@ const CartProducts = () => {
             <div className='cart-outer-box'>
                 <div className='cart-list-show-box'>
                     <div className='cart-list-page-box'>
-                        <Pagination count={cart.length % 10 === 0 ? Math.floor(cart.length / 10) : Math.ceil(cart.length / 10)} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
+                        <Pagination count={pageCount} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
                     </div>
-                    
 
                     <div className='cart-list-box'>
                         {cart.map((cartProduct, index) => (
