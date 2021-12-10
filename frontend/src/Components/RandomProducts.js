@@ -39,7 +39,6 @@ const RandomProducts = () => {
         <div className='random-box'>
             <div className='random-box-title-page-box'>
                 <h1>商品库</h1>
-                {console.log(products.length % 10)}
                 <Pagination count={pageCount} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
             </div>
             

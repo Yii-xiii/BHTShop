@@ -24,7 +24,6 @@ const Cart = () => {
         const getCart = async() => {
             const specsFromServer = await fetchCart()
             setCart(specsFromServer)
-            console.log(specsFromServer)
         }
 
         getCart()

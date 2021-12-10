@@ -14,9 +14,8 @@ const SellerOrders = () => {
     const loggedInType = Cookies.get('user')
 
     const fetchOrders = async() => {
-        const data = await api.getSellerOrderListByStatus('paid')
-
-        return data.data
+        const data = await api.getSellerOrderListByStatusAndPage('paid', 1)
+        return data
     }
 
     useEffect(() => {

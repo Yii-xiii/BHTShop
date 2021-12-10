@@ -1,0 +1,75 @@
+.report-out-box {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.report-title-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3px;
+}
+
+.report-title-text-box {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    align-items: center;
+}
+
+.report-title-box h5 {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.report-title-box span {
+    color: grey;
+    font-size: 12px;
+}
+
+.report-in-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-report-desc-box {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    height: auto;
+}
+
+.admin-report-desc-box span {
+    font-size: 15px;
+}
+
+.report-admin-link {
+    color: black
+}
+
+.admin-report-button-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.admin-report-action-button {
+    background-color: darkred;
+    color: white;
+    border: 0px;
+    padding: 8px 10px;
+    border-radius: 10px;
+}
+
+.admin-report-reject-button {
+    margin-left: 10px;
+    background-color: darkslategrey;
+    color: white;
+    border: 0px;
+    padding: 8px 10px;
+    border-radius: 10px;
+}

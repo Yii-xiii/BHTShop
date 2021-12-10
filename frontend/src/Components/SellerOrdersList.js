@@ -8,8 +8,8 @@ const SellerOrdersList = ({ status }) => {
     const [orders, setOrders] = useState([])
 
     const fetchOrders = async() => {
-        const data = await api.getSellerOrderListByStatus(status)
-        console.log(data)
+        const data = await api.getSellerOrderListByStatusAndPage(status, 1)
+        
         return data.data
     }
 
