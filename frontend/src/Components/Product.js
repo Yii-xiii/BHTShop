@@ -38,7 +38,7 @@ const Product = ({ product, type, count }) => {
 
         getImages()
         getSpec()
-    }, [])
+    }, [product])
 
     const path = `/product/${product.id}`
 
