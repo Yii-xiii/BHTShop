@@ -1,6 +1,6 @@
 import React from 'react'
 import AdminGraph from './Components/AdminGraph'
-import AdminLinks from './Components/AdminLinks'
+import AdminWorkspace from './Components/AdminWorkspace'
 import Footer from './Components/Footer'
 import Header from './Components/Header'
 
@@ -9,7 +9,7 @@ const AdminPage = () => {
         <div>
             <Header />
             <AdminGraph />
-            <AdminLinks />
+            <AdminWorkspace />
             <Footer />
         </div>
     )
