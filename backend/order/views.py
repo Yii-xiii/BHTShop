@@ -67,7 +67,7 @@ def get_latest_product_spec_order_list_by_page(request, specId, pageNum):
 
 
 @login_required
-def get_seller_order_list_by_order_status(request):
+def get_seller_order_list_by_order_status_and_page(request, pageNum):
 	try:
 		seller = Seller.objects.get(id=request.user.id)
 	except Seller.DoesNotExist:
@@ -87,11 +87,13 @@ def get_seller_order_list_by_order_status(request):
 		if status is not None and status.status == data["status"]:
 			results += [status]
 
-	return returnJson([dict(status.body()) for status in results])
+	pages = results.count()
+	results = results.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(status.body()) for status in results],pages)
 
 
 @login_required
-def get_customer_order_list_by_order_status(request):
+def get_customer_order_list_by_order_status_and_page(request, pageNum):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
@@ -109,7 +111,9 @@ def get_customer_order_list_by_order_status(request):
 		if status is not None and status.status == data["status"]:
 			results += [status]
 
-	return returnJson([dict(status.body()) for status in results])
+	pages = results.count()
+	results = results.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(status.body()) for status in results], pages)
 
 @login_required
 def create_order(request):

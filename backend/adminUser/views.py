@@ -11,21 +11,23 @@ from django.utils import timezone
 import json
 
 # Create your views here.
-def returnJson(data=None, errorCode=0, cookies=''):
+def returnJson(data=None, pageCount=0, errorCode=0):
 	if data is None:
 		data = []
-	return JsonResponse({'errorCode': errorCode, 'data': data, 'cookies': cookies})
+	return JsonResponse({'errorCode': errorCode, 'data': data, 'pageCount': pageCount})
 
 
 @login_required
-def get_all_report_list(request):
+def get_all_report_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	reports = Report.objects.all()
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 # all reporting filter
@@ -34,12 +36,14 @@ def get_all_latest_customer_reporting_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	customers = Customer.objects.all()
 
-	reports = Report.objects.filter(reportingUser__in=customers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = Report.objects.filter(reportingUser__in=customers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -47,12 +51,14 @@ def get_all_latest_seller_reporting_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	sellers = Seller.objects.all()
 
-	reports = Report.objects.filter(reportingUser__in=sellers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = Report.objects.filter(reportingUser__in=sellers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports], pages)
 
 
 @login_required
@@ -60,12 +66,14 @@ def get_all_latest_customer_reporting_user_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	customers = Customer.objects.all()
 
-	reports = UserReport.objects.filter(reportingUser__in=customers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = UserReport.objects.filter(reportingUser__in=customers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports], pages)
 
 
 @login_required
@@ -73,12 +81,14 @@ def get_all_latest_seller_reporting_user_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	sellers = Seller.objects.all()
 
-	reports = UserReport.objects.filter(reportingUser__in=sellers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = UserReport.objects.filter(reportingUser__in=sellers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports], pages)
 
 
 @login_required
@@ -86,12 +96,14 @@ def get_all_latest_customer_reporting_product_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	customers = Customer.objects.all()
 
-	reports = ProductReport.objects.filter(reportingUser__in=customers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductReport.objects.filter(reportingUser__in=customers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports], pages)
 
 
 @login_required
@@ -99,12 +111,14 @@ def get_all_latest_seller_reporting_product_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	sellers = Seller.objects.all()
 
-	reports = ProductReport.objects.filter(reportingUser__in=sellers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductReport.objects.filter(reportingUser__in=sellers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -112,12 +126,14 @@ def get_all_latest_customer_reporting_comment_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	customers = Customer.objects.all()
 
-	reports = ProductCommentReport.objects.filter(reportingUser__in=customers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductCommentReport.objects.filter(reportingUser__in=customers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -125,12 +141,14 @@ def get_all_latest_seller_reporting_comment_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	sellers = Seller.objects.all()
 
-	reports = ProductCommentReport.objects.filter(reportingUser__in=sellers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductCommentReport.objects.filter(reportingUser__in=sellers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 # all reported filter
@@ -139,10 +157,12 @@ def get_all_latest_reported_user_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
-	reports = UserReport.objects.all().order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = UserReport.objects.all()
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports], pages)
 
 
 @login_required
@@ -150,12 +170,14 @@ def get_all_latest_reported_customer_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	customers = Customer.objects.all()
 
-	reports = UserReport.objects.filter(reportedUser__in=customers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = UserReport.objects.filter(reportedUser__in=customers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 
@@ -164,12 +186,14 @@ def get_all_latest_reported_seller_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	sellers = Seller.objects.all()
 
-	reports = UserReport.objects.filter(reportedUser__in=sellers).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = UserReport.objects.filter(reportedUser__in=sellers)
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -177,10 +201,12 @@ def get_all_latest_reported_product_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
-	reports = ProductReport.objects.all().order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductReport.objects.all()
+	pages = reports.count()
+	reports = reports.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -188,10 +214,12 @@ def get_all_latest_reported_comment_list_by_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
-	reports = ProductCommentReport.objects.all().order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductCommentReport.objects.all().order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 # reporting filter with user id
@@ -201,15 +229,17 @@ def get_latest_customer_reporting_list_by_page(request, pk_customer, pageNum):
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 	try:
 		customer = Customer.objects.get(id=pk_customer)
 	except Customer.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = Report.objects.filter(reportingUser=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = Report.objects.filter(reportingUser=customer).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -218,15 +248,17 @@ def get_latest_seller_reporting_list_by_page(request, pk_seller, pageNum):
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 	try:
 		seller = Seller.objects.get(id=pk_seller)
 	except Seller.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = Report.objects.filter(reportingUser=seller).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = Report.objects.filter(reportingUser=seller).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -235,15 +267,17 @@ def get_latest_customer_reporting_user_list_by_page(request, pk_customer, pageNu
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 	try:
 		customer = Customer.objects.get(id=pk_customer)
 	except Customer.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = UserReport.objects.filter(reportingUser=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = UserReport.objects.filter(reportingUser=customer).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -252,15 +286,17 @@ def get_latest_seller_reporting_user_list_by_page(request, pk_seller, pageNum):
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 	try:
 		seller = Seller.objects.get(id=pk_seller)
 	except Seller.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = UserReport.objects.filter(reportingUser=seller).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = UserReport.objects.filter(reportingUser=seller).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 @login_required
 def get_latest_customer_reporting_product_list_by_page(request, pk_customer, pageNum):
@@ -268,15 +304,17 @@ def get_latest_customer_reporting_product_list_by_page(request, pk_customer, pag
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 	try:
 		customer = Customer.objects.get(id=pk_customer)
 	except Customer.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = ProductReport.objects.filter(reportingUser=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductReport.objects.filter(reportingUser=customer).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -285,15 +323,17 @@ def get_latest_seller_reporting_product_list_by_page(request, pk_seller, pageNum
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 	try:
 		seller = Seller.objects.get(id=pk_seller)
 	except Seller.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = ProductReport.objects.filter(reportingUser=seller).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductReport.objects.filter(reportingUser=seller).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -302,15 +342,17 @@ def get_latest_customer_reporting_comment_list_by_page(request, pk_customer, pag
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 	try:
 		customer = Customer.objects.get(id=pk_customer)
 	except Customer.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = ProductCommentReport.objects.filter(reportingUser=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductCommentReport.objects.filter(reportingUser=customer).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -319,15 +361,17 @@ def get_latest_seller_reporting_comment_list_by_page(request, pk_seller, pageNum
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 	try:
 		seller = Seller.objects.get(id=pk_seller)
 	except Seller.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = ProductCommentReport.objects.filter(reportingUser=seller).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductCommentReport.objects.filter(reportingUser=seller).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 # reported filter with id
@@ -336,15 +380,17 @@ def get_latest_reported_customer_list_by_page(request, pk_customer, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	try:
 		customer = Customer.objects.get(id=pk_customer)
 	except Customer.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = UserReport.objects.filter(reportedUser=customer).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = UserReport.objects.filter(reportedUser=customer).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -352,15 +398,17 @@ def get_latest_reported_seller_list_by_page(request, pk_seller, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	try:
 		seller = Seller.objects.get(id=pk_seller)
 	except Seller.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = UserReport.objects.filter(reportedUser=seller).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = UserReport.objects.filter(reportedUser=seller).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -368,15 +416,17 @@ def get_latest_reported_product_list_by_page(request, pk_product, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	try:
 		product = Product.objects.get(id=pk_product)
 	except Product.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = ProductReport.objects.filter(product=product).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductReport.objects.filter(product=product).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -384,15 +434,17 @@ def get_latest_reported_comment_list_by_page(request, pk_comment, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	try:
 		comment = ProductComment.objects.get(id=pk_comment)
 	except ProductComment.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
-	reports = ProductCommentReport.objects.filter(comment=comment).order_by('-id')[((pageNum-1)*10):(pageNum*10)]
-	return returnJson([dict(report.body()) for report in reports])
+	reports = ProductCommentReport.objects.filter(comment=comment).order_by('-id')
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
@@ -400,13 +452,13 @@ def get_report(request, pk):
 	try:
 		report = UserReport.objects.get(id=pk)
 	except Report.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	if request.user.id != report.reportingUser.id:
 		try:
 			admin = AdminUser.objects.get(id=request.user.id)
 		except AdminUser.DoesNotExist:
-			return returnJson([], 403)
+			return returnJson([],0, 403)
 
 	return returnJson([dict(report.body())])
 
@@ -418,10 +470,10 @@ def create_user_report(request):
 	try:
 		user = User.objects.get(id=data["userId"])
 	except User.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	if data["reason"] not in dict(UserReport.REASONS):
-		return returnJson([], 400)
+		return returnJson([],0, 400)
 
 	reason = data["reason"]
 	description = data["description"]
@@ -439,10 +491,10 @@ def create_product_report(request):
 	try:
 		product = Product.objects.get(id=data["productId"])
 	except Product.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	if data["reason"] not in dict(Report.REASONS):
-		return returnJson([], 400)
+		return returnJson([],0, 400)
 
 	reason = data["reason"]
 	description = data["description"]
@@ -460,10 +512,10 @@ def create_product_comment_report(request):
 	try:
 		comment = ProductComment.objects.get(id=data["commentId"])
 	except ProductComment.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	if data["reason"] not in dict(Report.REASONS):
-		return returnJson([], 400)
+		return returnJson([],0, 400)
 
 	reason = data["reason"]
 	description = data["description"]
@@ -479,13 +531,13 @@ def edit_report(request, pk):
 	try:
 		report = Report.objects.get(id=pk)
 	except Report.DoesNotExist:
-		return returnJson([], 404)
+		return returnJson([],0, 404)
 
 	if request.method == 'PUT':
 		data = json.loads(request.body)
 		if request.user.id == report.reportingUser.id:
 			if data["reason"] not in dict(Report.REASONS):
-				return returnJson([], 400)
+				return returnJson([],0, 400)
 			report.reason = data["reason"]
 			report.description = data["description"]
 			report.save()
@@ -494,10 +546,10 @@ def edit_report(request, pk):
 			try:
 				admin = AdminUser.objects.get(id=request.user.id)
 			except AdminUser.DoesNotExist:
-				return returnJson([], 403)
+				return returnJson([],0, 403)
 
 			if data["status"] not in dict(Report.STATUSES):
-				return returnJson([], 400)
+				return returnJson([],0, 400)
 			report.status = data["status"]
 			report.save()
 			return returnJson([dict(report.body())])
@@ -506,69 +558,77 @@ def edit_report(request, pk):
 			try:
 				admin = AdminUser.objects.get(id=request.user.id)
 			except AdminUser.DoesNotExist:
-				return returnJson([], 403)
+				return returnJson([],0, 403)
 		report.delete()
 		return returnJson()
 
 
 # filter report by date 
 @login_required
-def get_report_in_days(request, dayNum):
+def get_report_in_days_by_page(request, dayNum, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	end = timezone.now().date()
 	start = end - timedelta(days=dayNum-1)
 	reports = Report.objects.filter(time__range=[start,end])
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_user_in_days(request, dayNum):
+def get_reported_user_in_days_by_page(request, dayNum, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	end = timezone.now().date()
 	start = end - timedelta(days=dayNum-1)
 	reports = UserReport.objects.filter(time__range=[start,end])
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_product_in_days(request, dayNum):
+def get_reported_product_in_days_by_page(request, dayNum, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	end = timezone.now().date()
 	start = end - timedelta(days=dayNum-1)
 	reports = ProductReport.objects.filter(time__range=[start,end])
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_comment_in_days(request, dayNum):
+def get_reported_comment_in_days_by_page(request, dayNum, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	end = timezone.now().date()
 	start = end - timedelta(days=dayNum-1)
 	reports = ProductCommentReport.objects.filter(time__range=[start,end])
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 @login_required
-def get_report_by_day(request):
+def get_report_by_day_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -576,15 +636,17 @@ def get_report_by_day(request):
 	day = data["day"]
 
 	reports = Report.objects.filter(time__year=year, time__month=month, time__day=day)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_user_by_day(request):
+def get_reported_user_by_day_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -592,15 +654,17 @@ def get_reported_user_by_day(request):
 	day = data["day"]
 
 	reports = UserReport.objects.filter(time__year=year, time__month=month, time__day=day)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_product_by_day(request):
+def get_reported_product_by_day_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -608,15 +672,17 @@ def get_reported_product_by_day(request):
 	day = data["day"]
 
 	reports = ProductReport.objects.filter(time__year=year, time__month=month, time__day=day)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_comment_by_day(request):
+def get_reported_comment_by_day_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
@@ -624,123 +690,206 @@ def get_reported_comment_by_day(request):
 	day = data["day"]
 
 	reports = ProductCommentReport.objects.filter(time__year=year, time__month=month, time__day=day)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_report_by_month(request):
+def get_report_by_month_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
 	month = data["month"]
 
 	reports = Report.objects.filter(time__year=year, time__month=month)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_user_by_month(request):
+def get_reported_user_by_month_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
 	month = data["month"]
 
 	reports = UserReport.objects.filter(time__year=year, time__month=month)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_product_by_month(request):
+def get_reported_product_by_month_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
 	month = data["month"]
 
 	reports = ProductReport.objects.filter(time__year=year, time__month=month)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_comment_by_month(request):
+def get_reported_comment_by_month_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
 	month = data["month"]
 
 	reports = ProductCommentReport.objects.filter(time__year=year, time__month=month)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_report_by_year(request):
+def get_report_by_year_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
 
 	reports = Report.objects.filter(time__year=year)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_user_by_year(request):
+def get_reported_user_by_year_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
 
 	reports = UserReport.objects.filter(time__year=year)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_product_by_year(request):
+def get_reported_product_by_year_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
 
 	reports = ProductReport.objects.filter(time__year=year)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 @login_required
-def get_reported_comment_by_year(request):
+def get_reported_comment_by_year_and_page(request, pageNum):
 	try:
 		admin = AdminUser.objects.get(id=request.user.id)
 	except AdminUser.DoesNotExist:
-		return returnJson([], 403)
+		return returnJson([],0, 403)
 
 	data = json.loads(request.body)
 	year = data["year"]
 
 	reports = ProductCommentReport.objects.filter(time__year=year)
-	return returnJson([dict(report.body()) for report in reports])
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
+
+
+# filter with status
+@login_required
+def get_report_by_status_and_page(request, pageNum):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([],0, 403)
+
+	data = json.loads(request.body)
+	status = data["status"]
+
+	reports = Report.objects.filter(status=status)
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
+
+
+@login_required
+def get_reported_user_by_status_and_page(request, pageNum):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([],0, 403)
+
+	data = json.loads(request.body)
+	status = data["status"]
+
+	reports = UserReport.objects.filter(status=status)
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
+
+
+@login_required
+def get_reported_product_by_status_and_page(request, pageNum):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([],0, 403)
+
+	data = json.loads(request.body)
+	status = data["status"]
+
+	reports = ProductReport.objects.filter(status=status)
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
+
+
+@login_required
+def get_reported_comment_by_status_and_page(request, pageNum):
+	try:
+		admin = AdminUser.objects.get(id=request.user.id)
+	except AdminUser.DoesNotExist:
+		return returnJson([],0, 403)
+
+	data = json.loads(request.body)
+	status = data["status"]
+
+	reports = ProductCommentReport.objects.filter(status=status)
+	pages = reports.count()
+	reports = reports[((pageNum-1)*10):(pageNum*10)]
+	return returnJson([dict(report.body()) for report in reports],pages)
 
 
 #logging
@@ -748,7 +897,7 @@ def user_get_request(request,pk):
 	try:
 		user = User.objects.get(id=pk)
 	except User.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
 	logs = StatusLog.objects.filter(msg__contains='%s : "GET' % user.username)
 	return returnJson([dict(acttime=log.create_datetime, msg=log.msg, level=log.level) for log in logs])
@@ -758,7 +907,7 @@ def user_illegal_operation(request,pk):
 	try:
 		user = User.objects.get(id=pk)
 	except User.DoesNotExist:
-		return returnJson([],404)
+		return returnJson([],0,404)
 
 	logs = StatusLog.objects.exclude(msg__contains="response_code:2").filter(msg__contains='%s : "' % user.username)
 	return returnJson([dict(acttime=log.create_datetime, msg=log.msg, level=log.level) for log in logs])

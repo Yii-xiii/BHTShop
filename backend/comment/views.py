@@ -74,19 +74,6 @@ def product_comment_list_by_rating(request, pk, rating):
 	return returnJson([dict(comment.body()) for comment in comments])
 
 
-def product_comment_list_by_page(request, pk, pageNum):
-	try:
-		product = Product.objects.get(id=pk)
-	except Product.DoesNotExist:
-		return returnJson([], 404)
-
-	specs = ProductSpec.objects.filter(product=product)
-
-	orders = Order.objects.filter(productSpec__in=specs)
-
-	comments = ProductComment.objects.filter(order__in=orders)[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(comment.body()) for comment in comments])
-
 
 def latest_product_comment_list(request, pk):
 	try:
@@ -99,20 +86,6 @@ def latest_product_comment_list(request, pk):
 	orders = Order.objects.filter(productSpec__in=specs)
 
 	comments = ProductComment.objects.filter(order__in=orders).order_by('-id')
-	return returnJson([dict(comment.body()) for comment in comments])
-
-
-def latest_product_comment_list_by_page(request, pk, pageNum):
-	try:
-		product = Product.objects.get(id=pk)
-	except Product.DoesNotExist:
-		return returnJson([], 404)
-
-	specs = ProductSpec.objects.filter(product=product)
-
-	orders = Order.objects.filter(productSpec__in=specs)
-
-	comments = ProductComment.objects.filter(order__in=orders).order_by('-id')[((pageNum - 1) * 10):(pageNum * 10)]
 	return returnJson([dict(comment.body()) for comment in comments])
 
 
