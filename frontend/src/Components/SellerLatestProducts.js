@@ -16,7 +16,7 @@ const SellerLatestProducts = () => {
 
     // Fetch data from database
     const fetchProducts = async() => {
-        const data = await api.getSellerLatestProductList(sellerId)
+        const data = await api.getSellerLatestProductListByPage(sellerId, 1)
         // const data = await response.json()
 
         return data.data

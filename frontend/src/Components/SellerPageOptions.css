@@ -15,6 +15,7 @@
 
 .seller-page-all-product-box {
     margin-top: 5px;
+    margin-right: 30px;
 }
 
 .seller-page-home-link {
@@ -34,4 +35,31 @@
 .seller-page-home-link h2 {
     font-size: 25px;
     color: black;
+}
+
+.seller-page-sort-by-type-product-box {
+    margin-top: 5px;
+    margin-right: 30px;
+}
+
+.seller-page-sort-by-type-product-link {
+    text-decoration: none;
+    color: grey;
+}
+
+.seller-page-sort-by-type-product-link span {
+    font-size: 25px;
+}
+
+.seller-page-sort-by-price-product-box {
+    margin-top: 5px;
+}
+
+.seller-page-sort-by-price-product-link {
+    text-decoration: none;
+    color: grey;
+}
+
+.seller-page-sort-by-price-product-link span {
+    font-size: 25px;
 }

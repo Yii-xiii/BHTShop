@@ -93,6 +93,31 @@ const SellerDescAndFilter = () => {
         }
     }
 
+    if (Cookies.get('user') === 'Seller') {
+        return (
+            <div className='seller-desc-and-filter-outer-box'>
+                <div className='seller-desc-box'>
+                    <h2>{seller.username}</h2>
+                    
+                    <div className='seller-desc-texts-box'>
+                        <h4>注册于: </h4>
+                        <span>{seller.joinDate}</span>
+                    </div>
+    
+                    <div className='seller-desc-texts-box'>
+                        <h4>粉丝数: </h4>
+                        <span> {followCount}</span>
+                    </div>
+    
+                    <div className='seller-exclusive-desc-texts-box'>
+                        <h4>评价: </h4>
+                        <span> {avgRating}</span>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     if (followship.length > 0) {
         return (
             <div className='seller-desc-and-filter-outer-box'>

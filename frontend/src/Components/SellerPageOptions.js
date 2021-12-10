@@ -20,6 +20,18 @@ const SellerPageOptions = () => {
                     <span>所有商品</span>
                 </Link>
             </div>
+
+            <div className='seller-page-sort-by-type-product-box'>
+                <Link className='seller-page-sort-by-type-product-link' to={path}>
+                    <span>分类</span>
+                </Link>
+            </div>
+
+            <div className='seller-page-sort-by-price-product-box'>
+                <Link className='seller-page-sort-by-price-product-link' to={path}>
+                    <span>价格</span>
+                </Link>
+            </div>
         </div>
     )
 }

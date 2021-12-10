@@ -35,7 +35,7 @@ const FavProduct = ({ favProduct }) => {
 
         getSpecs()
         getImages()
-    }, [])
+    }, [favProduct])
 
     const path = `/product/${favProduct.id}`
 

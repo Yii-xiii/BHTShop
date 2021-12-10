@@ -37,7 +37,7 @@ const PersonalOrder = ({ order }) => {
 
         getOrderStatus()
         getImages()
-    }, [])
+    }, [order])
 
     const orderPath = `/order/${order.id}`
 

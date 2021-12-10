@@ -37,6 +37,20 @@
     width: 80px;
 }
 
+.seller-exclusive-desc-texts-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    margin-left: 70px;
+    margin-bottom: 30px;
+}
+
+.seller-exclusive-desc-texts-box h4 {
+    width: 80px;
+}
+
 .seller-desc-buttons-box {
     margin-top: 20px;
     margin-bottom: 20px;

@@ -12,10 +12,11 @@ const SellerRankedProducts = () => {
 
     // Initializing
     const [products, setProducts] = useState([])
+    const [page, setPage] = useState(1)
 
     // Fetch data from database
     const fetchProducts = async() => {
-        const data = await api.getSellerBestSellingProductList(sellerId)
+        const data = await api.getSellerBestSellingProductListByPage(sellerId, 1)
 
         return data.data
     }

@@ -34,7 +34,7 @@ const SellerLatestProduct = ({ product, count }) => {
 
         getImages()
         getSpec()
-    }, [])
+    }, [product, count])
 
     const productPath = `/product/${product.id}`
 

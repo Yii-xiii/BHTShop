@@ -30,7 +30,7 @@ const FavSeller = ({favSeller}) => {
 
         getAvgRating()
         getFollowCount()
-    }, [])
+    }, [favSeller])
 
     const sellerPath = `/seller/${favSeller.id}`
 
