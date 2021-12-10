@@ -367,8 +367,10 @@ def latest_product_list_by_category(request, pageNum):
 
 def highest_rating_product_list_by_category(request, pageNum):
 	data =json.loads(request.body)
-	products = Product.objects.filter(category=data["category"]).order_by('-rating')[((pageNum - 1) * 10):(pageNum * 10)]
-	return returnJson([dict(product.body()) for product in products])
+	products = Product.objects.filter(category=data["category"])
+	pages = products.count()
+	products = products.order_by('-rating')[((pageNum - 1) * 10):(pageNum * 10)]
+	return returnJson([dict(product.body()) for product in products],pages)
 
 
 def lowest_rating_product_list_by_category(request, pageNum):

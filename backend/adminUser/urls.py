@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-	path('reports/', views.get_all_report_list),
+	path('reports/pages/<int:pageNum>/', views.get_all_report_list_by_page),
 
 	path('reports/customers/reporting/pages/<int:pageNum>/', views.get_all_latest_customer_reporting_list_by_page),
 	path('reports/sellers/reporting/pages/<int:pageNum>/', views.get_all_latest_seller_reporting_list_by_page),
@@ -34,25 +34,30 @@ urlpatterns = [
 	path('reports/reporting/products/<int:pk_product>/pages/<int:pageNum>/', views.get_latest_reported_product_list_by_page),
 	path('reports/reporting/comments/<int:pk_comment>/pages/<int:pageNum>/', views.get_latest_reported_comment_list_by_page),
 
-	path('reports/in_days/<int:dayNum>/', views.get_report_in_days),
-	path('reports/reporting/users/in_days/<int:dayNum>/', views.get_reported_user_in_days),
-	path('reports/reporting/products/in_days/<int:dayNum>/', views.get_reported_product_in_days),
-	path('reports/reporting/comments/in_days/<int:dayNum>/', views.get_reported_comment_in_days),
+	path('reports/in_days/<int:dayNum>/pages/<int:pageNum>/', views.get_report_in_days_by_page),
+	path('reports/reporting/users/in_days/<int:dayNum>/pages/<int:pageNum>/', views.get_reported_user_in_days_by_page),
+	path('reports/reporting/products/in_days/<int:dayNum>/pages/<int:pageNum>/', views.get_reported_product_in_days_by_page),
+	path('reports/reporting/comments/in_days/<int:dayNum>/pages/<int:pageNum>/', views.get_reported_comment_in_days_by_page),
 
-	path('reports/by_day/', views.get_report_by_day),
-	path('reports/reporting/users/by_day/', views.get_reported_user_by_day),
-	path('reports/reporting/products/by_day/', views.get_reported_product_by_day),
-	path('reports/reporting/comments/by_day/', views.get_reported_comment_by_day),
+	path('reports/by_day/pages/<int:pageNum>/', views.get_report_by_day_and_page),
+	path('reports/reporting/users/by_day/pages/<int:pageNum>/', views.get_reported_user_by_day_and_page),
+	path('reports/reporting/products/by_day/pages/<int:pageNum>/', views.get_reported_product_by_day_and_page),
+	path('reports/reporting/comments/by_day/pages/<int:pageNum>/', views.get_reported_comment_by_day_and_page),
 
-	path('reports/by_month/', views.get_report_by_month),
-	path('reports/reporting/users/by_month/', views.get_reported_user_by_month),
-	path('reports/reporting/products/by_month/', views.get_reported_product_by_month),
-	path('reports/reporting/comments/by_month/', views.get_reported_comment_by_month),
+	path('reports/by_month/pages/<int:pageNum>/', views.get_report_by_month_and_page),
+	path('reports/reporting/users/by_month/pages/<int:pageNum>/', views.get_reported_user_by_month_and_page),
+	path('reports/reporting/products/by_month/pages/<int:pageNum>/', views.get_reported_product_by_month_and_page),
+	path('reports/reporting/comments/by_month/pages/<int:pageNum>/', views.get_reported_comment_by_month_and_page),
 
-	path('reports/by_year/', views.get_report_by_year),
-	path('reports/reporting/users/by_year/', views.get_reported_user_by_year),
-	path('reports/reporting/products/by_year/', views.get_reported_product_by_year),
-	path('reports/reporting/comments/by_year/', views.get_reported_comment_by_year),
+	path('reports/by_year/pages/<int:pageNum>/', views.get_report_by_year_and_page),
+	path('reports/reporting/users/by_year/pages/<int:pageNum>/', views.get_reported_user_by_year_and_page),
+	path('reports/reporting/products/by_year/pages/<int:pageNum>/', views.get_reported_product_by_year_and_page),
+	path('reports/reporting/comments/by_year/pages/<int:pageNum>/', views.get_reported_comment_by_year_and_page),
+
+	path('reports/statuses/pages/<int:pageNum>/',views.get_report_by_status_and_page),
+	path('reports/reporting/users/statuses/pages/<int:pageNum>/',views.get_reported_user_by_status_and_page),
+	path('reports/reporting/products/statuses/pages/<int:pageNum>/',views.get_reported_product_by_status_and_page),
+	path('reports/reporting/comments/statuses/pages/<int:pageNum>/',views.get_reported_comment_by_status_and_page),
 
 	path('reports/<int:pk>/', views.get_report),
 

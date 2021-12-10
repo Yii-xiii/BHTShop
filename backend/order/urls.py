@@ -8,8 +8,8 @@ urlpatterns = [
 	path('products/<int:productId>/pages/<int:pageNum>/',views.get_latest_product_order_list_by_page),
 	path('products/specs/<int:specId>/pages/<int:pageNum>/',views.get_latest_product_spec_order_list_by_page),
 
-	path('sellers/status/',views.get_seller_order_list_by_order_status),
-	path('customers/status/',views.get_customer_order_list_by_order_status),
+	path('sellers/status/pages/<int:pageNum>/',views.get_seller_order_list_by_order_status_and_page),
+	path('customers/status/pages/<int:pageNum>/',views.get_customer_order_list_by_order_status_and_page),
 	
 	path('create/',views.create_order),
 	path('<int:orderId>/',views.get_order),

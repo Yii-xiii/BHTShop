@@ -244,21 +244,9 @@ class Api {
 		return data;
 	}
 
-	getProductCommentListByPage = async (productId,pageNum) => {
-		//404 : product not found
-		let data = await this.get(`/comments/products/${productId}/pages/${pageNum}/`);
-		return data;
-	}
-
 	getLatestProductCommentList = async (productId) => {
 		//404 : product not found
 		let data = await this.get(`/comments/products/${productId}/latest/`);
-		return data;
-	}
-
-	getLatestProductCommentListByPage = async (productId,pageNum) => {
-		//404 : product not found
-		let data = await this.get(`/comments/products/${productId}/latest/pages/${pageNum}/`);
 		return data;
 	}
 
@@ -467,19 +455,19 @@ class Api {
 		return data;
 	}
 
-	getSellerOrderListByStatus = async (status) => {
+	getSellerOrderListByStatusAndPage = async (status, pageNum) => {
 		//login required
 		//403 : seller not found
 		//400 : Invalid status
-		let data = await this.post(`/orders/sellers/status/`,{status});
+		let data = await this.post(`/orders/sellers/status/pages/${pageNum}/`,{status});
 		return data;
 	}
 
-	getCustomerOrderListByStatus = async (status) => {
+	getCustomerOrderListByStatusAndPage = async (status, pageNum) => {
 		//login required
 		//403 : customer not found
 		//400 : Invalid status
-		let data = await this.post(`/orders/customers/status/`,{status});
+		let data = await this.post(`/orders/customers/status/pages/${pageNum}/`,{status});
 		return data;
 	}
 
@@ -693,64 +681,64 @@ class Api {
 	}
 
 	//Report CRUD
-	getAllReportList = async (pageNum) => {
+	getAllReportListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/`);
+		let data = await this.get(`/adminUsers/reports/pages/${pageNum}/`);
 		return data;
 	}
 
 	// reporting filter
-	getAllCustomerReportingList = async (pageNum) => {
+	getAllCustomerReportingListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/customers/reporting/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllSellerReportingList = async (pageNum) => {
+	getAllSellerReportingListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/sellers/reporting/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllCustomerReportingUserList = async (pageNum) => {
+	getAllCustomerReportingUserListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/customers/reporting/users/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllSellerReportingUserList = async (pageNum) => {
+	getAllSellerReportingUserListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/sellers/reporting/users/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllCustomerReportingProductList = async (pageNum) => {
+	getAllCustomerReportingProductListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/customers/reporting/products/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllSellerReportingProductList = async (pageNum) => {
+	getAllSellerReportingProductListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/sellers/reporting/products/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllCustomerReportingCommentList = async (pageNum) => {
+	getAllCustomerReportingCommentListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/customers/reporting/comments/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllSellerReportingCommentList = async (pageNum) => {
+	getAllSellerReportingCommentListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/sellers/reporting/comments/pages/${pageNum}/`);
@@ -758,35 +746,35 @@ class Api {
 	}
 
 	// reported filter
-	getAllReportedUserList = async (pageNum) => {
+	getAllReportedUserListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/reporting/users/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllReportedCustomerList = async (pageNum) => {
+	getAllReportedCustomerListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/reporting/customers/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllReportedSellerList = async (pageNum) => {
+	getAllReportedSellerListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/reporting/sellers/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllReportedProductList = async (pageNum) => {
+	getAllReportedProductListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/reporting/products/pages/${pageNum}/`);
 		return data;
 	}
 
-	getAllReportedCommentList = async (pageNum) => {
+	getAllReportedCommentListByPage = async (pageNum) => {
 		//login required
 		//403 : user is not admin
 		let data = await this.get(`/adminUsers/reports/reporting/comments/pages/${pageNum}/`);
@@ -794,7 +782,7 @@ class Api {
 	}
 
 	//reporting filter with userId 
-	getCustomerReportingList = async (pageNum, customerId) => {
+	getCustomerReportingListByPage = async (pageNum, customerId) => {
 		//login required
 		//403 : user is neither admin nor reporting customer
 		//404 : customer not found
@@ -802,7 +790,7 @@ class Api {
 		return data;
 	}
 
-	getCustomerReportingUserList = async (pageNum, customerId) => {
+	getCustomerReportingUserListByPage = async (pageNum, customerId) => {
 		//login required
 		//403 : user is neither admin nor reporting customer
 		//404 : customer not found
@@ -810,7 +798,7 @@ class Api {
 		return data;
 	}
 
-	getCustomerReportingProductList = async (pageNum, customerId) => {
+	getCustomerReportingProductListByPage = async (pageNum, customerId) => {
 		//login required
 		//403 : user is neither admin nor reporting customer
 		//404 : customer not found
@@ -818,7 +806,7 @@ class Api {
 		return data;
 	}
 
-	getCustomerReportingCommentList = async (pageNum, customerId) => {
+	getCustomerReportingCommentListByPage = async (pageNum, customerId) => {
 		//login required
 		//403 : user is neither admin nor reporting customer
 		//404 : customer not found
@@ -826,7 +814,7 @@ class Api {
 		return data;
 	}
 
-	getSellerReportingList = async (pageNum, sellerId) => {
+	getSellerReportingListByPage = async (pageNum, sellerId) => {
 		//login required
 		//403 : user is neither admin nor reporting seller
 		//404 : seller not found
@@ -834,7 +822,7 @@ class Api {
 		return data;
 	}
 
-	getSellerReportingUserList = async (pageNum, sellerId) => {
+	getSellerReportingUserListByPage = async (pageNum, sellerId) => {
 		//login required
 		//403 : user is neither admin nor reporting seller
 		//404 : seller not found
@@ -842,7 +830,7 @@ class Api {
 		return data;
 	}
 
-	getSellerReportingProductList = async (pageNum, sellerId) => {
+	getSellerReportingProductListByPage = async (pageNum, sellerId) => {
 		//login required
 		//403 : user is neither admin nor reporting seller
 		//404 : seller not found
@@ -850,7 +838,7 @@ class Api {
 		return data;
 	}
 
-	getSellerReportingCommentList = async (pageNum, sellerId) => {
+	getSellerReportingCommentListByPage = async (pageNum, sellerId) => {
 		//login required
 		//403 : user is neither admin nor reporting seller
 		//404 : seller not found
@@ -859,7 +847,7 @@ class Api {
 	}
 
 	// reported filter with id
-	getReportedCustomerList = async (pageNum, customerId) => {
+	getReportedCustomerListByPage = async (pageNum, customerId) => {
 		//login required
 		//403 : user is not admin
 		//404 : customer not found
@@ -867,7 +855,7 @@ class Api {
 		return data;
 	}
 
-	getReportedSellerList = async (pageNum, sellerId) => {
+	getReportedSellerListByPage = async (pageNum, sellerId) => {
 		//login required
 		//403 : user is not admin
 		//404 : seller not found
@@ -875,7 +863,7 @@ class Api {
 		return data;
 	}
 
-	getReportedProductList = async (pageNum, productId) => {
+	getReportedProductListByPage = async (pageNum, productId) => {
 		//login required
 		//403 : user is not admin
 		//404 : product not found
@@ -883,7 +871,7 @@ class Api {
 		return data;
 	}
 
-	getReportedCommentList = async (pageNum, commentId) => {
+	getReportedCommentListByPage = async (pageNum, commentId) => {
 		//login required
 		//403 : user is not admin
 		//404 : comment not found
@@ -892,115 +880,143 @@ class Api {
 	}
 
 	// reported filter with date
-	getReportListInDays = async (dayNum) => {
+	getReportListInDaysByPage = async (pageNum, dayNum) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/in_days/${dayNum}/`);
+		let data = await this.get(`/adminUsers/reports/in_days/${dayNum}/pages/${pageNum}/`);
 		return data;
 	}
 
-	getReportedUserListInDays = async (dayNum) => {
+	getReportedUserListInDaysByPage = async (pageNum, dayNum) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/users/in_days/${dayNum}/`);
+		let data = await this.get(`/adminUsers/reports/reporting/users/in_days/${dayNum}/pages/${pageNum}/`);
 		return data;
 	}
 
-	getReportedProductListInDays = async (dayNum) => {
+	getReportedProductListInDaysByPage = async (pageNum, dayNum) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/products/in_days/${dayNum}/`);
+		let data = await this.get(`/adminUsers/reports/reporting/products/in_days/${dayNum}/pages/${pageNum}/`);
 		return data;
 	}
 
-	getReportedCommentListInDays = async (dayNum) => {
+	getReportedCommentListInDaysByPage = async (pageNum, dayNum) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/comments/in_days/${dayNum}/`);
+		let data = await this.get(`/adminUsers/reports/reporting/comments/in_days/${dayNum}/pages/${pageNum}/`);
 		return data;
 	}
 
-	getReportListByDay = async (year, month, day) => {
+	getReportListByDayAndPage = async (pageNum, year, month, day) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/by_day/`,{year,month,day});
+		let data = await this.get(`/adminUsers/reports/by_day/pages/${pageNum}/`,{year,month,day});
 		return data;
 	}
 
-	getReportedUserListByDay = async (year, month, day) => {
+	getReportedUserListByDayAndPage = async (pageNum, year, month, day) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/users/by_day/`,{year,month,day});
+		let data = await this.get(`/adminUsers/reports/reporting/users/by_day/pages/${pageNum}/`,{year,month,day});
 		return data;
 	}
 
-	getReportedProductListByDay = async (year, month, day) => {
+	getReportedProductListByDayAndPage = async (pageNum, year, month, day) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/products/by_day/`,{year,month,day});
+		let data = await this.get(`/adminUsers/reports/reporting/products/by_day/pages/${pageNum}/`,{year,month,day});
 		return data;
 	}
 
-	getReportedCommentListByDay = async (year, month, day) => {
+	getReportedCommentListByDayAndPage = async (pageNum, year, month, day) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/comments/by_day/`,{year,month,day});
+		let data = await this.get(`/adminUsers/reports/reporting/comments/by_day/pages/${pageNum}/`,{year,month,day});
 		return data;
 	}
 
-	getReportListByMonth = async (year, month) => {
+	getReportListByMonthAndPage = async (pageNum, year, month) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/by_month/`,{year, month});
+		let data = await this.get(`/adminUsers/reports/by_month/pages/${pageNum}/`,{year, month});
 		return data;
 	}
 
-	getReportedUserListByMonth = async (year, month) => {
+	getReportedUserListByMonthAndPage = async (pageNum, year, month) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/users/by_month/`,{year, month});
+		let data = await this.get(`/adminUsers/reports/reporting/users/by_month/pages/${pageNum}/`,{year, month});
 		return data;
 	}
 
-	getReportedProductListByMonth = async (year, month) => {
+	getReportedProductListByMonthAndPage = async (pageNum, year, month) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/products/by_month/`,{year, month});
+		let data = await this.get(`/adminUsers/reports/reporting/products/by_month/pages/${pageNum}/`,{year, month});
 		return data;
 	}
 
-	getReportedCommentListByMonth = async (year, month) => {
+	getReportedCommentListByMonthAndPage = async (pageNum, year, month) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/comments/by_month/`,{year, month});
+		let data = await this.get(`/adminUsers/reports/reporting/comments/by_month/pages/${pageNum}/`,{year, month});
 		return data;
 	}
 
-	getReportListByYear = async (year) => {
+	getReportListByYearAndPage = async (pageNum, year) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/by_year/`,{year});
+		let data = await this.get(`/adminUsers/reports/by_year/pages/${pageNum}/`,{year});
 		return data;
 	}
 
-	getReportedUserListByYear = async (year) => {
+	getReportedUserListByYearAndPage = async (pageNum, year) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/users/by_year/`,{year});
+		let data = await this.get(`/adminUsers/reports/reporting/users/by_year/pages/${pageNum}/`,{year});
 		return data;
 	}
 
-	getReportedProductListByYear = async (year) => {
+	getReportedProductListByYearAndPage = async (pageNum, year) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/products/by_year/`,{year});
+		let data = await this.get(`/adminUsers/reports/reporting/products/by_year/pages/${pageNum}/`,{year});
 		return data;
 	}
 
-	getReportedCommentListByYear = async (year) => {
+	getReportedCommentListByYearAndPage = async (pageNum, year) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/comments/by_year/`,{year});
+		let data = await this.get(`/adminUsers/reports/reporting/comments/by_year/pages/${pageNum}/`,{year});
+		return data;
+	}
+
+	//filter with status
+	getReportListByStatusAndPage = async (pageNum, status) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/statuses/pages/${pageNum}/`,{status});
+		return data;
+	}
+
+	getReportedUserListByStatusAndPage = async (pageNum, status) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/users/statuses/pages/${pageNum}/`,{status});
+		return data;
+	}
+
+	getReportedProductListByStatusAndPage = async (pageNum, status) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/products/statuses/pages/${pageNum}/`,{status});
+		return data;
+	}
+	getReportedCommentListByStatusAndPage = async (pageNum, status) => {
+		//login required
+		//403 : user is not admin
+		let data = await this.get(`/adminUsers/reports/reporting/comments/statuses/pages/${pageNum}/`,{status});
 		return data;
 	}
 
