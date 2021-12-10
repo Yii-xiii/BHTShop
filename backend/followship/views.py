@@ -45,7 +45,7 @@ def latest_customer_followship_list_by_page(request, pageNum):
 		return returnJson([],0, 403)
 
 	followships = Followship.objects.filter(customer=customer)
-	pages = followships.count()
+	pages = (followships.count()+9)/10
 	followships = followships.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
 
 	return returnJson([dict(followship.body()) for followship in followships], pages)
