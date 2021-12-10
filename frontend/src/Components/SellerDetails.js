@@ -10,7 +10,6 @@ const SellerDetails = () => {
     // Fetch data from database
     const fetchSeller = async() => {
         const data = await api.getSeller(userId)
-        console.log(data.data[0])
         return data.data[0]
     }
 

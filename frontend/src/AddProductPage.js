@@ -4,7 +4,7 @@ import Header from './Components/Header'
 import './AddProductPage.css'
 import api from './Components/Api'
 import { useNavigate } from 'react-router'
-import { InputLabel, MenuItem, Select } from '@mui/material'
+import { MenuItem, Select } from '@mui/material'
 
 const AddProductPage = () => {
     const navigate = useNavigate()
@@ -82,10 +82,10 @@ const AddProductPage = () => {
                     <form onSubmit={addProduct}>
                         <Error />
 
-                        <div class="form-type-group">
+                        <div className="add-product-form-type-group">
                             <h5>类型</h5>
 
-                            <Select name='category' defaultValue='类型' class="form-type-select" value={category} onChange={event => setCategory(event.target.value)}>
+                            <Select name='category' defaultValue='类型' className="form-type-select" value={category} onChange={event => setCategory(event.target.value)}>
                                 <MenuItem value='women clothes'>女装</MenuItem>
                                 <MenuItem value='men clothes'>男装</MenuItem>
                                 <MenuItem value='sports'>运动</MenuItem>
@@ -93,7 +93,6 @@ const AddProductPage = () => {
                                 <MenuItem value='drinks'>饮料</MenuItem>
                                 <MenuItem value='snacks'>零食</MenuItem>
                                 <MenuItem value='others'>其他</MenuItem>
-                            
                             </Select>
                         </div>
 
@@ -138,6 +137,7 @@ const AddProductPage = () => {
 
                         <div className='form-table'>
                             <table>
+                                <tbody>
                                 <tr>
                                     <th>规格</th>
                                     <th>价格</th>
@@ -146,7 +146,7 @@ const AddProductPage = () => {
                                 </tr>
 
                                 {specs.map((spec, index) => (
-                                    <tr>
+                                    <tr key={index}>
                                         <td>
                                             <div className='spec-form'>
                                                 <input 
@@ -192,6 +192,7 @@ const AddProductPage = () => {
                                         </td>
                                     </tr>
                                 ))}
+                                </tbody>
                             </table>
 
                         </div>

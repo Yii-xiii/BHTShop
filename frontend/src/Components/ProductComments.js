@@ -13,8 +13,6 @@ const ProductComments = () => {
     const fetchComments = async() => {
         const data = await api.getLatestProductCommentList(productId)
         // const data = await response.json()
-
-        console.log(data.data)
         
         return data.data
     }

@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import {Link, useParams} from 'react-router-dom'
 import './ProductDescription.css'
 import api from './Api'
+import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
 
 const ProductDescription = () => {    
     const { productId } = useParams()
@@ -33,16 +34,15 @@ const ProductDescription = () => {
 
     return (
         <div className='description-outer-box'>
-            <div className='description-spec-title'>
-                <h5>商品规格</h5>
+            <div className='description-seller-profile-link'>
+                <Link className='seller-page-link' to={sellerPath}>
+                    <StoreOutlinedIcon fontSize='large'/>
+                    <h3>{sellerName}</h3>
+                </Link>
             </div>
 
-            <div className='description-seller-box'>
-                <h5>商家</h5>
-                {/* link to seller page */}
-                <Link className='seller-page-link' to={sellerPath}>
-                    <span>{sellerName}</span>
-                </Link>
+            <div className='description-spec-title'>
+                <h5>商品规格</h5>
             </div>
 
             <div className='description-seller-box'>

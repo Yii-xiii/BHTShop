@@ -31,7 +31,7 @@ const SellerOrders = () => {
         return (
             // link to userId fav list
             <Link className='addItem-link' to='/sOrders/paid'>
-                <Badge badgeContent={orders.length} color='primary' max='99'
+                <Badge badgeContent={orders.length} color='primary' max={99}
                     anchorOrigin={{
                         vertical: 'bottom',
                         horizontal: 'right',
@@ -44,7 +44,7 @@ const SellerOrders = () => {
 
     return (
         <Link className='addItem-link' to='/'>
-            <Badge badgeContent={orders.length} color='primary' max='99'
+            <Badge badgeContent={orders.length} color='primary' max={99}
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'right',

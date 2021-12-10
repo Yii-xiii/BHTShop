@@ -46,7 +46,7 @@ const RandomProducts = () => {
             <div className='random-show-box'>
                 <div className='random-show-box-inner-part'>
                     {productsByPage.length > 0 ? <Products products={ productsByPage }/>
-                    : console.log('No product founds.')}
+                    : ''}
                 </div>
             </div>
         </div>

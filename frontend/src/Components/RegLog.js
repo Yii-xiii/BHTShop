@@ -3,6 +3,7 @@ import './RegLog.css'
 import {Link, useNavigate} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import api from './Api'
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
 const RegLog = () => {
     const navigate = useNavigate()
@@ -31,7 +32,9 @@ const RegLog = () => {
                 </Link>
 
                 <Link className='reglog-link' to='/profile'>
-                    <h5 className='login-status'>{username}，已登录。</h5>
+                    <button className='btn-profile'>
+                        <PermIdentityIcon /><h4>{username}</h4>
+                    </button>
                 </Link>
             </div>
         )

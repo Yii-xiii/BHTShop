@@ -13,9 +13,8 @@ const Cart = () => {
     const [cart, setCart] = useState([])
 
     const fetchCart = async() => {
-        const data = await api.getCustomerCartList()
-
         if (loggedInType === 'Customer') {
+            const data = await api.getCustomerCartList()
             return data.data
         } 
     }
@@ -33,7 +32,7 @@ const Cart = () => {
         return (
             <Link className='cart-link' to='/cart'>
                 <div className='cart-link-button'>
-                    <Badge badgeContent={cart.length} color='primary' max='99'
+                    <Badge badgeContent={cart.length} color='primary' max={99}
                         anchorOrigin={{
                             vertical: 'bottom',
                             horizontal: 'right',
@@ -48,7 +47,7 @@ const Cart = () => {
     return (
         <Link className='cart-link' to='/login'>
             <div className='cart-link-button'>
-                <Badge badgeContent={0} color='primary' max='99'
+                <Badge badgeContent={0} color='primary' max={99}
                     anchorOrigin={{
                         vertical: 'bottom',
                         horizontal: 'right',

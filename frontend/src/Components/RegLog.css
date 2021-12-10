@@ -38,6 +38,27 @@
   float: right;
 }
 
+.btn-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+  width: auto;
+  margin-right: 10px;
+  height: 30px;
+  float: right;
+  background-color: #C4DFFB;
+  border: 0px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-profile h4 {
+  margin-left: 5px;
+  font-size: 13px;
+  margin-right: 5px;
+}
+
 .btn-reglog:active {
   transform: scale(0.95)
 }

@@ -4,6 +4,7 @@ import api from './Api'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { Link } from 'react-router-dom'
 
 const CartProduct = ({ cartProduct }) => {
     const [image, setImages] = useState([])
@@ -44,10 +45,15 @@ const CartProduct = ({ cartProduct }) => {
         window.location.reload(false)
     }
 
+    const productPath = `/product/${cartProduct.productSpec.product.id}`
+
     return (
         <div className='cart-product-outer-box'>
+           
             <div className='cart-product-image-box'>
-                <img src={ image? image.image_url : '0'} alt='img'/>
+                <Link to={productPath}>
+                    <img src={ image? image.image_url : '0'} alt='img'/>
+                </Link>
             </div>
             
             <div className='cart-product-descriptions-box'>

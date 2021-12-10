@@ -20,7 +20,7 @@ const SellerDescAndFilter = () => {
 
     const fetchAvgRating = async () => {
         const data = await api.getSellerAverageRating(sellerId)
-        return data.data.rating
+        return data? data.data.rating : '未有商品'
     }
 
     // Fetch data from database
@@ -150,31 +150,6 @@ const SellerDescAndFilter = () => {
                         </button>
                     </div>
                 </div>
-    
-                <div className='seller-filter-box'>
-                    <div className='seller-filter-by-type-box'>
-                        <h3>按种类排序</h3>
-                        <span>女装</span>
-                        <span>男装</span>
-                        <span>运动</span>
-                        <span>美妆</span>
-                        <span>饮料</span>
-                        <span>零食</span>
-                        <span>其他</span>
-                    </div>
-    
-                    <div className='seller-filter-by-rating-box'>
-                        <h3>按评价排序</h3>
-                        <span>由低到高</span>
-                        <span>由高到低</span>
-                    </div>
-    
-                    <div className='seller-filter-by-price-box'>
-                        <h3>按价格排序</h3>
-                        <span>由低到高</span>
-                        <span>由高到低</span>
-                    </div>
-                </div>
             </div>
         )
     }
@@ -208,31 +183,6 @@ const SellerDescAndFilter = () => {
                     <button className='seller-desc-report-button' onClick={() => reportUser()}>
                         举报
                     </button>
-                </div>
-            </div>
-
-            <div className='seller-filter-box'>
-                <div className='seller-filter-by-type-box'>
-                    <h3>按种类排序</h3>
-                    <span>女装</span>
-                    <span>男装</span>
-                    <span>运动</span>
-                    <span>美妆</span>
-                    <span>饮料</span>
-                    <span>零食</span>
-                    <span>其他</span>
-                </div>
-
-                <div className='seller-filter-by-rating-box'>
-                    <h3>按评价排序</h3>
-                    <span>由低到高</span>
-                    <span>由高到低</span>
-                </div>
-
-                <div className='seller-filter-by-price-box'>
-                    <h3>按价格排序</h3>
-                    <span>由低到高</span>
-                    <span>由高到低</span>
                 </div>
             </div>
         </div>

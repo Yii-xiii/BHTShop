@@ -75,5 +75,36 @@
 
 .seller-page-link {
     text-decoration: none;
+    background-color: #ACD1FB;
     color: black;
+    padding: 5px 15px;
+    border-radius: 10px;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.seller-page-link h3 {
+    margin-left: 15px;
+}
+
+.description-seller-profile-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 35px;
+    margin-top: 30px;
+}
+
+.seller-store-icon-link-color {
+    background-color: #BACDB0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
 }
