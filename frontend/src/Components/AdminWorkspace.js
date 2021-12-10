@@ -1,13 +1,20 @@
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
+import { FormControlLabel, Pagination, Radio, RadioGroup } from '@mui/material'
 import React from 'react'
 import './AdminWorkspace.css'
 import {useState, useEffect} from 'react'
+import api from './Api'
+import Report from './Report'
 
 const AdminWorkspace = () => {
+    const [page, setPage] = useState(1)
     const [reports, setReports] = useState([])
     const [reportTypeFilter, setReportTypeFilter] = useState('All')
     const [reportStatusFilter, setReportStatusFilter] = useState('All')
 
+    const handlePageChange = (event, value) => {
+        setPage(value)
+    }
+    
     const handleReportTypeFilter = (event, value) => {
         setReportTypeFilter(value)
     }
@@ -16,20 +23,21 @@ const AdminWorkspace = () => {
         setReportStatusFilter(value)
     }
  
-    const getReports = async() => {
+    const fetchReports = async() => {
         if (reportTypeFilter === 'All' && reportStatusFilter === 'All') {
-            
+            const data = await api.getAllReportListByPage(page)
+            return data
         }
     }
 
     useEffect(() => {
         const getReports = async() => {
             const reportsFromServer = await fetchReports()
-            setReports(reportsFromServer)
+            setReports(reportsFromServer.data)
         }
 
         getReports()
-    }, [reportTypeFilter, reportStatusFilter])
+    }, [reportTypeFilter, reportStatusFilter, page])
 
     return (
         <div className='admin-workspace-out-box'>
@@ -48,7 +56,6 @@ const AdminWorkspace = () => {
                     </RadioGroup>
                 </div>
 
-
                 <div className='admin-workspace-status-filter-box'>
                     <h4>状态分类</h4>
                     
@@ -62,7 +69,17 @@ const AdminWorkspace = () => {
             </div>
 
             <div className='admin-workspace-show-box'> 
-                {reportTypeFilter + reportStatusFilter} 
+                <div className='admin-workspace-show-page-box'>
+                    <Pagination count={10} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
+                </div>
+
+                <div className='admin-workspace-report-show-box'>
+                    {reports.map((report, index) => (
+                        <div className='admin-workspace-report-box'>
+                            <Report key={index} report={report}/>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )
