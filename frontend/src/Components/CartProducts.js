@@ -55,7 +55,7 @@ const CartProducts = () => {
         getCart()
         getCustomer()
         getCartByPage()
-    }, [page, cart])
+    }, [page])
 
     cart.map((cartProduct) => (
         cartProduct.productSpec.stock > cartProduct.quantity ?

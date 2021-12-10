@@ -2,7 +2,8 @@ import {useState, useEffect} from 'react'
 import './CartProduct.css'
 import api from './Api'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const CartProduct = ({ cartProduct }) => {
     const [image, setImages] = useState([])
@@ -21,7 +22,7 @@ const CartProduct = ({ cartProduct }) => {
         }
 
         getImages()
-    }, [])
+    }, [cartProduct])
 
     const deleteItem = async(cartItemSpecId) => {
         await api.deleteCustomerCart(cartItemSpecId)
@@ -30,6 +31,7 @@ const CartProduct = ({ cartProduct }) => {
 
     const handleAddItem = async() => {
         await api.updateCustomerCart(cartProduct.productSpec.id, cartProduct.quantity + 1)
+        window.location.reload(false)
     }
 
     const handleDecreaseItem = async() => {
@@ -37,8 +39,9 @@ const CartProduct = ({ cartProduct }) => {
 
         if (data.data[0].quantity === 0) {
             await api.deleteCustomerCart(cartProduct.productSpec.id)
-            window.location.reload(false)
         }
+
+        window.location.reload(false)
     }
 
     return (
@@ -66,8 +69,6 @@ const CartProduct = ({ cartProduct }) => {
                 <div className='cart-product-description'>
                     <h3>数量: </h3>
                     <span>{cartProduct.productSpec.stock > cartProduct.quantity ? cartProduct.quantity : cartProduct.productSpec.stock }</span>
-                    <button onClick={() => handleAddItem()}>+</button>
-                    <button onClick={() => handleDecreaseItem()}>-</button>
                 </div>
 
                 <div className='cart-product-description'>
@@ -78,6 +79,14 @@ const CartProduct = ({ cartProduct }) => {
                 </div>
 
                 <div className='cart-buttons-box'>
+                    <button className='handle-add-item-button' onClick={() => handleAddItem()}>
+                        <AddIcon />
+                    </button>
+
+                    <button className='handle-decrease-item-button' onClick={() => handleDecreaseItem()}>
+                        <RemoveIcon />
+                    </button>
+
                     <button className='delete-item-button' onClick={() => deleteItem(cartProduct.productSpec.id)}>
                         <DeleteOutlineOutlinedIcon />
                     </button>
