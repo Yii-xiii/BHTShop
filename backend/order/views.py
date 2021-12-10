@@ -112,7 +112,7 @@ def get_customer_order_list_by_order_status_and_page(request, pageNum):
 			results += [status]
 
 	pages = (len(results)+9)/10
-	results = results.order_by('-id')[((pageNum-1)*10):(pageNum*10)]
+	results = results[((pageNum-1)*10):(pageNum*10)]
 	return returnJson([dict(status.body()) for status in results], pages)
 
 @login_required
