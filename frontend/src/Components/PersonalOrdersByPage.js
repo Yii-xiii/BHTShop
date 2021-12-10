@@ -8,8 +8,8 @@ import './PersonalOrdersByPage.css'
 import { Pagination } from '@mui/material'
 
 const PersonalOrdersByPage = () => {
-    const [orderList, setOrderList] = useState([])
     const [orderListByPage, setOrderListByPage] = useState([])
+    const [pageCount, setPageCount] = useState(0)
     const [page, setPage] = useState(1)
 
     const handlePageChange = (event, value) => {
@@ -18,14 +18,14 @@ const PersonalOrdersByPage = () => {
 
     const fetchOrderListByPage = async() => {
         const data = await api.getLatestCustomerOrderListByPage(Cookies.get('user_id'), page)
-        console.log(data.data);
-        return data.data
+        return data
     }
 
     useEffect(() => {
         const getOrderListByPage = async() => {
             const specsFromServer = await fetchOrderListByPage()
-            setOrderListByPage(specsFromServer)
+            setOrderListByPage(specsFromServer.data)
+            setPageCount(specsFromServer.pageCount)
         }
 
         getOrderListByPage()
@@ -34,7 +34,7 @@ const PersonalOrdersByPage = () => {
     return (
         <div className='orders-out-box'>
             <div className='orders-page-box'>
-                <Pagination count={10} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
+                <Pagination count={pageCount} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
             </div>
             
             {orderListByPage.map((order, index) => (

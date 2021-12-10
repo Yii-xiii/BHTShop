@@ -12,13 +12,13 @@ const SellerProducts = () => {
     // Initializing
     const [sellerProducts, setSellerProducts] = useState([])
     const [page, setPage] = useState(1)
+    const [pageCount, setPageCount] = useState(0)
 
     // Fetch data from database
     const fetchSellerProducts = async() => {
-        const data = await api.getSellerLatestProductList(sellerId)
+        const data = await api.getSellerLatestProductListByPage(sellerId, page)
         // const data = await response.json()
-
-        return data.data
+        return data
     }
 
     const handlePageChange = (event, value) => {
@@ -29,11 +29,12 @@ const SellerProducts = () => {
     useEffect(() => {
         const getSellerProducts = async() => {
             const productsFromServer = await fetchSellerProducts()
-            setSellerProducts(productsFromServer)
+            setSellerProducts(productsFromServer.data)
+            setPageCount(productsFromServer.pageCount)
         }
 
         getSellerProducts()
-    }, [])
+    }, [page])
 
     if (sellerProducts.length > 0) {
         return (
@@ -44,12 +45,12 @@ const SellerProducts = () => {
     
                 <div className='seller-products-show-box'>
                     <div className='seller-products-page-box'>
-                        <Pagination count={sellerProducts.length % 10 === 0 ? Math.floor(sellerProducts.length / 10) : Math.ceil(sellerProducts.length / 10)} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
+                        <Pagination count={pageCount} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
                     </div>
     
                     <div className='seller-products'>
                         {sellerProducts.length > 0 ? sellerProducts.map((product, index) => (
-                            <SellerProduct key={index} product={product}/>
+                            <SellerProduct key={index} product={product} page={page}/>
                         )) : console.log('Nothing to show.')}
                     </div>
                 </div>

@@ -28,6 +28,19 @@ const CartProduct = ({ cartProduct }) => {
         window.location.reload(false)
     }
 
+    const handleAddItem = async() => {
+        await api.updateCustomerCart(cartProduct.productSpec.id, cartProduct.quantity + 1)
+    }
+
+    const handleDecreaseItem = async() => {
+        const data = await api.updateCustomerCart(cartProduct.productSpec.id, cartProduct.quantity - 1)
+
+        if (data.data[0].quantity === 0) {
+            await api.deleteCustomerCart(cartProduct.productSpec.id)
+            window.location.reload(false)
+        }
+    }
+
     return (
         <div className='cart-product-outer-box'>
             <div className='cart-product-image-box'>
@@ -53,6 +66,8 @@ const CartProduct = ({ cartProduct }) => {
                 <div className='cart-product-description'>
                     <h3>数量: </h3>
                     <span>{cartProduct.productSpec.stock > cartProduct.quantity ? cartProduct.quantity : cartProduct.productSpec.stock }</span>
+                    <button onClick={() => handleAddItem()}>+</button>
+                    <button onClick={() => handleDecreaseItem()}>-</button>
                 </div>
 
                 <div className='cart-product-description'>

@@ -7,21 +7,14 @@ import { Pagination } from '@mui/material'
 
 const FavProducts = () => {
     // Initializing
-    const [favProducts, setFavProducts] = useState([])
     const [favProductsByPage, setFavProductsByPage] = useState([])
+    const [pageCount, setPageCount] = useState(0)
     const [page, setPage] = useState(1)
 
     // Fetch data from database
-    const fetchFavProducts = async() => {
-        const data = await api.getCustomerCollectionList()
-
-        // get back list of favProducts
-        return data.data
-    }
 
     const fetchFavProductsByPage = async() => {
         const data = await api.getLatestCustomerCollectionListByPage(page)
-
         // get back list of favProducts
         return data
     }
@@ -31,19 +24,15 @@ const FavProducts = () => {
     }
 
     useEffect(() => {
-        const getFavProducts = async() => {
-            const productsFromServer = await fetchFavProducts()
-            setFavProducts(productsFromServer)
-        }
 
         const getFavProductsByPage = async() => {
             const productsFromServer = await fetchFavProductsByPage()
-            setFavProductsByPage(productsFromServer)
+            setFavProductsByPage(productsFromServer.data)
+            setPageCount(productsFromServer.pageCount)
         }
 
-        getFavProducts()
         getFavProductsByPage()
-    }, [])
+    }, [page])
 
     return (
         <div className='fav-box'>
@@ -53,11 +42,11 @@ const FavProducts = () => {
                 <FavProductOptions />
 
                 <div className='fav-list-page-box'>
-                    <Pagination count={10} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
+                    <Pagination count={pageCount} showFirstButton showLastButton page={page} onChange={handlePageChange}/>
                 </div>
                 
                 <div className='fav-list-box'>
-                    {favProducts.map((favProduct, index) => (
+                    {favProductsByPage.map((favProduct, index) => (
                         <FavProduct key={index} favProduct={favProduct.product}/>
                     ))} 
                 </div>
