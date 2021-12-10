@@ -93,7 +93,7 @@ def get_seller_order_list_by_order_status_and_page(request, pageNum):
 
 
 @login_required
-def get_customer_order_list_by_order_status(request, pageNum):
+def get_customer_order_list_by_order_status_and_page(request, pageNum):
 	try:
 		customer = Customer.objects.get(id=request.user.id)
 	except Customer.DoesNotExist:
