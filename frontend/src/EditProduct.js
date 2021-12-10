@@ -52,7 +52,9 @@ const EditProduct = () => {
         setSpecs([...specs, {description : "", price : 0, stock : 0}])
     }
 
-    const deleteSpec = async (i) => {
+    const deleteSpec = async (i, e) => {
+        e.preventDefault()
+
         let newSpecs = [...specs]
         let data = newSpecs.splice(i,1)
         console.log(data)
@@ -253,7 +255,7 @@ const EditProduct = () => {
                                                 </td>
 
                                                 <td>
-                                                    <button onClick={() => deleteSpec(index)}>-</button>
+                                                    <button onClick={event => deleteSpec(index, event)}>-</button>
                                                 </td>
                                             </tr>
                                         ))}

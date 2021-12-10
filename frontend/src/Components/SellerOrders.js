@@ -3,11 +3,10 @@ import {Link} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import './AddItem.css'
 import api from './Api'
-import sellerOrdersLogo from './SellerOrders.png'
 import Cookies from 'js-cookie'
-import Notification from './Notification'
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import { Badge } from '@mui/material'
+import './SellerOrders.css'
 
 const SellerOrders = () => {
     const [orders, setOrders] = useState([])
@@ -36,7 +35,10 @@ const SellerOrders = () => {
                         vertical: 'bottom',
                         horizontal: 'right',
                     }}>
-                    <AssignmentOutlinedIcon className='sellerOrders-logo' color='action'/>
+                    
+                    <div className='seller-order-black-logo-top-right'>
+                        <AssignmentOutlinedIcon className='sellerOrders-logo' />
+                    </div>
                 </Badge>
             </Link>
         )
@@ -49,9 +51,11 @@ const SellerOrders = () => {
                     vertical: 'bottom',
                     horizontal: 'right',
                 }}>
-                <AssignmentOutlinedIcon className='sellerOrders-logo' color='action'/>
+
+                <div className='seller-order-black-logo-top-right'>
+                    <AssignmentOutlinedIcon className='sellerOrders-logo' />
+                </div>
             </Badge>
-            {/* getting orders count and pass in */}
         </Link>
     )
 }

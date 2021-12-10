@@ -25,6 +25,7 @@ import ReportPage from './ReportPage';
 import SearchPage from './SearchPage';
 import ReportSuccessPage from './ReportSuccessPage';
 import EditProduct from './EditProduct';
+import PostmanHomePage from './PostmanHomePage';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route path='/product/:productId/edit' element={<EditProduct />}/>
           <Route path='/report/:reportType/:reportingId' element={<ReportPage />}/>
           <Route path='/report/:reportType/:reportingId/success' element={<ReportSuccessPage />}/>
+          <Route path='/postHome' element={<PostmanHomePage />}/>
         </Routes>
       </div>
     </Router>

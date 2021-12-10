@@ -10,6 +10,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import LockIcon from '@mui/icons-material/Lock'
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone'
 import HomeIcon from '@mui/icons-material/Home'
+import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 
 const RegisterPage = () => {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ const RegisterPage = () => {
     const [address, setAddress] = useState([])
     const [seller, setSeller] = useState(false)
     const [errorMessage,setErrorMessage] = useState("")
+    const [registerType, setRegisterType] = useState('customer')
 
     const validUsername = /^[A-Za-z0-9._]+$/;
     const validPassword = /^[A-Za-z0-9._]+$/;
@@ -35,9 +37,15 @@ const RegisterPage = () => {
             if (Cookies.get('user') === 'Customer') {
                 navigate('/')
             } else if (Cookies.get('user') === 'Seller') {
-                navigate(`/sellerHome`)
+                navigate('/sellerHome')
+            } else if (Cookies.get('user') === 'Postman') {
+                navigate('/postHome')
             }
         }
+    }
+
+    const handleTypeChange = (event, value) => {
+        setRegisterType(value)
     }
 
     const createUser = async (e) => {
@@ -56,11 +64,14 @@ const RegisterPage = () => {
             //console.log(data)
 
             var data
-            if (seller) {
+            if (registerType === 'seller') {
                 data = await api.createSeller(username, password,phoneNum,address)
                 console.log(data)
-            } else {
+            } else if (registerType === 'customer') {
                 data = await api.createCustomer(username, password,phoneNum,address)
+                console.log(data)
+            } else if (registerType === 'postman') {
+                data = await api.createPostman(username, password, phoneNum, address)
                 console.log(data)
             }
 
@@ -144,11 +155,14 @@ const RegisterPage = () => {
                     </div>
 
                     <div className='user-type-box'>
-                        <label>用户</label>
-                        <input className='checkbox-box' name='user-type' type='checkbox' value='customer' class='user' checked={!seller} onClick={isCustomer} />
 
-                        <label className='in-user-type-box'>商家</label>
-                        <input className='checkbox-box' name='user-type' type='checkbox' value='seller' checked={seller} onClick={isSeller}/>
+                        <RadioGroup value={registerType} onChange={handleTypeChange} row className="reg-row-radio-buttons-group">
+                            <FormControlLabel labelPlacement="start" value="customer" control={<Radio />} label="用户" />
+                            <FormControlLabel labelPlacement="start" value="seller" control={<Radio />} label="商家" />
+                            <FormControlLabel labelPlacement="start" value="postman" control={<Radio />} label="派送员" />
+                        </RadioGroup>
+
+        
                     </div>
 
                     <div className='register-button-submit-box'>

@@ -12,15 +12,19 @@ const AddItem = () => {
         return (
             // link to userId fav list
             <Link className='addItem-link' to='/addProduct'>
-                <AddCircleOutlineOutlinedIcon className='addItem-logo' color='action'/>
+                <div className='seller-add-item-circle-black-logo'>
+                    <AddCircleOutlineOutlinedIcon className='addItem-logo'/>
+                </div>
+                
             </Link>
         )
     }
 
     return (
         <Link className='addItem-link' to='/'>
-            <AddCircleOutlineOutlinedIcon className='addItem-logo' color='action'/>
-            {/* getting favourite count and pass in */}
+            <div className='seller-add-item-circle-black-logo'>
+                <AddCircleOutlineOutlinedIcon className='addItem-logo'/>
+            </div>
         </Link>
     )
 }

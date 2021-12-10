@@ -56,6 +56,17 @@ const NavBar = () => {
                 <hr className='navbar-line'/>
             </header>
         )
+    } else if (loggedInType === 'Postman') {
+        return (
+            <header>
+                <nav className='navbar'>
+                    <Link className='home-logo' to='/postHome'>
+                        <img className='navbar-logo' src={Logo} alt='logo'/>
+                    </Link>
+                </nav>
+                <hr className='navbar-line'/>
+            </header>
+        )
     }
 
     return (

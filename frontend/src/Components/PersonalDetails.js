@@ -10,9 +10,15 @@ const PersonalDetails = () => {
 
     // Fetch data from database
     const fetchCustomer = async() => {
-        const data = await api.getCustomer(userId)
-        console.log(data.data[0])
-        return data.data[0]
+        if (Cookies.get('user') === 'Customer') {
+            const data = await api.getCustomer(userId)
+            console.log(data.data[0])
+            return data.data[0]
+        } else if (Cookies.get('user') === 'Postman') {
+            const data = await api.getPostman(userId)
+            console.log(data.data[0])
+            return data.data[0]
+        }
     }
 
     // Importing data

@@ -2,4 +2,9 @@
     width: 25px;
     height: 25px;
     object-fit: contain;
+    margin-top: 5px;
+}
+
+.seller-order-black-logo-top-right {
+    color: black;
 }

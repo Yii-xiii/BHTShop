@@ -31,6 +31,8 @@ const LoginPage = () => {
                 navigate('/sellerHome')
             } else if (Cookies.get('user') === 'Admin') {
                 navigate('/admin')
+            } else if (Cookies.get('user') === 'Postman') {
+                navigate('/postHome')
             }
         }
     }

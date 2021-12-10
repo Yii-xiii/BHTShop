@@ -9,7 +9,7 @@ import SellerInfo from './Components/SellerInfo'
 const ProfilePage = () => {
 	let loggedInType = Cookies.get('user')
 
-    if (loggedInType === 'Customer') {
+    if (loggedInType === 'Customer' || loggedInType === 'Postman') {
         return (
             <div>
                 <Header />
