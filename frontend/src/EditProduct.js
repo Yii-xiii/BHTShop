@@ -5,6 +5,7 @@ import api from './Components/Api'
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router'
 import './EditProduct.css'
+import { TextareaAutosize } from '@mui/material'
 
 const EditProduct = () => {
     const navigate = useNavigate()
@@ -145,25 +146,29 @@ const EditProduct = () => {
     return (
         <div>
             <Header />
+                <div className='edit-product-outmost-box'>
+                
+                
                 {status === 0 ? <h1>加载中</h1> : 
 
-                        <div className="box">
+                        <div className="edit-product-outer-box">
+                            <h1>编辑商品</h1>
                             <form onSubmit={submitProduct}>
 
-                                <div >
-                                    <img src={imagePath} alt='preview-img' className="product-image"/>
+                                <div className='edit-product-preview-box'>
+                                    <img src={imagePath} alt='edit-product-preview-img' className="product-image"/>
                                 </div>
 
-                                <div className='button-submit-box'>
+                                <div className='edited-image-button-submit-box'>
                                     {/* <button onClick={() => {handleImageChange()}} >更换图片</button> */}
                                     <input
                                         type="checkbox"
                                         value={changeImage}
                                         onClick={() => {handleImageChange()}} />
-                                    更换图片
+                                    <span>更换图片</span>
                                 </div>
 
-                                <div>
+                                <div className='choose-image-button-box'>
                                     <input 
                                         name={images}
                                         onChange={event => {if (changeImage) {setImages(event.target.files[0]); setImagePath(URL.createObjectURL(event.target.files[0]));}}}
@@ -171,9 +176,9 @@ const EditProduct = () => {
                                         accept='image/*'/>
                                 </div>
 
-                                <div class="form-group m-3" style={{margin: 'auto'}}>
-                                    <label>类型</label>
-                                    <select name="category" class="form-control" value={product.category} onChange={event => setProduct(prev => ({...prev, category : event.target.value}))}>
+                                <div class="edit-item-type-form-box">
+                                    <h4>类型</h4>
+                                    <select name="category" className="edit-item-type-form-box-control" value={product.category} onChange={event => setProduct(prev => ({...prev, category : event.target.value}))}>
                                         <option value='none'>-----</option>
 
                                         <option value='women clothes'>女装</option>
@@ -187,23 +192,25 @@ const EditProduct = () => {
                                     </select>
                                 </div>
 
-                                <div className='form'>
-                                    <label>标题</label>
-                                    <input 
+                                <div className='edit-product-title-area-box'>
+                                    <h4>标题</h4>
+                                    <TextareaAutosize 
+                                        className='edit-product-text-area-box'
                                         value={product.title}
                                         onChange={event => setProduct(prev => ({...prev, title : event.target.value}))}
                                         placeholder='输入标题' required/>
                                 </div>
 
-                                <div className='form'>
-                                    <label>描述</label>
-                                    <input 
+                                <div className='edit-product-title-area-box'>
+                                    <h4>描述</h4>
+                                    <TextareaAutosize 
+                                        className='edit-product-desc-area-box'
                                         value={product.description}
                                         onChange={event => setProduct(prev => ({...prev, description : event.target.value}))}
                                         placeholder='输入描述'/>
                                 </div>
 
-                                <div className='form-table'>
+                                <div className='edit-product-form-table'>
                                     <table>
                                         <tr>
                                             <th>规格</th>
@@ -255,7 +262,7 @@ const EditProduct = () => {
                                                 </td>
 
                                                 <td>
-                                                    <button onClick={event => deleteSpec(index, event)}>-</button>
+                                                    <button className='edit-delete-spec-button' onClick={event => deleteSpec(index, event)}>-</button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -266,15 +273,17 @@ const EditProduct = () => {
                                     <button onClick={addSpec}>+</button>
                                 </div>
 
-                                <div className='button-submit-box'>
-                                    <button onSubmit={submitProduct} type='submit' className='button-submit'>提交</button>
-                                    <button onClick={() => navigate('/sellerHome')} lassName='button-submit'>取消</button>
+                                <div className='edit-button-submit-box'>
+                                    <button onSubmit={submitProduct} type='submit' className='edit-product-button-submit'>提交</button>
+                                    <button onClick={() => navigate('/sellerHome')} className='cancel-edit-product-button-submit'>取消</button>
                                 </div>
 
                             </form>
                         </div>
 
-                }                 
+                }          
+
+                </div>       
                 {console.log(product)}
             <Footer />
             
