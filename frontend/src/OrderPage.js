@@ -3,7 +3,7 @@ import './OrderPage.css'
 import React from 'react'
 import Footer from './Components/Footer'
 import Header from './Components/Header'
-import OrderPages from './OrderPages'
+import OrderPages from './Components/OrderPages'
 
 const OrderPage = () => {
 
