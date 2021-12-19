@@ -436,15 +436,26 @@ const OrderStatusListPage = ({ status, time, description}) => {
                     <Dialog open={open} onClose={handleClose}>
                         <DialogTitle>评价</DialogTitle>
                         <DialogContent>
-                            <Rating
-                                name="simple-controlled"
+                            <Rating sx={{ml: '130px'}}
+                                name="rating"
                                 value={value}
                                 onChange={(event, newValue) => {
                                     setValue(newValue);
                                 }}
                             />
-                        </DialogContent>
-                        <DialogContent>
+
+                            <div className='form-image-group'>
+                                <h5>图片</h5>
+
+                                <div className='form-image-input'>
+                                    <input
+                                        name={images}
+                                        onChange={event => setImages(event.target.files[0])}
+                                        type="file"
+                                        required />
+                                </div>
+                            </div>
+
                             <DialogContentText>
                                 请输入评价：
                             </DialogContentText>
@@ -457,6 +468,7 @@ const OrderStatusListPage = ({ status, time, description}) => {
                                 fullWidth
                                 variant="standard"
                             />
+
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose}>取消</Button>
