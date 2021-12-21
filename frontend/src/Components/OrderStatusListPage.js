@@ -32,6 +32,7 @@ const OrderStatusListPage = ({ status, time, description}) => {
     const [open, setOpen] = React.useState(false);
     const [open1, setOpen1] = React.useState(false);
     const [value, setValue] = React.useState(0);
+    const [images, setImages] = useState([])
 
     const handleClickOpen = () => {
         setOpen(true);
