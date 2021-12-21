@@ -8,7 +8,7 @@ import OrderPages from './Components/OrderPages'
 const OrderPage = () => {
 
     return (
-        <div>
+        <div className='orderpage-box'>
             <Header />
 
             <div className='head'>
@@ -16,10 +16,13 @@ const OrderPage = () => {
             </div>
 
             <OrderPages />
-            <Footer />
+
+            <div className='styleFooter'>
+                <Footer />
+            </div>
         </div>
     )
-    
+
 }
 
 export default OrderPage
