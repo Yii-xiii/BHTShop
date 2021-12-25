@@ -550,6 +550,12 @@ class Api {
 	}
 
 	//ReturnRequest CRUD
+	getSellerLatestReturnRequestList = async (sellerId) => {
+		//404 : seller not found
+		let data = await this.get(`/orders/return_requests/sellers/${sellerId}/latest_list/`);
+		return data;
+	}
+
 	getCustomerLatestReturnRequestList = async (customerId) => {
 		//404 : customer not found
 		let data = await this.get(`/orders/return_requests/customers/${customerId}/latest_list/`);

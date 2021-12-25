@@ -285,6 +285,18 @@ def get_return_request_list(request):
 	reqs = ReturnRequest.objects.all()
 	return returnJson([dict(req.body()) for req in reqs])
 
+def get_seller_latest_return_request_list(request, sellerId):
+	try:
+		seller = Seller.objects.get(id=sellerId)
+	except Seller.DoesNotExist:
+		return returnJson([],0,0,404)
+
+	products = Product.objects.filter(seller=seller)
+	specs = ProductSpec.objects.filter(product__in=products)
+	orders = Order.objects.filter(productSpec__in=specs)
+
+	reqs = ReturnRequest.objects.filter(order__in=orders).order_by('-id')
+	return returnJson([dict(req.body()) for req in reqs])
 
 def get_customer_latest_return_request_list(request, customerId):
 	try:
