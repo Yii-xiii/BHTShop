@@ -4,7 +4,6 @@ import React from 'react'
 import api from './Api'
 import { useParams } from 'react-router'
 import { useState, useEffect } from 'react'
-import Cookies from 'js-cookie'
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -28,39 +27,48 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import Radio from '@mui/material/Radio';
-import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
+import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 const OrderStatusListPage = ({ statusId, status, time, description }) => {
     const { orderId } = useParams()
-    const [open, setOpen] = React.useState(false);
-    const [open1, setOpen1] = React.useState(false);
-    const [open2, setOpen2] = React.useState(false);
-    const [open3, setOpen3] = React.useState(false);
-    const [value1, setValue1] = React.useState(0);
-    const [des1, setDes1] = useState('不想要了');
-    const [des2, setDes2] = useState('确认收货');
-    const [des3, setDes3] = useState('incorrect product');
+    const [open, setOpen] = useState(false);
+    const [open1, setOpen1] = useState(false);
+    const [open2, setOpen2] = useState(false);
+    const [open3, setOpen3] = useState(false);
+    const [des3, setDes3] = useState([]);
     const [des4, setDes4] = useState([]);
-    const [refundflag, setRefundflag] = useState(0);
-    const [returningflag, setReturningflag] = useState(0);
-    const [orders, setOrders] = useState([])
     const [orderStatus, setOrderStatus] = useState([])
+    const [comment, setComment] = useState([])
+    const [orders, setOrders] = useState([])
+    const [refundflag, setRefundflag] = useState(0);
+    const [refundpendingflag, setRefundpendingflag] = useState(0);
+    const [refundfailedflag, setRefundfailedflag] = useState(0);
+    const [receivedflag, setReceivedflag] = useState(0);
+    const [returningflag, setReturningflag] = useState(0);
+    const [returnedflag, setReturnedflag] = useState(0);
+    const [returningfailedflag, setReturningfailedflag] = useState(0);
+    const [returningpendingflag, setReturningpendingflag] = useState(0);
+    const [ratevalue, setRatevalue] = useState(0);
 
-    const confirmReceived = async (reason, description) => {
-        console.log(orderId, reason, description)
-        const data = await api.createReturnRequest(orderId, reason, description)
-        console.log(data)
-        window.location.reload(false)
+    const fetchOrderStatus = async () => {
+        const data = await api.getLatestOrderStatus(orderId)
+        console.log(data.data[0]);
+        return data.data[0]
     }
 
-    const confirmReceived1 = async (reason, description) => {
-        console.log(orderId, reason, description)
-        const data = await api.customerUpdateReturnRequest(orderId, reason, description)
-        console.log(data)
-        window.location.reload(false)
+    const fetchOrders = async () => {
+        const data = await api.getReturnRequest(orderId)
+        console.log(data.data[0])
+        return data.data
+    }
+
+    const fetchComment = async () => {
+        const data = await api.getOrderComment(orderId)
+        console.log(data.data[0])
+        return data.data
     }
 
     const handleClickOpen = () => {
@@ -95,27 +103,32 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
         setOpen3(false);
     };
 
-    const handleTypeChange3 = (event) => {
-        setDes4(event.target.value)
-        console.log(des4);
-    }
-
     const handleTypeChange2 = (event) => {
         setDes3(event.target.value)
         console.log(des3);
     }
 
-    const handleTypeChange1 = (event) => {
-        setDes2(event.target.value)
-        console.log(des2);
+    const confirmReceived = async (reason, description) => {
+        console.log(orderId, reason, description)
+        const data = await api.createReturnRequest(orderId, reason, description)
+        console.log(data)
+        window.location.reload(false)
     }
 
-    const handleTypeChange = (event, value) => {
-        setDes1(value)
-        console.log(des1);
+    const confirmReceived1 = async (reason, description) => {
+        console.log(orderId, reason, description)
+        const data = await api.customerUpdateReturnRequest(orderId, reason, description)
+        console.log(data)
+        window.location.reload(false)
     }
 
-    //new refund requests
+    const deleteRequest = async () => {
+        console.log(orderId)
+        const data = await api.customerDeleteReturnRequest(orderId)
+        console.log(data)
+        window.location.reload(false)
+    }
+
     const newRefundStatus = async (reason, description) => {
         console.log(orderId, reason, description)
         const data = await api.createReturnRequest(orderId, reason, description)
@@ -125,30 +138,14 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
 
     const newComment = async (des, rating) => {
         if (rating === 0) {
-            console.log("error");
-            console.log(status);
+            return (
+                console.log("please enter rating")
+            )
         }
-        else {
-            console.log(orderId, des, rating);
-            const data = await api.createProductComment(orderId, des, rating)
-            console.log(data)
-            window.location.reload(false)
-        }
-    }
-
-
-    //check the order with or without refund/return requests
-    const fetchOrders = async () => {
-        const data = await api.getReturnRequest(orderId)
-        console.log(data.data[0])
-        return data.data
-    }
-
-    //get the latest order status to check send in status is the latest or not
-    const fetchOrderStatus = async () => {
-        const data = await api.getLatestOrderStatus(orderId)
-        console.log(data.data[0]);
-        return data.data[0]
+        console.log(orderId, des, rating);
+        const data = await api.createProductComment(orderId, des, rating)
+        console.log(data)
+        window.location.reload(false)
     }
 
     useEffect(() => {
@@ -156,16 +153,136 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
             const ordersFromServer = await fetchOrders()
             setOrders(ordersFromServer)
         }
+
         const getOrderStatus = async () => {
             const orderStatusFromServer = await fetchOrderStatus()
             setOrderStatus(orderStatusFromServer)
         }
 
+        const getComment = async () => {
+            const commentFromServer = await fetchComment()
+            setComment(commentFromServer)
+        }
+
+
         getOrders()
         getOrderStatus()
+        getComment()
     }, [])
 
-    function CompletedTimelinewithComment() {
+    function ReturningTimeline() {
+        return (
+            <div className='timeline-box'>
+                <Timeline>
+                    <TimelineItem>
+                        <TimelineContent
+                            sx={{ mt: '15px', mr: '0px', ml: '0px' }}
+                            align="right"
+                            variant="body2"
+                            color="text.secondary"
+                        >{time}</TimelineContent>
+                        <TimelineSeparator>
+                            <TimelineDot>
+                                <img className='ReturningIcon-logo' src={ReturningIcon} alt='returning' width="25" />
+                            </TimelineDot>
+                            <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent sx={{ mt: '10px' }}>
+                            <Typography variant="h6" component="span">
+                                退货中
+                            </Typography>
+                            <Typography>{description}</Typography>
+                        </TimelineContent>
+                    </TimelineItem>
+                </Timeline>
+            </div>
+        );
+    }
+
+    function ReturnedTimeline() {
+        return (
+            <div className='timeline-box'>
+                <Timeline>
+                    <TimelineItem>
+                        <TimelineContent
+                            sx={{ mt: '15px', mr: '0px', ml: '0px' }}
+                            align="right"
+                            variant="body2"
+                            color="text.secondary"
+                        >{time}</TimelineContent>
+                        <TimelineSeparator>
+                            <TimelineDot>
+                                <img className='ReturnedIcon-logo' src={ReturnedIcon} alt='returned' width="25" />
+                            </TimelineDot>
+                            <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent sx={{ mt: '10px' }}>
+                            <Typography variant="h6" component="span">
+                                已退货
+                            </Typography>
+                            <Typography>{description}</Typography>
+                        </TimelineContent>
+                    </TimelineItem>
+                </Timeline>
+            </div>
+        );
+    }
+
+    function ReturningPendingTimeline() {
+        return (
+            <div className='timeline-box'>
+                <Timeline>
+                    <TimelineItem>
+                        <TimelineContent
+                            sx={{ mt: '15px', mr: '0px', ml: '0px' }}
+                            align="right"
+                            variant="body2"
+                            color="text.secondary"
+                        >{time}</TimelineContent>
+                        <TimelineSeparator>
+                            <TimelineDot>
+                                <img className='ReturningIcon-logo' src={ReturningIcon} alt='returning' width="25" />
+                            </TimelineDot>
+                            <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent sx={{ mt: '10px' }}>
+                            <Typography variant="h6" component="span">
+                                申请退货中
+                            </Typography>
+                            <Typography>Return Pending</Typography>
+                        </TimelineContent>
+                    </TimelineItem>
+                </Timeline>
+
+                <div>
+                    <div className='deliveredbox1'>
+                        <Button size="small" variant="contained" onClick={handleClickOpen3}>取消退货</Button>
+                        <Dialog
+                            open={open3}
+                            onClose={handleClose3}
+                            aria-labelledby="confirm-dialog-title"
+                            aria-describedby="confirm-dialog-description"
+                        >
+                            <DialogTitle id="confirm-dialog-title">
+                                {"取消退货操作"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="confirm-dialog-description">
+                                    确认取消退货吗？
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose2}>取消</Button>
+                                <Button onClick={() => deleteRequest()}>确认</Button>
+                            </DialogActions>
+                        </Dialog>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    function CompletedTimelinewithoutButton() {
         return (
             <div className='timeline-box'>
                 <Timeline>
@@ -195,7 +312,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
         );
     }
 
-    function CompletedTimeline() {
+    function CompletedTimelinewithButton() {
         return (
             <div className='timeline-box'>
                 <Timeline>
@@ -230,9 +347,9 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         <DialogContent>
                             <Rating sx={{ ml: '40px' }}
                                 name="rating"
-                                value={value1}
+                                value={ratevalue}
                                 onChange={(event) => {
-                                    setValue1(event.target.value);
+                                    setRatevalue(event.target.value);
                                 }}
                             />
 
@@ -255,7 +372,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose3}>取消</Button>
-                            <Button onClick={() => newComment(des4, value1)}>提交</Button>
+                            <Button onClick={() => newComment(des4, ratevalue)}>提交</Button>
                         </DialogActions>
                     </Dialog>
                 </div>
@@ -263,7 +380,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
         );
     }
 
-    function ApplyReturningTimeline() {
+    function DeliveredTimelinewithConfirmButton() {
         return (
             <div className='timeline-box'>
                 <Timeline>
@@ -276,155 +393,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         >{time}</TimelineContent>
                         <TimelineSeparator>
                             <TimelineDot>
-                                <img className='ReturningIcon-logo' src={ReturningIcon} alt='returning' width="25" />
-                            </TimelineDot>
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent sx={{ mt: '10px' }}>
-                            <Typography variant="h6" component="span">
-                                申请退货中
-                            </Typography>
-                            <Typography>{description}</Typography>
-                        </TimelineContent>
-                    </TimelineItem>
-                </Timeline>
-            </div>
-        );
-    }
-
-    function FailedReturnTimeline() {
-        return (
-            <div className='timeline-box'>
-                <Timeline>
-                    <TimelineItem>
-                        <TimelineContent
-                            sx={{ mt: '15px', mr: '0px', ml: '0px' }}
-                            align="right"
-                            variant="body2"
-                            color="text.secondary"
-                        >{time}</TimelineContent>
-                        <TimelineSeparator>
-                            <TimelineDot>
-                                <img className='ReturningIcon-logo' src={ReturningIcon} alt='returning' width="25" />
-                            </TimelineDot>
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent sx={{ mt: '10px' }}>
-                            <Typography variant="h6" component="span">
-                                申请退货失败
-                            </Typography>
-                            <Typography>{description}</Typography>
-                        </TimelineContent>
-                    </TimelineItem>
-                </Timeline>
-            </div>
-        );
-    }
-
-    function ReturningTimeline() {
-        return (
-            <div className='timeline-box'>
-                <Timeline>
-                    <TimelineItem>
-                        <TimelineContent
-                            sx={{ mt: '15px', mr: '0px', ml: '0px' }}
-                            align="right"
-                            variant="body2"
-                            color="text.secondary"
-                        >{time}</TimelineContent>
-                        <TimelineSeparator>
-                            <TimelineDot>
-                                <img className='ReturningIcon-logo' src={ReturningIcon} alt='returning' width="25" />
-                            </TimelineDot>
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent sx={{ mt: '10px' }}>
-                            <Typography variant="h6" component="span">
-                                退货中
-                            </Typography>
-                            <Typography>{description}</Typography>
-                        </TimelineContent>
-                    </TimelineItem>
-                </Timeline>
-            </div>
-        );
-
-    }
-
-    function ReturnedTimeline() {
-        return (
-            <div className='timeline-box'>
-                <Timeline>
-                    <TimelineItem>
-                        <TimelineContent
-                            sx={{ mt: '15px', mr: '0px', ml: '0px' }}
-                            align="right"
-                            variant="body2"
-                            color="text.secondary"
-                        >{time}</TimelineContent>
-                        <TimelineSeparator>
-                            <TimelineDot>
-                                <img className='ReturnedIcon-logo' src={ReturnedIcon} alt='returned' width="25" />
-                            </TimelineDot>
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent sx={{ mt: '10px' }}>
-                            <Typography variant="h6" component="span">
-                                已退货
-                            </Typography>
-                            <Typography>{description}</Typography>
-                        </TimelineContent>
-                    </TimelineItem>
-                </Timeline>
-            </div>
-        );
-
-    }
-
-    function DeliveredwithoutButton() {
-        return (
-            <div className='timeline-box'>
-                <Timeline>
-                    <TimelineItem>
-                        <TimelineContent
-                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
-                            align="right"
-                            variant="body2"
-                            color="text.secondary"
-                        >{time}</TimelineContent>
-                        <TimelineSeparator>
-                            <TimelineDot>
-                                <img className='DeliveredIcon-logo' src={DeliveredIcon} alt='delivered' width="25" />
-                            </TimelineDot>
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent sx={{ mt: '10px' }}>
-                            <Typography variant="h6" component="span">
-                                已签收
-                            </Typography>
-                            <Typography>{description}</Typography>
-                        </TimelineContent>
-                    </TimelineItem>
-                </Timeline>
-            </div>
-        );
-
-    }
-
-    function DeliveredwithButtonReceivedOnly() {
-        return (
-            <div className='timeline-box'>
-                <Timeline>
-                    <TimelineItem>
-                        <TimelineContent
-                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
-                            align="right"
-                            variant="body2"
-                            color="text.secondary"
-                        >{time}</TimelineContent>
-                        <TimelineSeparator>
-                            <TimelineDot>
-                                <img className='DeliveredIcon-logo' src={DeliveredIcon} alt='delivered' width="25" />
+                                <img className='DoneIcon-logo' src={DoneIcon} alt='done' width="25" />
                             </TimelineDot>
                             <TimelineConnector />
                         </TimelineSeparator>
@@ -443,7 +412,6 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         <Dialog
                             open={open2}
                             onClose={handleClose2}
-                            onChange={handleTypeChange3}
                             aria-labelledby="confirm-dialog-title"
                             aria-describedby="confirm-dialog-description"
                         >
@@ -462,12 +430,43 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         </Dialog>
                     </div>
                 </div>
+
             </div>
         );
     }
 
-    function DeliveredwithButton() {
-        return(
+    function DeliveredTimelinewithoutButton() {
+        return (
+            <div className='timeline-box'>
+                <Timeline>
+                    <TimelineItem>
+                        <TimelineContent
+                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
+                            align="right"
+                            variant="body2"
+                            color="text.secondary"
+                        >{time}</TimelineContent>
+                        <TimelineSeparator>
+                            <TimelineDot>
+                                <img className='DeliveredIcon-logo' src={DeliveredIcon} alt='delivered' width="25" />
+                            </TimelineDot>
+                            <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent sx={{ mt: '10px' }}>
+                            <Typography variant="h6" component="span">
+                                已签收
+                            </Typography>
+                            <Typography>{description}</Typography>
+                        </TimelineContent>
+                    </TimelineItem>
+                </Timeline>
+            </div>
+        );
+
+    }
+
+    function DeliveredTimelinewithButton() {
+        return (
             <div className='timeline-box'>
                 <Timeline>
                     <TimelineItem>
@@ -498,7 +497,6 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         <Dialog
                             open={open}
                             onClose={handleClose}
-                            onChange={handleTypeChange1}
                             aria-labelledby="confirm-dialog-title"
                             aria-describedby="confirm-dialog-description"
                         >
@@ -529,6 +527,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                                     <RadioGroup
                                         aria-label="reason"
                                         name="radio-buttons-group"
+                                        defaultValue="incorrect product"
                                         value={des3}
                                         onChange={handleTypeChange2}
                                     >
@@ -582,72 +581,102 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                 </Timeline>
             </div>
         );
-
     }
 
-    function RefundingTimeline() {
-        return (
-            <div className='timeline-box'>
-                <div className='timeline-box1'>
-                    <Timeline>
-                        <TimelineItem>
-                            <TimelineContent
-                                sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
-                                align="right"
-                                variant="body2"
-                                color="text.secondary"
-                            >{time}</TimelineContent>
-                            <TimelineSeparator>
-                                <TimelineDot>
-                                    <img className='PaidIcon-logo' src={PaidIcon} alt='paid' width="25" />
-                                </TimelineDot>
-                                <TimelineConnector />
-                            </TimelineSeparator>
-                            <TimelineContent sx={{ mt: '10px' }}>
-                                <Typography variant="h6" component="span">
-                                    已付款
-                                </Typography>
-                                <Typography>{description}</Typography>
-                            </TimelineContent>
-                        </TimelineItem>
-                    </Timeline>
-                </div>
-
-                <div className='timeline-box2'>
-                    <Timeline>
-                        <TimelineItem>
-                            <TimelineContent
-                                sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
-                                align="right"
-                                variant="body2"
-                                color="text.secondary"
-                            >{time}</TimelineContent>
-                            <TimelineSeparator>
-                                <TimelineDot>
-                                    <img className='RefundingIcon-logo' src={RefundingIcon} alt='returning' width="25" />
-                                </TimelineDot>
-                                <TimelineConnector />
-                            </TimelineSeparator>
-                            <TimelineContent sx={{ mt: '10px' }}>
-                                <Typography variant="h6" component="span">
-                                    退款中
-                                </Typography>
-                                <Typography>{orders.description}</Typography>
-                            </TimelineContent>
-                        </TimelineItem>
-                    </Timeline>
-                </div>
-            </div>
-        )
-    }
-
-    function PaidwithoutButton() {
+    function RefundSuccessTimeline() {
         return (
             <div className='timeline-box'>
                 <Timeline>
                     <TimelineItem>
                         <TimelineContent
-                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '0px' }}
+                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
+                            align="right"
+                            variant="body2"
+                            color="text.secondary"
+                        >{time}</TimelineContent>
+                        <TimelineSeparator>
+                            <TimelineDot>
+                                <img className='refundIcon-logo' src={RefundingIcon} alt='refund' width="25" />
+                            </TimelineDot>
+                            <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent sx={{ mt: '10px' }}>
+                            <Typography variant="h6" component="span">
+                                退款成功
+                            </Typography>
+                            <Typography>Refunded.</Typography>
+                        </TimelineContent>
+                    </TimelineItem>
+                </Timeline>
+            </div>
+        );
+    }
+
+    function RefundFailedTimeline() {
+        return (
+            <div className='timeline-box'>
+                <Timeline>
+                    <TimelineItem>
+                        <TimelineContent
+                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
+                            align="right"
+                            variant="body2"
+                            color="text.secondary"
+                        >{time}</TimelineContent>
+                        <TimelineSeparator>
+                            <TimelineDot>
+                                <img className='PaidIcon-logo' src={PaidIcon} alt='paid' width="25" />
+                            </TimelineDot>
+                            <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent sx={{ mt: '10px' }}>
+                            <Typography variant="h6" component="span">
+                                退款失败
+                            </Typography>
+                            <Typography>Failed Refunding.</Typography>
+                        </TimelineContent>
+                    </TimelineItem>
+                </Timeline>
+            </div>
+        );
+    }
+
+    function RefundPendingTimeline() {
+        return (
+            <div className='timeline-box'>
+                <Timeline>
+                    <TimelineItem>
+                        <TimelineContent
+                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
+                            align="right"
+                            variant="body2"
+                            color="text.secondary"
+                        >{time}</TimelineContent>
+                        <TimelineSeparator>
+                            <TimelineDot>
+                                <img className='refundingIcon-logo' src={RefundingIcon} alt='refunding' width="25" />
+                            </TimelineDot>
+                            <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent sx={{ mt: '10px' }}>
+                            <Typography variant="h6" component="span">
+                                申请退款中
+                            </Typography>
+                            <Typography>Refunding.</Typography>
+                        </TimelineContent>
+                    </TimelineItem>
+                </Timeline>
+            </div>
+        );
+    }
+
+    function PaidTimelinewithoutButton() {
+        return (
+            <div className='timeline-box'>
+                <Timeline>
+                    <TimelineItem>
+                        <TimelineContent
+                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
                             align="right"
                             variant="body2"
                             color="text.secondary"
@@ -667,16 +696,16 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                     </TimelineItem>
                 </Timeline>
             </div>
-        )
+        );
     }
 
-    function PaidwithButton() {
+    function PaidTimelinewithButton() {
         return (
             <div className='timeline-box'>
                 <Timeline>
                     <TimelineItem>
                         <TimelineContent
-                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '0px' }}
+                            sx={{ mt: '15px', mr: '0px', ml: '0px', mb: '10px' }}
                             align="right"
                             variant="body2"
                             color="text.secondary"
@@ -695,25 +724,28 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         </TimelineContent>
                     </TimelineItem>
                 </Timeline>
-
 
                 <div className='refundbox'>
                     <Button size="small" variant="contained" onClick={handleClickOpen}>
-                        退款申请
+                        退款
                     </Button>
                     <Dialog open={open} onClose={handleClose}>
                         <DialogTitle>退款申请</DialogTitle>
                         <DialogContent>
-                            <FormControl component="refundoption">
-                                <FormLabel component="refund-option">请选择退款原因：</FormLabel>
+                            <DialogContentText>
+                                请选择退款原因：
+                            </DialogContentText>
+                            <FormControl component="fieldset">
+                                <FormLabel component="reasons">原因</FormLabel>
                                 <RadioGroup
-                                    aria-label="reason"
+                                    aria-label="refund-reason"
+                                    defaultValue="不想要了"
+                                    //value={des1}
                                     name="radio-buttons-group"
-                                    value={des1}
-                                    onChange={handleTypeChange}
+                                    //onChange={handleTypeChange}
                                 >
                                     <FormControlLabel value="不想要了" control={<Radio />} label="不想要了" />
-                                    <FormControlLabel value="未按约定发货" control={<Radio />} label="未按约定发货" />
+                                    <FormControlLabel value="未按约定时间发货" control={<Radio />} label="未按约定时间发货" />
                                     <FormControlLabel value="拍错了" control={<Radio />} label="拍错了" />
                                     <FormControlLabel value="其他" control={<Radio />} label="其他" />
                                 </RadioGroup>
@@ -721,10 +753,163 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose}>取消</Button>
-                            <Button onClick={() => newRefundStatus("others", "refunding")}>提交</Button>
+                            <Button onClick={ () => newRefundStatus("others", "refunding")}>提交</Button>
                         </DialogActions>
                     </Dialog>
                 </div>
+            </div>
+        );
+    }
+
+    function GetReturned() {
+        return (
+            <div>
+                <CheckReturned />
+                {(returnedflag === 0) ? <DeliveredTimelinewithButton /> : console.log("returned success status has changed to returned")}
+            </div>
+        )
+    }
+
+    function GetReturningpendingstatus() {
+        return (
+            <div>
+                <CheckReturningpendingstatus />
+                {(returningpendingflag === 1) ?
+                    <div>
+                        <CompletedTimelinewithoutButton />
+                        <ReturningPendingTimeline />
+                    </div>
+                    : console.log("returning success as the order status has changed to returning")}
+            </div>
+        )
+    }
+
+    function GetReturningfailedstatus() {
+        return (
+            <div>
+                <CheckReturningfailedstatus />
+                {(returningfailedflag === 1) ? <DeliveredTimelinewithConfirmButton /> : <GetReturningpendingstatus />}
+            </div>
+        )
+    }
+
+    function GetReturning() {
+        return (
+            <div>
+                <CheckReturning />
+                {(returningflag === 1)? <GetReturningfailedstatus />: <GetReturned />}
+            </div>
+        )
+    }
+
+    function CheckComment() {
+        return (
+            <div className='order-statuslist-box'>
+                {comment.length > 0 ? <CompletedTimelinewithoutButton /> : <CompletedTimelinewithButton />}
+            </div>
+        )
+    }
+
+    function CheckReturned() {
+        return (
+            <div className='order-statuslist-box'>
+                {orders.length > 0 ? orders.map((order, index) => (
+                    //setRefunddes(order.description)
+                    (order.description === 'returned') ? setReturnedflag(1) : setReturnedflag(0)
+                    //console.log(order.description)
+                )) : console.log("wrong status")}
+            </div>
+        )
+    }
+
+    function CheckReturningpendingstatus() {
+        return (
+            <div className='order-statuslist-box'>
+                {orders.length > 0 ? orders.map((order, index) => (
+                    //setRefunddes(order.description)
+                    (order.status === 'pending') ? setReturningpendingflag(1) : setReturningpendingflag(0)
+                    //console.log(order.description)
+                )) : console.log("wrong status")}
+            </div>
+        )
+    }
+
+    function CheckReturningfailedstatus() {
+        return (
+            <div className='order-statuslist-box'>
+                {orders.length > 0 ? orders.map((order, index) => (
+                    //setRefunddes(order.description)
+                    (order.status === 'failed') ? setReturningfailedflag(1) : setReturningfailedflag(0)
+                    //console.log(order.description)
+                )) : console.log("wrong status")}
+            </div>
+        )
+    }
+
+    function CheckReturning() {
+        return (
+            <div className='order-statuslist-box'>
+                {orders.length > 0 ? orders.map((order, index) => (
+                    //setRefunddes(order.description)
+                    (order.description === 'returning') ? setReturningflag(1) : setReturningflag(0)
+                    //console.log(order.description)
+                )) : console.log("wrong status")}
+            </div>
+        )
+    }
+
+    function CheckReceived() {
+        return (
+            <div className='order-statuslist-box'>
+                {orders.length > 0 ? orders.map((order, index) => (
+                    //setRefunddes(order.description)
+                    (order.description === 'received') ? setReceivedflag(1) : setReceivedflag(0)
+                    //console.log(order.description)
+                )) : console.log("wrong status")}
+            </div>
+        )
+    }
+
+    function CheckRefundFailedstatus() {
+        return (
+            <div className='order-statuslist-box'>
+                {orders.length > 0 ? orders.map((order, index) => (
+                    //setRefundTime(order.time)
+                    (order.status === 'failed') ? setRefundfailedflag(1) : setRefundfailedflag(0)
+                    //console.log(order.time)
+                )) : console.log("wrong status")}
+            </div>
+        )
+    }
+
+    function CheckRefundPendingstatus() {
+        return (
+            <div className='order-statuslist-box'>
+                {orders.length > 0 ? orders.map((order, index) => (
+                    //setRefundTime(order.time)
+                    (order.status === 'pending') ? setRefundpendingflag(1) : setRefundpendingflag(0)
+                    //console.log(order.time)
+                )) : console.log("wrong status")}
+            </div>
+        )
+    }
+
+    function CheckRefundFailed() {
+        return (
+            <div>
+                <CheckRefundFailedstatus />
+                <RefundPendingTimeline />
+                {(refundfailedflag === 1) ? <RefundFailedTimeline /> : <RefundSuccessTimeline />}
+            </div>
+        )
+    }
+
+    function CheckRefundPending() {
+        return (
+            <div>
+                <CheckRefundPendingstatus />
+                <PaidTimelinewithoutButton />
+                {(refundpendingflag === 1) ? <RefundPendingTimeline /> : <CheckRefundFailed />}
             </div>
         )
     }
@@ -734,71 +919,24 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
             <div className='order-statuslist-box'>
                 {orders.length > 0 ? orders.map((order, index) => (
                     //setRefunddes(order.description)
-                    (order.description === 'refunding')?setRefundflag(1):setRefundflag(0)
-                )) : console.log("wrong status") }
-            </div>
-        )
-    }
-
-    function CheckReturning() {
-        return (
-            <div className='order-statuslist-box'>
-                {orders.length > 0 ? orders.map((order, index) => (
-                    //<h1>{order.description}</h1>
-                    (order.description === 'received') ? setReturningflag(1) : setReturningflag(0)
-                )) : console.log("wrong status")}
-            </div>
-        )
-    }
-
-    function CheckReturnFailedorSuccess() {
-        return (
-            <div className='order-statuslist-box'>
-                {orders.length > 0 ? orders.map((order, index) => (
-                    (order.status === 'failed') ?
-                        <div>
-                            <FailedReturnTimeline />
-                            <DeliveredwithButtonReceivedOnly />
-                        </div>
-                        :
-                        <div>
-                            <ApplyReturningTimeline />
-                            <ReturningTimeline />
-                        </div>
-                )) : console.log("wrong status")}
-            </div>
-        )
-    }
-
-    function CheckReturningStatus() {
-        return (
-            <div className='order-statuslist-box'>
-                {orders.length > 0 ? orders.map((order, index) => (
-                    //<h1>{order.description}</h1>
-                    (order.status === 'pending') ?
-                        <div>
-                            <DeliveredwithoutButton />
-                            <ApplyReturningTimeline />
-                        </div>
-                        : <CheckReturnFailedorSuccess />
+                    (order.description === 'refunding') ? setRefundflag(1) : setRefundflag(0)
+                    //console.log(order.description)
                 )) : console.log("wrong status")}
             </div>
         )
     }
 
     if (status === 'paid') {
-        // if orderStatus.status != status means not lastest status, do not need refund button
         if (orderStatus.status != status) {
             return (
-                <PaidwithoutButton />
+                <PaidTimelinewithoutButton />
             )
         }
-        // else means just reach paid (with refund button) or waiting refund
         else {
             return (
                 <div>
                     <CheckRefunding />
-                    {(refundflag === 1) ? <RefundingTimeline /> : <PaidwithButton />}
+                    {(refundflag === 1) ? <CheckRefundPending /> : < PaidTimelinewithButton />}
                 </div>
             )
         }
@@ -806,56 +944,56 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
     else if (status === 'shipped') {
         return (
             <ShippedTimeline />
-        );
+        )
     }
     else if (status === 'delivered') {
         if (orderStatus.status != status) {
             return (
-                <DeliveredwithoutButton />
-            )
-        }
-        else if (orders.length === 0) {
-            return (
-                <DeliveredwithButton />
+                <DeliveredTimelinewithoutButton />
             )
         }
         else {
             return (
                 <div>
-                    <CheckReturning />
-
-                    {(returningflag === 1) ?
+                    <CheckReceived />
+                    {(receivedflag === 1) ?
                         <div>
-                            <DeliveredwithoutButton />
-                            <CompletedTimeline />
+                            <DeliveredTimelinewithoutButton />
+                            <CompletedTimelinewithButton />
                         </div>
-                        : <CheckReturningStatus />}
+                        : <GetReturning />}
                 </div>
             )
         }
     }
     else if (status === 'returning') {
         return (
-            <ReturningTimeline />
+            <div>
+                <ReturningTimeline />
+            </div>
         )
     }
     else if (status === 'returned') {
         return (
-            <ReturnedTimeline />
+            <div>
+                <ReturnedTimeline />
+            </div>
         )
     }
     else if (status === 'completed') {
         return (
             <div>
-                <CompletedTimeline />
+                <CheckComment />
             </div>
         )
     }
-    
 
     return (
-        <div><span>wrong status</span></div>
+        <div>
+            <span>wrong status</span>
+        </div>
     )
+
 }
 
 export default OrderStatusListPage
