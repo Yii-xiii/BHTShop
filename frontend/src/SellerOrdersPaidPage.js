@@ -10,9 +10,7 @@ import Header from './Components/Header'
 import Footer from './Components/Footer'
 import api from './Components/Api'
 import { useState, useEffect } from 'react'
-import './SellerOrdersPaidPage.css'
 import SellerOrdersPaidList from './Components/SellerOrdersPaidList'
-import SellerOrdersChangeStatus from './Components/SellerOrdersChangeStatus'
 
 const SellerOrdersPaidPage = () => {
     const [value, setValue] = React.useState(0);
