@@ -38,7 +38,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
     const [open1, setOpen1] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [open3, setOpen3] = useState(false);
-    const [des3, setDes3] = useState([]);
+    const [des3, setDes3] = useState("incorrect product");
     const [des4, setDes4] = useState([]);
     const [orderStatus, setOrderStatus] = useState([])
     const [comment, setComment] = useState([])
@@ -118,6 +118,13 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
     const confirmReceived1 = async (reason, description) => {
         console.log(orderId, reason, description)
         const data = await api.customerUpdateReturnRequest(orderId, reason, description)
+        console.log(data)
+        window.location.reload(false)
+    }
+
+    const deleteRefundFailed = async () => {
+        console.log(orderId)
+        const data = await api.customerDeleteReturnRequest(orderId)
         console.log(data)
         window.location.reload(false)
     }
@@ -303,7 +310,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                             <Typography variant="h6" component="span">
                                 已完成
                             </Typography>
-                            <Typography>{description}</Typography>
+                            <Typography>Completed.</Typography>
                             <Typography>已完成评价</Typography>
                         </TimelineContent>
                     </TimelineItem>
@@ -333,7 +340,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                             <Typography variant="h6" component="span">
                                 已完成
                             </Typography>
-                            <Typography>{description}</Typography>
+                            <Typography>Completed.</Typography>
                         </TimelineContent>
                     </TimelineItem>
                 </Timeline>
@@ -456,7 +463,6 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                             <Typography variant="h6" component="span">
                                 已签收
                             </Typography>
-                            <Typography>{description}</Typography>
                         </TimelineContent>
                     </TimelineItem>
                 </Timeline>
@@ -527,7 +533,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                                     <RadioGroup
                                         aria-label="reason"
                                         name="radio-buttons-group"
-                                        defaultValue="incorrect product"
+                                        //defaultValue="incorrect product"
                                         value={des3}
                                         onChange={handleTypeChange2}
                                     >
@@ -633,7 +639,27 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                             <Typography variant="h6" component="span">
                                 退款失败
                             </Typography>
-                            <Typography>Failed Refunding.</Typography>
+                        <div className='deliveredbox3'>
+                            <Button size="small" variant="contained" onClick={handleClickOpen}>退款失败</Button>
+                                <Dialog
+                                    open={open}
+                                    onClose={handleClose}
+                                    aria-labelledby="confirm-dialog-title"
+                                    aria-describedby="confirm-dialog-description"
+                                >
+                                    <DialogTitle id="confirm-dialog-title">
+                                        {"退款失败通知"}
+                                    </DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText id="confirm-dialog-description">
+                                            退款申请失败，确认后会继续发货。
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={() => deleteRefundFailed()}>确认</Button>
+                                    </DialogActions>
+                                </Dialog>
+                            </div>
                         </TimelineContent>
                     </TimelineItem>
                 </Timeline>
@@ -776,7 +802,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                 <CheckReturningpendingstatus />
                 {(returningpendingflag === 1) ?
                     <div>
-                        <CompletedTimelinewithoutButton />
+                        <DeliveredTimelinewithoutButton />
                         <ReturningPendingTimeline />
                     </div>
                     : console.log("returning success as the order status has changed to returning")}
