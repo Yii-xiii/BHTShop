@@ -15,7 +15,8 @@
 }
 
 .seller-page-right-part-box {
-    width: 80%;
+    width: auto;
+    min-width: 470px;
     margin-left: 10px;
     background-color: #fff;
     border-radius: 20px;

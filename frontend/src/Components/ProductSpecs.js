@@ -85,9 +85,11 @@ const ProductSpecs = () => {
 
             <div className='spec-choose-box'>
                 { specs ? (specs.map((spec, index) => (
-                    <button key={index} onClick={() => changeStatus(spec.price, spec.stock, spec.id, '1')}>
-                        {spec.description}
-                    </button>
+                    <div >
+                        <button class="spec-choose-specific-box" key={index} onClick={() => changeStatus(spec.price, spec.stock, spec.id, '1')}>
+                            <span>{spec.description}</span> 
+                        </button>
+                    </div>
                 ))) : console.log('specs not found.')}
             </div>
 

@@ -30,6 +30,12 @@
     margin-top: 15px;
 }
 
+.product-title-box h3 {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .seller-product-specs {
     display: flex;
     flex-direction: column;
@@ -69,6 +75,7 @@
     margin-left: 15px;
     height: auto;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .spec-box {

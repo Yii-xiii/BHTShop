@@ -21,12 +21,16 @@
 .spec-choose-box button {
     font-size: 15px;
     width: auto;
-    height: 35px;
+    height: auto;
     margin-right: 20px;
     border-radius: 10px;
     border: 0px;
     padding: 5px 20px;
     cursor: pointer;
+}
+
+.spec-choose-specific-box {
+    height: auto;
 }
 
 .spec-choose-box button:active {

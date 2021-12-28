@@ -27,6 +27,9 @@
     margin-left: 10px;
     width: 85%;
     height: 50px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .main-info-name-box h2 {
