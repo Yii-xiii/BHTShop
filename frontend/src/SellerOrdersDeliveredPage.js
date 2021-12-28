@@ -84,14 +84,12 @@ const SellerOrdersDeliveredPage = () => {
                     <Tab label="已发货" to='/sOrders/shipped' component={Link} {...a11yProps(3)} />
                     <Tab label="已签收" disabled {...a11yProps(4)} />
                     <Tab label="待退货" to='/sOrders/returning' component={Link} {...a11yProps(5)} />
-                    <Tab label="已退货" to='/sOrders/returning' component={Link} {...a11yProps(6)} />
+                    <Tab label="已退货" to='/sOrders/returned' component={Link} {...a11yProps(6)} />
                     <Tab label="已完成" to='/sOrders/completed' component={Link} {...a11yProps(7)} />
                 </Tabs>
                 <TabPanel value={value} index={4}>
                     {orders.length > 0 ? orders.map((order, index) => (
-                        //setRefunddes(order.description)
                         <SellerOrdersDeliveredList order={order} />
-                        //console.log(order.description)
                     )) : console.log("wrong status")}
                 </TabPanel>
             </Box>
