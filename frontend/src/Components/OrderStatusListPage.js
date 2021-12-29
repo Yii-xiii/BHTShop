@@ -67,8 +67,14 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
 
     const fetchComment = async () => {
         const data = await api.getOrderComment(orderId)
-        console.log(data.data[0])
-        return data.data
+        if (data === undefined) {
+            return null;
+        }
+        else {
+            console.log(data.data[0])
+            return data.data
+        }
+        return null;
     }
 
     const handleClickOpen = () => {
@@ -639,8 +645,8 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                             <Typography variant="h6" component="span">
                                 退款失败
                             </Typography>
-                        <div className='deliveredbox3'>
-                            <Button size="small" variant="contained" onClick={handleClickOpen}>退款失败</Button>
+                            <div className='deliveredbox3'>
+                                <Button size="small" variant="contained" onClick={handleClickOpen}>退款失败</Button>
                                 <Dialog
                                     open={open}
                                     onClose={handleClose}
@@ -768,7 +774,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                                     defaultValue="不想要了"
                                     //value={des1}
                                     name="radio-buttons-group"
-                                    //onChange={handleTypeChange}
+                                //onChange={handleTypeChange}
                                 >
                                     <FormControlLabel value="不想要了" control={<Radio />} label="不想要了" />
                                     <FormControlLabel value="未按约定时间发货" control={<Radio />} label="未按约定时间发货" />
@@ -779,7 +785,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose}>取消</Button>
-                            <Button onClick={ () => newRefundStatus("others", "refunding")}>提交</Button>
+                            <Button onClick={() => newRefundStatus("others", "refunding")}>提交</Button>
                         </DialogActions>
                     </Dialog>
                 </div>
@@ -823,7 +829,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
         return (
             <div>
                 <CheckReturning />
-                {(returningflag === 1)? <GetReturningfailedstatus />: <GetReturned />}
+                {(returningflag === 1) ? <GetReturningfailedstatus /> : <GetReturned />}
             </div>
         )
     }
