@@ -38,7 +38,7 @@ const SellerOrder = ({ order }) => {
                        
                         <div className='seller-order-page-second-row'>
                             <div className='seller-order-page-second-row-image'>
-                                <img src={image? image.image_url : '0'} alt='img'/>
+                                <img className='seller-order-page-second-row-image-img' src={image? image.image_url : '0'} alt='img'/>
                             </div>
     
                             <div className='seller-order-page-second-row-desc'>
