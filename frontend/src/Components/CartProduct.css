@@ -18,6 +18,8 @@
 .cart-product-image-box img {
     position: absolute;
     min-width: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .cart-product-descriptions-box {
