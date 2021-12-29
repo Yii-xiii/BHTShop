@@ -9,9 +9,9 @@ import Header from './Components/Header'
 import Footer from './Components/Footer'
 import api from './Components/Api'
 import { useState, useEffect } from 'react'
-import SellerOrdersReturnRequestList from './Components/SellerOrdersReturnRequestList'
+import SellerOrdersReturningList from './Components/SellerOrdersReturningList'
 
-const SellerOrdersReturnRequestPage = () => {
+const SellerOrdersReturningPage = () => {
     const [value, setValue] = React.useState(5);
     const [orders, setOrders] = useState([])
 
@@ -89,7 +89,7 @@ const SellerOrdersReturnRequestPage = () => {
                 </Tabs>
                 <TabPanel value={value} index={5}>
                     {orders.length > 0 ? orders.map((order, index) => (
-                        <SellerOrdersReturnRequestList order={order} />
+                        <SellerOrdersReturningList order={order} />
                     )) : console.log("wrong status")}
                 </TabPanel>
             </Box>
@@ -98,4 +98,5 @@ const SellerOrdersReturnRequestPage = () => {
     );
 }
 
-export default SellerOrdersReturnRequestPage
+export default SellerOrdersReturningPage
+
