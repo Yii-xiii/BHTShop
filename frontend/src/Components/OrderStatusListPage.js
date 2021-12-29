@@ -143,16 +143,16 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
         window.location.reload(false)
     }
 
-    const newComment = async (des, rating) => {
-        if (rating === 0) {
-            return (
-                console.log("please enter rating")
-            )
+    const fetchComment = async () => {
+        const data = await api.getOrderComment(orderId)
+        if (data === undefined) {
+            return null;
         }
-        console.log(orderId, des, rating);
-        const data = await api.createProductComment(orderId, des, rating)
-        console.log(data)
-        window.location.reload(false)
+        else {
+            console.log(data.data[0])
+            return data.data
+        }
+        return null;
     }
 
     useEffect(() => {
