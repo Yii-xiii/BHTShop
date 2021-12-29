@@ -1,9 +1,9 @@
-﻿import Cookies from 'js-cookie'
-import './SellerOrdersReturnRequestList.css'
+import Cookies from 'js-cookie'
+import './SellerOrdersReturningList.css'
 import { useState, useEffect } from 'react'
 import api from './Api'
 
-const SellerOrdersReturnRequestList = ({ order }) => {
+const SellerOrdersReturningList = ({ order }) => {
     const [image, setImages] = useState([])
     const [returnRequest, setReturnRequest] = useState([])
     const [returnList, setReturnList] = useState([])
@@ -48,17 +48,17 @@ const SellerOrdersReturnRequestList = ({ order }) => {
         window.location.reload(false)
     }
 
-    function CheckReturnRequest() {
+    function CheckReturning() {
         if (returnRequest.length > 0) {
             return (returnRequest.map((request, index) => (
-                (request.description === 'returning' && request.status === 'pending') ? <PrintReturnRequest /> : console.log("no return request"))))
+                (request.description === 'returning' && request.status === 'pending') ? <PrintReturning /> : console.log("no return request"))))
         }
         else {
             return null;
         }
     }
 
-    function PrintReturnRequest() {
+    function PrintReturning() {
         return (
             <div className='seller-order-whole-box6'>
                 <div className='seller-order-page-box6'>
@@ -118,10 +118,9 @@ const SellerOrdersReturnRequestList = ({ order }) => {
         )
     }
 
-
     if (returnRequest.length > 0) {
         return (
-            <CheckReturnRequest />
+            <CheckReturning />
         )
     }
     else {
@@ -129,4 +128,4 @@ const SellerOrdersReturnRequestList = ({ order }) => {
     }
 }
 
-export default SellerOrdersReturnRequestList
+export default SellerOrdersReturningList
