@@ -1,0 +1,108 @@
+﻿.seller-order-page-box3 {
+    width: 240%;
+    margin-top: 30px;
+    height: auto;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.seller-order-page-description {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+.seller-order-page-first-row {
+    display: flex;
+    width: 100%;
+    font-size: 13px;
+    color: grey;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.seller-order-page-first-id {
+    align-items: flex-start;
+}
+
+.seller-order-page-second-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.seller-order-page-second-row-image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 2px solid lightgrey;
+}
+
+.seller-order-page-second-row-desc {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    margin-top: 5px;
+}
+
+.seller-order-page-second-row-details {
+    display: flex;
+    margin-top: 10px;
+    margin-left: 20px;
+    flex-direction: row;
+    height: 20px;
+}
+
+    .seller-order-page-second-row-details h4 {
+        font-size: 18px;
+        width: 60px;
+    }
+
+    .seller-order-page-second-row-details span {
+        font-size: 18px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+.seller-order-button-box {
+    margin-left: -10px;
+}
+
+.seller-order-page-second-row-buttons {
+    margin-left: -10px;
+    margin-right: 10px;
+}
+
+.seller-order-page-second-row-buttons1 {
+    margin-left: 60px;
+    margin-right: 20px;
+    margin-top: -40px;
+}
+
+.seller-order-page-second-row-edit-item-button {
+    height: 30px;
+    width: 60px;
+    background-color: lightgreen;
+    border: 0px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.seller-order-page-second-row-edit-item-button1 {
+    height: 30px;
+    width: 60px;
+    background-color: red;
+    color: white;
+    border: 0px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

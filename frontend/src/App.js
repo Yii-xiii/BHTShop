@@ -19,8 +19,11 @@ import ProductCommentsPage from './ProductCommentsPage'
 import SellerOrdersPaidPage from './SellerOrdersPaidPage';
 import SellerOrdersShippedPage from './SellerOrdersShippedPage';
 import SellerOrdersDeliveredPage from './SellerOrdersDeliveredPage';
-import SellerOrdersReturningPage from './SellerOrdersReturningPage';
 import SellerOrdersReturnedPage from './SellerOrdersReturnedPage';
+import SellerOrdersRefundingPage from './SellerOrdersRefundingPage';
+import SellerOrdersRefundedPage from './SellerOrdersRefundedPage';
+import SellerOrdersReturnRequestPage from './SellerOrdersReturnRequestPage'
+import SellerOrdersCompletedPage from './SellerOrdersCompletedPage';
 import ReportPage from './ReportPage';
 import SearchPage from './SearchPage';
 import ReportSuccessPage from './ReportSuccessPage';
@@ -158,9 +161,12 @@ function App() {
           <Route path='/sOrders/paid' element={<SellerOrdersPaidPage />}/>
           <Route path='/sOrders/shipped' element={<SellerOrdersShippedPage />}/>
           <Route path='/sOrders/delivered' element={<SellerOrdersDeliveredPage />}/>
-          <Route path='/sOrders/returning' element={<SellerOrdersReturningPage />}/>
-          <Route path='/sOrders/returned' element={<SellerOrdersReturnedPage />}/>
-          <Route path='/sellerHome' element={<SellerHomePage />}/>
+          <Route path='/sOrders/returned' element={<SellerOrdersReturnedPage />} />
+          <Route path='/sOrders/refunding' element={<SellerOrdersRefundingPage />} />
+          <Route path='/sOrders/refunded' element={<SellerOrdersRefundedPage />} />
+          <Route path='/sOrders/returning' element={<SellerOrdersReturnRequestPage />} />
+          <Route path='/sOrders/completed' element={<SellerOrdersCompletedPage />} />
+          <Route path='/sellerHome' element={<SellerHomePage />} />
           <Route path='/product/:productId' element={<ProductPage />}/>
           <Route path='/profile' element={<ProfilePage />}/>
           <Route path='/admin' element={<AdminPage />}/>

@@ -9,14 +9,14 @@ import Header from './Components/Header'
 import Footer from './Components/Footer'
 import api from './Components/Api'
 import { useState, useEffect } from 'react'
-import SellerOrdersShippedList from './Components/SellerOrdersShippedList'
+import SellerOrdersReturnRequestList from './Components/SellerOrdersReturnRequestList'
 
-const SellerOrdersPaidPage = () => {
-    const [value, setValue] = React.useState(3);
+const SellerOrdersReturnRequestPage = () => {
+    const [value, setValue] = React.useState(5);
     const [orders, setOrders] = useState([])
 
     const fetchOrders = async () => {
-        const data = await api.getSellerOrderListByStatusAndPage('shipped', 1)
+        const data = await api.getSellerOrderListByStatusAndPage('delivered', 1)
         return data.data
     }
 
@@ -80,16 +80,16 @@ const SellerOrdersPaidPage = () => {
                 >
                     <Tab label="已付款" to='/sOrders/paid' component={Link} {...a11yProps(0)} />
                     <Tab label="待退款" to='/sOrders/refunding' component={Link} {...a11yProps(1)} />
-                    <Tab label="已退款" to='/sOrders/refunded' component={Link} {...a11yProps(2)} />
-                    <Tab label="已发货" disabled {...a11yProps(3)} />
+                    <Tab label="已退款" to='/sOrders/refunding' component={Link} {...a11yProps(2)} />
+                    <Tab label="已发货" to='/sOrders/shipped' component={Link} {...a11yProps(3)} />
                     <Tab label="已签收" to='/sOrders/delivered' component={Link} {...a11yProps(4)} />
-                    <Tab label="待退货" to='/sOrders/returning' component={Link} {...a11yProps(5)} />
+                    <Tab label="待退货" disabled {...a11yProps(5)} />
                     <Tab label="已退货" to='/sOrders/returned' component={Link} {...a11yProps(6)} />
                     <Tab label="已完成" to='/sOrders/completed' component={Link} {...a11yProps(7)} />
                 </Tabs>
-                <TabPanel value={value} index={3}>
+                <TabPanel value={value} index={5}>
                     {orders.length > 0 ? orders.map((order, index) => (
-                        <SellerOrdersShippedList order={order} />
+                        <SellerOrdersReturnRequestList order={order} />
                     )) : console.log("wrong status")}
                 </TabPanel>
             </Box>
@@ -98,4 +98,4 @@ const SellerOrdersPaidPage = () => {
     );
 }
 
-export default SellerOrdersPaidPage
+export default SellerOrdersReturnRequestPage
