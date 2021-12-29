@@ -22,7 +22,7 @@ import SellerOrdersDeliveredPage from './SellerOrdersDeliveredPage';
 import SellerOrdersReturnedPage from './SellerOrdersReturnedPage';
 import SellerOrdersRefundingPage from './SellerOrdersRefundingPage';
 import SellerOrdersRefundedPage from './SellerOrdersRefundedPage';
-import SellerOrdersReturnRequestPage from './SellerOrdersReturnRequestPage'
+import SellerOrdersReturningPage from './SellerOrdersReturningPage'
 import SellerOrdersCompletedPage from './SellerOrdersCompletedPage';
 import ReportPage from './ReportPage';
 import SearchPage from './SearchPage';
@@ -88,7 +88,10 @@ function App() {
               <Route path='/sOrders/shipped' element={<SellerOrdersShippedPage />}/>
               <Route path='/sOrders/delivered' element={<SellerOrdersDeliveredPage />}/>
               <Route path='/sOrders/returning' element={<SellerOrdersReturningPage />}/>
-              <Route path='/sOrders/returned' element={<SellerOrdersReturnedPage />}/>
+              <Route path='/sOrders/returned' element={<SellerOrdersReturnedPage />} />
+              <Route path='/sOrders/refunding' element={<SellerOrdersRefundingPage />} />
+              <Route path='/sOrders/refunded' element={<SellerOrdersRefundedPage />} />
+              <Route path='/sOrders/completed' element={<SellerOrdersCompletedPage />} />
               <Route path='/sellerHome' element={<SellerHomePage />}/>
               <Route path='/product/:productId' element={<ProductPage />}/>
               <Route path='/profile' element={<Navigate to="/sellerHome" />}/>
@@ -164,7 +167,7 @@ function App() {
           <Route path='/sOrders/returned' element={<SellerOrdersReturnedPage />} />
           <Route path='/sOrders/refunding' element={<SellerOrdersRefundingPage />} />
           <Route path='/sOrders/refunded' element={<SellerOrdersRefundedPage />} />
-          <Route path='/sOrders/returning' element={<SellerOrdersReturnRequestPage />} />
+          <Route path='/sOrders/returning' element={<SellerOrdersReturningPage />} />
           <Route path='/sOrders/completed' element={<SellerOrdersCompletedPage />} />
           <Route path='/sellerHome' element={<SellerHomePage />} />
           <Route path='/product/:productId' element={<ProductPage />}/>
