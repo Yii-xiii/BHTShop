@@ -33,7 +33,7 @@ const PersonalDetails = () => {
         getCustomer()
     }, [])
 
-    if (loggedInType === 'Customer') {
+    if (loggedInType === 'Customer' || loggedInType === 'Postman') {
         return (
             <div className='details-box'>
                 <div className="id-box">
@@ -54,21 +54,6 @@ const PersonalDetails = () => {
                 <div className='phone-box'>
                     <h3>电话 :</h3>
                     <span>{customer.phoneNumber}</span>
-                </div>
-            </div>
-        )
-    }
-    else {
-        return (
-            <div className='details-box'>
-                <div className="id-box">
-                    <h3>用户名:</h3>
-                    <span>{customer.username}</span>
-                </div>
-
-                <div className="type-box">
-                    <h3>用户类型:</h3>
-                    <span>{customer.user}</span>
                 </div>
             </div>
         )
