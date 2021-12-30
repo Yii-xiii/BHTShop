@@ -47,6 +47,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
     const [refundpendingflag, setRefundpendingflag] = useState(0);
     const [refundfailedflag, setRefundfailedflag] = useState(0);
     const [receivedflag, setReceivedflag] = useState(0);
+    const [commentflag, setCommentflag] = useState(0);
     const [returningflag, setReturningflag] = useState(0);
     const [returnedflag, setReturnedflag] = useState(0);
     const [returningfailedflag, setReturningfailedflag] = useState(0);
@@ -68,13 +69,13 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
     const fetchComment = async () => {
         const data = await api.getOrderComment(orderId)
         if (data === undefined) {
-            return null;
+            setCommentflag('null')
         }
         else {
             console.log(data.data[0])
             return data.data
         }
-        return null;
+        setCommentflag('null')
     }
 
     const handleClickOpen = () => {
@@ -837,7 +838,23 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
     function CheckComment() {
         return (
             <div className='order-statuslist-box'>
-                {comment.length > 0 ? <CompletedTimelinewithoutButton /> : <CompletedTimelinewithButton />}
+                {commentflag === 'null' ? <CompletedTimelinewithButton /> : <CompletedTimelinewithoutButton />}
+            </div>
+        )
+    }
+
+    function CheckComment1() {
+        return (
+            <div className='order-statuslist-box'>
+                {commentflag === 'null' ?
+                    <div>
+                        <DeliveredTimelinewithoutButton />
+                        <CompletedTimelinewithButton />
+                    </div> :
+                    <div>
+                        <DeliveredTimelinewithoutButton />
+                        <CompletedTimelinewithoutButton />
+                    </div>}
             </div>
         )
     }
@@ -988,12 +1005,7 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
             return (
                 <div>
                     <CheckReceived />
-                    {(receivedflag === 1) ?
-                        <div>
-                            <DeliveredTimelinewithoutButton />
-                            <CompletedTimelinewithButton />
-                        </div>
-                        : <GetReturning />}
+                    {(receivedflag === 1) ? <CheckComment1 /> : <GetReturning />}
                 </div>
             )
         }
