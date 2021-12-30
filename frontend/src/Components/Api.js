@@ -916,84 +916,84 @@ class Api {
 	getReportListByDayAndPage = async (pageNum, year, month, day) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/by_day/pages/${pageNum}/`,{year,month,day});
+		let data = await this.put(`/adminUsers/reports/by_day/pages/${pageNum}/`,{year,month,day});
 		return data;
 	}
 
 	getReportedUserListByDayAndPage = async (pageNum, year, month, day) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/users/by_day/pages/${pageNum}/`,{year,month,day});
+		let data = await this.put(`/adminUsers/reports/reporting/users/by_day/pages/${pageNum}/`,{year,month,day});
 		return data;
 	}
 
 	getReportedProductListByDayAndPage = async (pageNum, year, month, day) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/products/by_day/pages/${pageNum}/`,{year,month,day});
+		let data = await this.put(`/adminUsers/reports/reporting/products/by_day/pages/${pageNum}/`,{year,month,day});
 		return data;
 	}
 
 	getReportedCommentListByDayAndPage = async (pageNum, year, month, day) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/comments/by_day/pages/${pageNum}/`,{year,month,day});
+		let data = await this.put(`/adminUsers/reports/reporting/comments/by_day/pages/${pageNum}/`,{year,month,day});
 		return data;
 	}
 
 	getReportListByMonthAndPage = async (pageNum, year, month) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/by_month/pages/${pageNum}/`,{year, month});
+		let data = await this.put(`/adminUsers/reports/by_month/pages/${pageNum}/`,{year, month});
 		return data;
 	}
 
 	getReportedUserListByMonthAndPage = async (pageNum, year, month) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/users/by_month/pages/${pageNum}/`,{year, month});
+		let data = await this.put(`/adminUsers/reports/reporting/users/by_month/pages/${pageNum}/`,{year, month});
 		return data;
 	}
 
 	getReportedProductListByMonthAndPage = async (pageNum, year, month) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/products/by_month/pages/${pageNum}/`,{year, month});
+		let data = await this.put(`/adminUsers/reports/reporting/products/by_month/pages/${pageNum}/`,{year, month});
 		return data;
 	}
 
 	getReportedCommentListByMonthAndPage = async (pageNum, year, month) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/comments/by_month/pages/${pageNum}/`,{year, month});
+		let data = await this.put(`/adminUsers/reports/reporting/comments/by_month/pages/${pageNum}/`,{year, month});
 		return data;
 	}
 
 	getReportListByYearAndPage = async (pageNum, year) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/by_year/pages/${pageNum}/`,{year});
+		let data = await this.put(`/adminUsers/reports/by_year/pages/${pageNum}/`,{year});
 		return data;
 	}
 
 	getReportedUserListByYearAndPage = async (pageNum, year) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/users/by_year/pages/${pageNum}/`,{year});
+		let data = await this.put(`/adminUsers/reports/reporting/users/by_year/pages/${pageNum}/`,{year});
 		return data;
 	}
 
 	getReportedProductListByYearAndPage = async (pageNum, year) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/products/by_year/pages/${pageNum}/`,{year});
+		let data = await this.put(`/adminUsers/reports/reporting/products/by_year/pages/${pageNum}/`,{year});
 		return data;
 	}
 
 	getReportedCommentListByYearAndPage = async (pageNum, year) => {
 		//login required
 		//403 : user is not admin
-		let data = await this.get(`/adminUsers/reports/reporting/comments/by_year/pages/${pageNum}/`,{year});
+		let data = await this.put(`/adminUsers/reports/reporting/comments/by_year/pages/${pageNum}/`,{year});
 		return data;
 	}
 
