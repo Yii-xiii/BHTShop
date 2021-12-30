@@ -111,7 +111,7 @@ const SellerDescAndFilter = () => {
     
                     <div className='seller-exclusive-desc-texts-box'>
                         <h4>评价: </h4>
-                        <span> {avgRating}</span>
+                        <span> {parseFloat(avgRating).toFixed(2)}</span>
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@ const SellerDescAndFilter = () => {
     
                     <div className='seller-desc-texts-box'>
                         <h4>评价: </h4>
-                        <span> {avgRating}</span>
+                        <span> {parseFloat(avgRating).toFixed(2)}</span>
                     </div>
     
                     <div className='seller-desc-buttons-box'>
@@ -171,7 +171,7 @@ const SellerDescAndFilter = () => {
 
                 <div className='seller-desc-texts-box'>
                     <h4>评价: </h4>
-                    <span> {avgRating}</span>
+                    <span> {parseFloat(avgRating).toFixed(2)}</span>
                 </div>
 
                 <div className='seller-desc-buttons-box'>
