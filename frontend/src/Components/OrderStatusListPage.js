@@ -39,7 +39,6 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
     const [open2, setOpen2] = useState(false);
     const [open3, setOpen3] = useState(false);
     const [des3, setDes3] = useState("incorrect product");
-    const [des4, setDes4] = useState([]);
     const [orderStatus, setOrderStatus] = useState([])
     const [comment, setComment] = useState([])
     const [orders, setOrders] = useState([])
@@ -52,7 +51,8 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
     const [returnedflag, setReturnedflag] = useState(0);
     const [returningfailedflag, setReturningfailedflag] = useState(0);
     const [returningpendingflag, setReturningpendingflag] = useState(0);
-    const [ratevalue, setRatevalue] = useState(0);
+    var des4;
+    var ratevalue;
 
     const fetchOrderStatus = async () => {
         const data = await api.getLatestOrderStatus(orderId)
@@ -160,6 +160,14 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
         const data = await api.createProductComment(orderId, des, rating)
         console.log(data)
         window.location.reload(false)
+    }
+    
+    const changeRatevalue = (value) => {
+        ratevalue = value
+    }
+
+    const changeDes4 = (value) => {
+        des4 = value
     }
 
     useEffect(() => {
@@ -361,32 +369,23 @@ const OrderStatusListPage = ({ statusId, status, time, description }) => {
                         <DialogContent>
                             <Rating sx={{ ml: '40px' }}
                                 name="rating"
-                                value={ratevalue}
-                                onChange={(event) => {
-                                    setRatevalue(event.target.value);
-                                }}
+                                onChange={(event) => changeRatevalue(event.target.value)}
                             />
+                        </DialogContent>
 
+                        <DialogContent>
                             <DialogContentText>
                                 请输入评价：
                             </DialogContentText>
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                id="rating"
-                                label="评价内容"
-                                fullWidth
-                                variant="standard"
-                                value={des4}
-                                onChange={(event) => {
-                                    setDes4(event.target.value);
-                                }}
+                            <TextInput
+                                type="text"
+                                onChange={(event) => changeDes4(event.target.value)} 
                             />
 
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClose3}>取消</Button>
-                            <Button onClick={() => newComment(des4, ratevalue)}>提交</Button>
+                            <Button type="button" onClick={() => handleClose3}>取消</Button>
+                            <Button type="button" onClick={() => newComment(des4, ratevalue)}>提交</Button>
                         </DialogActions>
                     </Dialog>
                 </div>
