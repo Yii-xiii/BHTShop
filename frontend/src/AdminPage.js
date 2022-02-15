@@ -9,6 +9,9 @@ const AdminPage = () => {
     return (
         <div>
             <Header />
+            <div>
+                <AdminGraph/>
+            </div>
             <div className='admin-page-workspace-limit-box'>
                 <AdminWorkspace />
             </div>
